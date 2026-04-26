@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_utc": "2026-04-26T20:36:54.230933+00:00",
+    "generated_utc": "2026-04-26T20:39:57.522238+00:00",
     "year_range": [
       1995,
       2024
@@ -102941,7 +102941,7 @@
       }
     },
     "insuranceSignals": {
-      "generatedUtc": "2026-04-26T20:36:54.230916+00:00",
+      "generatedUtc": "2026-04-26T20:39:57.522221+00:00",
       "sources": {
         "femaOpenDataSetsIndex": "https://www.fema.gov/api/open/v1/OpenFemaDataSets",
         "femaNfipClaims": "https://www.fema.gov/api/open/v2/FimaNfipClaims",
@@ -102979,7 +102979,8 @@
               "buildingPaidUSD": 0.0,
               "contentsPaidUSD": 0.0,
               "increasedCompliancePaidUSD": 0.0,
-              "truncated": false
+              "truncated": false,
+              "error": "unavailable"
             },
             "housingOwners": {
               "rows": 65,
@@ -103031,7 +103032,8 @@
               "buildingPaidUSD": 0.0,
               "contentsPaidUSD": 0.0,
               "increasedCompliancePaidUSD": 0.0,
-              "truncated": false
+              "truncated": false,
+              "error": "unavailable"
             },
             "housingOwners": {
               "rows": 32,
@@ -103083,7 +103085,8 @@
               "buildingPaidUSD": 0.0,
               "contentsPaidUSD": 0.0,
               "increasedCompliancePaidUSD": 0.0,
-              "truncated": false
+              "truncated": false,
+              "error": "unavailable"
             },
             "housingOwners": {
               "rows": 26,
@@ -103135,7 +103138,8 @@
               "buildingPaidUSD": 0.0,
               "contentsPaidUSD": 0.0,
               "increasedCompliancePaidUSD": 0.0,
-              "truncated": false
+              "truncated": false,
+              "error": "unavailable"
             },
             "housingOwners": {
               "rows": 7,
@@ -103187,7 +103191,8 @@
               "buildingPaidUSD": 0.0,
               "contentsPaidUSD": 0.0,
               "increasedCompliancePaidUSD": 0.0,
-              "truncated": false
+              "truncated": false,
+              "error": "unavailable"
             },
             "housingOwners": {
               "rows": 8,
@@ -103239,7 +103244,8 @@
               "buildingPaidUSD": 0.0,
               "contentsPaidUSD": 0.0,
               "increasedCompliancePaidUSD": 0.0,
-              "truncated": false
+              "truncated": false,
+              "error": "unavailable"
             },
             "housingOwners": {
               "rows": 10,
@@ -103291,7 +103297,8 @@
               "buildingPaidUSD": 0.0,
               "contentsPaidUSD": 0.0,
               "increasedCompliancePaidUSD": 0.0,
-              "truncated": false
+              "truncated": false,
+              "error": "unavailable"
             },
             "housingOwners": {
               "rows": 8,
@@ -103343,7 +103350,8 @@
               "buildingPaidUSD": 0.0,
               "contentsPaidUSD": 0.0,
               "increasedCompliancePaidUSD": 0.0,
-              "truncated": false
+              "truncated": false,
+              "error": "unavailable"
             },
             "housingOwners": {
               "rows": 11,
@@ -103395,7 +103403,8 @@
               "buildingPaidUSD": 0.0,
               "contentsPaidUSD": 0.0,
               "increasedCompliancePaidUSD": 0.0,
-              "truncated": false
+              "truncated": false,
+              "error": "unavailable"
             },
             "housingOwners": {
               "rows": 15,
@@ -103447,7 +103456,8 @@
               "buildingPaidUSD": 0.0,
               "contentsPaidUSD": 0.0,
               "increasedCompliancePaidUSD": 0.0,
-              "truncated": false
+              "truncated": false,
+              "error": "unavailable"
             },
             "housingOwners": {
               "rows": 8,

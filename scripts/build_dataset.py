@@ -107,6 +107,23 @@ COMPARISON_CITIES = [
     {"key": "clarksburg_wv",   "name": "Clarksburg, WV",   "lat": 39.2806, "lon": -80.3445},
 ]
 
+# NFIP reportedCity fields are often redacted ("Currently Unavailable").
+# County FIPS codes are the stable public match for city-level claim aggregation.
+# 45=SC counties: 45019=Charleston, 45015=Berkeley, 45035=Dorchester
+# 54=WV counties: 54019=Fayette, 54049=Marion, 54033=Harrison
+NFIP_COUNTY_CODES_BY_CITY_KEY: dict[str, list[str]] = {
+    "charleston":       ["45019"],
+    "north_charleston": ["45019", "45015"],
+    "summerville":      ["45015", "45035"],
+    "goose_creek":      ["45015"],
+    "hanahan":          ["45015", "45019"],
+    "fayetteville_wv":  ["54019"],
+    "oak_hill_wv":      ["54019"],
+    "fairmont_wv":      ["54049"],
+    "bridgeport_wv":    ["54033"],
+    "clarksburg_wv":    ["54033"],
+}
+
 
 def _city_state_from_name(city_name: str) -> tuple[str, str]:
     parts = [p.strip() for p in (city_name or "").split(",")]
@@ -166,10 +183,16 @@ def _fema_fetch_rows(
     return rows, truncated
 
 
-def _fetch_nfip_city_claim_metrics(city_name: str, state_abbr: str) -> dict:
-    city = city_name.upper()
+def _fetch_nfip_city_claim_metrics(city_key: str, city_name: str, state_abbr: str) -> dict:
     state = state_abbr.upper()
-    filter_expr = f"state eq '{state}' and reportedCity eq '{city}'"
+    county_codes = NFIP_COUNTY_CODES_BY_CITY_KEY.get(city_key, [])
+    if county_codes:
+        county_filter = " or ".join(f"countyCode eq '{code}'" for code in county_codes)
+        filter_expr = f"state eq '{state}' and ({county_filter})"
+    else:
+        city = city_name.upper()
+        filter_expr = f"state eq '{state}' and reportedCity eq '{city}'"
+
     select_fields = [
         "amountPaidOnBuildingClaim",
         "amountPaidOnContentsClaim",
@@ -326,7 +349,7 @@ def build_external_insurance_signals(cities: list[dict], comparison_cities: list
         }
 
         try:
-            nfip = _fetch_nfip_city_claim_metrics(city_only, state_abbr)
+            nfip = _fetch_nfip_city_claim_metrics(city["key"], city_only, state_abbr)
         except Exception:
             nfip = {
                 "claimsCount": 0,
