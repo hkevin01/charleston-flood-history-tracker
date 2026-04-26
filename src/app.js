@@ -485,19 +485,23 @@ function renderTrendsSummary(dataset, filteredEvents) {
     trendVerdict = "Roughly stable"; trendColor = "#d97706"; trendIcon = "➡️";
   }
 
-  // Fatality analysis
-  const totalDeaths  = filteredEvents.reduce((s, e) => s + (e.deaths || 0), 0);
-  const recentDeaths = recent5.reduce((s, y) => s + (byYear[y]?.deaths || 0), 0);
-  const olderDeaths  = years.filter((y) => y < 2020).reduce((s, y) => s + (byYear[y]?.deaths || 0), 0);
-  let fatalVerdict, fatalColor;
-  if (totalDeaths === 0) {
-    fatalVerdict = "No fatalities recorded"; fatalColor = "#16a34a";
-  } else if (recentDeaths === 0 && olderDeaths > 0) {
-    fatalVerdict = "Lower — none in recent years"; fatalColor = "#16a34a";
-  } else if (recentDeaths > olderDeaths) {
-    fatalVerdict = "Higher in recent years"; fatalColor = "#dc2626";
+  // Damage trend (more meaningful than fatalities given very low death count)
+  const sumDamage = (ys) => ys.reduce((s, y) => s + (byYear[y]?.damage || 0), 0);
+  const recentDamage = sumDamage(recent5);
+  const priorDamage  = sumDamage(prior5);
+  const recentDamageAvg = recent5.length ? recentDamage / recent5.length : 0;
+  const priorDamageAvg  = prior5.length  ? priorDamage  / prior5.length  : 0;
+  let dmgVerdict, dmgColor, dmgIcon;
+  if (priorDamageAvg === 0 && recentDamageAvg === 0) {
+    dmgVerdict = "No damage reported in either window"; dmgColor = "#6b7280"; dmgIcon = "❓";
+  } else if (priorDamageAvg === 0) {
+    dmgVerdict = "Damage only in recent years"; dmgColor = "#d97706"; dmgIcon = "📈";
+  } else if (recentDamageAvg > priorDamageAvg * 1.15) {
+    dmgVerdict = "Higher damage in recent years"; dmgColor = "#dc2626"; dmgIcon = "📈";
+  } else if (recentDamageAvg < priorDamageAvg * 0.85) {
+    dmgVerdict = "Damage trending down"; dmgColor = "#16a34a"; dmgIcon = "📉";
   } else {
-    fatalVerdict = `${totalDeaths} total — steady`; fatalColor = "#d97706";
+    dmgVerdict = "Roughly stable damage"; dmgColor = "#d97706"; dmgIcon = "➡️";
   }
 
   const decadeRows = Object.entries(decades).sort()
@@ -518,11 +522,11 @@ function renderTrendsSummary(dataset, filteredEvents) {
         Recent avg: <b>${recentAvg.toFixed(1)} events/yr</b>&nbsp;·&nbsp;Prior avg: <b>${priorAvg.toFixed(1)} events/yr</b>
       </div>
     </div>
-    <div class="trend-verdict" style="border-left-color:${fatalColor};margin-top:.45rem">
-      <div class="trend-verdict-label">💀 Fatalities — are they lower today?</div>
-      <div class="trend-verdict-value" style="color:${fatalColor}">${fatalVerdict}</div>
+    <div class="trend-verdict" style="border-left-color:${dmgColor};margin-top:.45rem">
+      <div class="trend-verdict-label">${dmgIcon} Reported damage (2020–2024 vs 2015–2019)</div>
+      <div class="trend-verdict-value" style="color:${dmgColor}">${dmgVerdict}</div>
       <div class="trend-verdict-detail">
-        2020–2024: <b>${recentDeaths}</b> &nbsp;·&nbsp; Before 2020: <b>${olderDeaths}</b> &nbsp;·&nbsp; Total: <b>${totalDeaths}</b>
+        Recent avg: <b>${money(recentDamageAvg)}/yr</b>&nbsp;·&nbsp;Prior avg: <b>${money(priorDamageAvg)}/yr</b>
       </div>
     </div>
     <table class="cmp-table" style="margin-top:.5rem">
@@ -673,12 +677,28 @@ function renderInsuranceSignals(dataset) {
     return `<span class="${klass}">${kind}</span>`;
   };
 
+  // Approximate 2020 Census populations for per-capita normalization
+  const CITY_POP = {
+    charleston_sc:      150227,
+    north_charleston:   116278,
+    summerville:         54964,
+    goose_creek:         44045,
+    hanahan:             26000,
+    fairmont_wv:         17922,
+    clarksburg_wv:       15712,
+    bridgeport_wv:        9249,
+    oak_hill_wv:          7694,
+    fayetteville_wv:      2836,
+  };
+
   const rows = Object.entries(sig.byCity).map(([cityKey, c]) => {
     const r = c.residentialLayer || {};
     const v = c.vehicleProxyLayer || {};
     const residentialUSD = r.compositeResidentialLossUSD || 0;
     const vehicleScore = v.proxyVehicleImpactScore || 0;
     const confidence = c.confidence || {};
+    const pop = CITY_POP[cityKey] || null;
+    const perCapita = pop ? residentialUSD / pop : null;
     return {
       cityKey,
       name: c.name || cityKey,
@@ -689,8 +709,30 @@ function renderInsuranceSignals(dataset) {
       nfipClaims: r.nfipClaims?.claimsCount || 0,
       floodRegs: v.floodRegistrationCount || 0,
       autoRegs: v.autoDamageRegistrationCount || 0,
+      pop,
+      perCapita,
     };
   }).sort((a, b) => b.residentialUSD - a.residentialUSD || b.vehicleScore - a.vehicleScore);
+
+  // Compute per-capita percentile rank within this comparison set (ignores nulls)
+  const ranked = rows
+    .filter((r) => r.perCapita !== null)
+    .slice()
+    .sort((a, b) => a.perCapita - b.perCapita);
+  const n = ranked.length;
+  ranked.forEach((r, i) => {
+    r.pctile = n > 1 ? Math.round((i / (n - 1)) * 100) : 50;
+  });
+  // assign null pctile to any rows without population data
+  rows.forEach((r) => { if (r.perCapita === null) r.pctile = null; });
+
+  const pctileCell = (r) => {
+    if (r.pctile === null) return `<td style="color:#94a3b8">—</td>`;
+    const color = r.pctile >= 67 ? "#dc2626" : r.pctile >= 34 ? "#d97706" : "#16a34a";
+    const label = `P${r.pctile}`;
+    const perCapStr = `$${Math.round(r.perCapita).toLocaleString()}/res`;
+    return `<td title="${perCapStr}" style="color:${color};font-weight:600">${label}<span style="font-weight:400;color:#64748b;font-size:.72rem"> (${perCapStr})</span></td>`;
+  };
 
   const tableRows = rows.map((r) =>
     `<tr>` +
@@ -699,6 +741,7 @@ function renderInsuranceSignals(dataset) {
       `<td>${r.vehicleBadge} ${r.vehicleScore.toFixed(1)}</td>` +
       `<td>${r.nfipClaims}</td>` +
       `<td>${r.floodRegs}/${r.autoRegs}</td>` +
+      pctileCell(r) +
     `</tr>`
   ).join("");
 
@@ -718,7 +761,7 @@ function renderInsuranceSignals(dataset) {
     `</div>` +
     `<table class="cmp-table" style="margin-top:.45rem">` +
       `<thead><tr>` +
-        `<th>City</th><th>Residential signal (USD)</th><th>Vehicle proxy score</th><th>NFIP claims</th><th>IHP flood/auto</th>` +
+        `<th>City</th><th>Residential signal (USD)</th><th>Vehicle proxy score</th><th>NFIP claims</th><th>IHP flood/auto</th><th title="Per-capita residential loss percentile within this comparison set">Per-capita pctile ↑</th>` +
       `</tr></thead>` +
       `<tbody>${tableRows}</tbody>` +
     `</table>` +

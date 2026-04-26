@@ -1215,13 +1215,16 @@ def main() -> None:
         injuries = 0
         deaths = 0
 
+        by_year_damage: dict[int, float] = {}
         for ev in evs:
             m = month_from_datetime(ev.date_time)
             if 1 <= m <= 12:
                 monthly[month_names[m - 1]] += 1
             by_type[ev.event_type] = by_type.get(ev.event_type, 0) + 1
             by_year[ev.year] = by_year.get(ev.year, 0) + 1
-            total_damage += ev.property_damage_usd + ev.crops_damage_usd
+            ev_dmg = ev.property_damage_usd + ev.crops_damage_usd
+            by_year_damage[ev.year] = by_year_damage.get(ev.year, 0.0) + ev_dmg
+            total_damage += ev_dmg
             injuries += ev.injuries
             deaths += ev.deaths
 
@@ -1233,6 +1236,7 @@ def main() -> None:
             "peakMonths": [{"month": m, "count": c} for m, c in peak_months],
             "eventTypeCounts": by_type,
             "yearlyCounts": [{"year": y, "count": by_year.get(y, 0)} for y in range(START_YEAR, END_YEAR + 1)],
+            "yearlyDamage": [{"year": y, "damage": round(by_year_damage.get(y, 0.0), 2)} for y in range(START_YEAR, END_YEAR + 1)],
             "totalDamageUSD": round(total_damage, 2),
             "injuries": injuries,
             "deaths": deaths,
@@ -1249,13 +1253,16 @@ def main() -> None:
         injuries = 0
         deaths = 0
 
+        by_year_damage: dict[int, float] = {}
         for ev in evs:
             m = month_from_datetime(ev.date_time)
             if 1 <= m <= 12:
                 monthly[month_names[m - 1]] += 1
             by_type[ev.event_type] = by_type.get(ev.event_type, 0) + 1
             by_year[ev.year] = by_year.get(ev.year, 0) + 1
-            total_damage += ev.property_damage_usd + ev.crops_damage_usd
+            ev_dmg = ev.property_damage_usd + ev.crops_damage_usd
+            by_year_damage[ev.year] = by_year_damage.get(ev.year, 0.0) + ev_dmg
+            total_damage += ev_dmg
             injuries += ev.injuries
             deaths += ev.deaths
 
@@ -1267,6 +1274,7 @@ def main() -> None:
             "peakMonths": [{"month": m, "count": c} for m, c in peak_months],
             "eventTypeCounts": by_type,
             "yearlyCounts": [{"year": y, "count": by_year.get(y, 0)} for y in range(START_YEAR, END_YEAR + 1)],
+            "yearlyDamage": [{"year": y, "damage": round(by_year_damage.get(y, 0.0), 2)} for y in range(START_YEAR, END_YEAR + 1)],
             "totalDamageUSD": round(total_damage, 2),
             "injuries": injuries,
             "deaths": deaths,
