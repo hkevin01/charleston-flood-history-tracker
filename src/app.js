@@ -328,10 +328,12 @@ function cityFeature(place) {
 // Inputs:
 //   dataset (object):       Full parsed JSON dataset.
 //   filteredEvents (array): Events currently passing filter criteria.
+//   minDamageFilterUSD (number): Active minimum-damage filter threshold.
+//   unreportedOnly (boolean): If true, only events with damageUnreported are shown.
 // Outputs:  Mutates innerHTML of #stats element.
 // Side Effects: DOM write only; no data mutation.
 // ---------------------------------------------------------------------------
-function renderStats(dataset, filteredEvents, minDamageFilterUSD = 0) {
+function renderStats(dataset, filteredEvents, minDamageFilterUSD = 0, unreportedOnly = false) {
   const statsEl = document.getElementById("stats");
   const byType = {};
   const byCtx  = {};
@@ -371,6 +373,7 @@ function renderStats(dataset, filteredEvents, minDamageFilterUSD = 0) {
     `<b>Events shown:</b> ${filteredEvents.length}<br/>` +
     `<b>Year range:</b> ${dataset.meta.year_range[0]}-${dataset.meta.year_range[1]}<br/>` +
     `<b>Min reported damage filter:</b> ${money(minDamageFilterUSD)}<br/>` +
+    `<b>Data quality mode:</b> ${unreportedOnly ? "Unreported only" : "All events"}<br/>` +
     `<b>Total reported damage:</b> ${money(dmg)}<br/>` +
     (unreportedCount > 0
       ? `<span style="color:#92400e;font-size:0.85em">⚠ ${unreportedCount} event${unreportedCount > 1 ? "s" : ""} ` +
@@ -612,6 +615,7 @@ function renderPrintReport(dataset, filteredEvents, filters) {
     `<div><b>Filter window:</b> ${filters.yearStart}-${filters.yearEnd}</div>` +
     `<div><b>Event type:</b> ${filters.eventType || "All flood types"}</div>` +
     `<div><b>Minimum reported damage:</b> ${money(filters.minDamage)}</div>` +
+    `<div><b>Data quality mode:</b> ${filters.unreportedOnly ? "Unreported only" : "All events"}</div>` +
     `<div><b>Events shown:</b> ${filteredEvents.length}</div>` +
     `<div><b>Total reported damage:</b> ${money(totalDamage)}</div>` +
     `<div><b>Damage not recorded flags:</b> ${unreported}</div>` +
@@ -817,6 +821,7 @@ function exportPDF() {
   const yearStartEl  = document.getElementById("yearStart");
   const yearEndEl    = document.getElementById("yearEnd");
   const minDamageEl  = document.getElementById("minDamage");
+  const showUnreportedOnlyEl = document.getElementById("showUnreportedOnly");
   const eventTypeEl  = document.getElementById("eventType");
   const showRiskEl   = document.getElementById("showRisk");
   const showFemaEl   = document.getElementById("showFema");
@@ -838,6 +843,7 @@ function exportPDF() {
     const yStart = parseInt(yearStartEl.value, 10) || dataset.meta.year_range[0];
     const yEnd   = parseInt(yearEndEl.value,   10) || dataset.meta.year_range[1];
     const minDamage = Math.max(0, parseFloat(minDamageEl?.value || "0") || 0);
+    const unreportedOnly = !!showUnreportedOnlyEl?.checked;
     const typeFilter = eventTypeEl.value;
     const showRisk   = showRiskEl.checked;
 
@@ -846,6 +852,7 @@ function exportPDF() {
       if (typeFilter && e.eventType !== typeFilter) return false;
       const reportedDamage = (e.propertyDamageUSD || 0) + (e.cropDamageUSD || 0);
       if (reportedDamage < minDamage) return false;
+      if (unreportedOnly && !e.damageUnreported) return false;
       return true;
     });
 
@@ -859,7 +866,7 @@ function exportPDF() {
       allZones.forEach((z) => riskSource.addFeature(riskFeature(z)));
     }
 
-    renderStats(dataset, filtered, minDamage);
+    renderStats(dataset, filtered, minDamage, unreportedOnly);
     renderTrendsSummary(dataset, filtered);
     renderCityComparison(dataset, filtered);
     renderPrintReport(dataset, filtered, {
@@ -867,11 +874,12 @@ function exportPDF() {
       yearEnd: yEnd,
       eventType: typeFilter,
       minDamage,
+      unreportedOnly,
     });
   }
 
   // ── 9. Wire filter control events ────────────────────────────────────────
-  [yearStartEl, yearEndEl, minDamageEl, eventTypeEl, showRiskEl].forEach((el) => {
+  [yearStartEl, yearEndEl, minDamageEl, showUnreportedOnlyEl, eventTypeEl, showRiskEl].forEach((el) => {
     el.addEventListener("change", redraw);
   });
 

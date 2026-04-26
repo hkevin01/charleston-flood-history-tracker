@@ -447,10 +447,12 @@ gantt
         Decision-analysis section    :done,    p3b, 2026-04-15, 2026-04-22
         Docker + docs + tests        :done,    p3c, 2026-04-20, 2026-04-26
     section Phase 4 · Enhancements
-        Historical storm-track overlay    :         p4a, 2026-05-01, 2026-06-01
-        FEMA flood-zone layer integration :         p4b, 2026-05-15, 2026-06-15
-        Exportable city risk report (PDF) :         p4c, 2026-06-01, 2026-07-01
-        Mobile-optimised layout           :         p4d, 2026-06-15, 2026-07-15
+      Historical storm-track overlay    :done,    p4a, 2026-05-01, 2026-06-01
+      FEMA flood-zone layer integration :done,    p4b, 2026-05-15, 2026-06-15
+      Exportable city risk report (PDF) :done,    p4c, 2026-06-01, 2026-07-01
+      Mobile-optimised layout           :done,    p4d, 2026-06-15, 2026-07-15
+      Data-quality audit filters        :done,    p4e, 2026-07-10, 2026-07-25
+      Filtered event CSV export         :         p4f, 2026-07-25, 2026-08-20
 ```
 
 | Phase | Goals | Target | Status |
@@ -458,7 +460,7 @@ gantt
 | 1 — Data Pipeline | NOAA ingestion, filtering, risk scoring, JSON output | 2026-03 | ✅ Complete |
 | 2 — Map Experience | OpenLayers map, markers, polygons, filters | 2026-04 | ✅ Complete |
 | 3 — Analysis & Delivery | Decision analysis, Docker, tests, docs | 2026-04-26 | ✅ Complete |
-| 4 — Enhancements | Storm tracks, FEMA zones, PDF report, mobile | 2026-07 | ⭕ Planned |
+| 4 — Enhancements | Storm tracks, FEMA zones, PDF report, mobile, data quality filters | 2026-08 | 🟡 In Progress |
 
 <p align="right">(<a href="#top">back to top ↑</a>)</p>
 
@@ -469,8 +471,8 @@ gantt
 | Version | Stability | Test Coverage | Known Limitations |
 |---------|-----------|---------------|------------------|
 | v1.0.0 (current) | ✅ Stable | Unit tests for pipeline helpers | No flood-only city-level auto payout data available publicly |
-| v1.0.0 | ✅ Stable | Manual UI verification | Mobile layout not yet optimised |
-| v1.0.0 | ✅ Stable | Docker smoke-tested | FEMA flood-zone layer not yet integrated |
+| v1.0.0 | ✅ Stable | Manual UI verification | Per-event damage dollars are sometimes unreported in NOAA source rows |
+| v1.0.0 | ✅ Stable | Docker smoke-tested | CSV export for filtered map view not yet implemented |
 
 ```mermaid
 mindmap
