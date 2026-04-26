@@ -35,6 +35,6 @@ Phase 3 Gate: PASS
 - [x] Add minimum reported damage filter in map controls.
 - [x] Add "unreported-only" filter mode for data-quality auditing.
 - [ ] Add on-map legend control (compact map-overlay legend).
-- [ ] Add downloadable filtered-event CSV export.
+- [x] Add downloadable filtered-event CSV export.
 
 Phase 4 Gate: IN PROGRESS

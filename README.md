@@ -452,7 +452,7 @@ gantt
       Exportable city risk report (PDF) :done,    p4c, 2026-06-01, 2026-07-01
       Mobile-optimised layout           :done,    p4d, 2026-06-15, 2026-07-15
       Data-quality audit filters        :done,    p4e, 2026-07-10, 2026-07-25
-      Filtered event CSV export         :         p4f, 2026-07-25, 2026-08-20
+      Filtered event CSV export         :done,    p4f, 2026-07-25, 2026-08-20
 ```
 
 | Phase | Goals | Target | Status |
@@ -472,7 +472,7 @@ gantt
 |---------|-----------|---------------|------------------|
 | v1.0.0 (current) | ✅ Stable | Unit tests for pipeline helpers | No flood-only city-level auto payout data available publicly |
 | v1.0.0 | ✅ Stable | Manual UI verification | Per-event damage dollars are sometimes unreported in NOAA source rows |
-| v1.0.0 | ✅ Stable | Docker smoke-tested | CSV export for filtered map view not yet implemented |
+| v1.0.0 | ✅ Stable | Docker smoke-tested | On-map compact legend overlay control not yet implemented |
 
 ```mermaid
 mindmap

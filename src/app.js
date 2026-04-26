@@ -738,6 +738,81 @@ function exportPDF() {
 }
 
 // ---------------------------------------------------------------------------
+// ID:           CFHT-EXPORT-CSV-001
+// Requirement:  Export the currently filtered event list to CSV so users can
+//               analyze or archive map-filtered results outside the app.
+// Inputs:
+//   events (array): Active filtered events shown on map.
+//   filters (object): Active filter values for filename metadata.
+// Outputs:  Triggers browser download of a UTF-8 CSV file.
+// Side Effects: Creates and revokes an in-memory Blob URL.
+// ---------------------------------------------------------------------------
+function exportFilteredEventsCsv(events, filters) {
+  const header = [
+    "id",
+    "episodeId",
+    "year",
+    "dateTime",
+    "eventType",
+    "county",
+    "startLat",
+    "startLon",
+    "endLat",
+    "endLon",
+    "injuries",
+    "deaths",
+    "propertyDamageUSD",
+    "cropDamageUSD",
+    "damageContext",
+    "damageUnreported",
+    "narrative",
+  ];
+
+  const esc = (v) => {
+    const s = String(v ?? "");
+    return `"${s.replace(/"/g, '""')}"`;
+  };
+
+  const rows = events.map((e) => [
+    e.id,
+    e.episodeId,
+    e.year,
+    e.dateTime,
+    e.eventType,
+    e.county,
+    e.start?.lat,
+    e.start?.lon,
+    e.end?.lat,
+    e.end?.lon,
+    e.injuries,
+    e.deaths,
+    e.propertyDamageUSD,
+    e.cropDamageUSD,
+    e.damageContext,
+    e.damageUnreported,
+    e.narrative,
+  ]);
+
+  const csv = [
+    `# Charleston Flood Tracker filtered export`,
+    `# yearStart=${filters.yearStart},yearEnd=${filters.yearEnd},eventType=${filters.eventType || "ALL"},minDamage=${filters.minDamage},unreportedOnly=${filters.unreportedOnly}`,
+    header.join(","),
+    ...rows.map((r) => r.map(esc).join(",")),
+  ].join("\n");
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const ts = new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = `charleston_flood_events_filtered_${ts}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ---------------------------------------------------------------------------
 // ID:           CFHT-MAIN-001
 // Requirement:  Async IIFE that bootstraps the entire application:
 //               load JSON → build map → wire all controls → render all panels.
@@ -827,6 +902,16 @@ function exportPDF() {
   const showFemaEl   = document.getElementById("showFema");
   const showTracksEl = document.getElementById("showStormTracks");
   const exportBtnEl  = document.getElementById("exportPdfBtn");
+  const exportCsvBtnEl = document.getElementById("exportCsvBtn");
+
+  let currentFiltered = [];
+  let currentFilters = {
+    yearStart: dataset.meta.year_range[0],
+    yearEnd: dataset.meta.year_range[1],
+    eventType: "",
+    minDamage: 0,
+    unreportedOnly: false,
+  };
 
   yearStartEl.value = String(dataset.meta.year_range[0]);
   yearEndEl.value   = String(dataset.meta.year_range[1]);
@@ -855,6 +940,15 @@ function exportPDF() {
       if (unreportedOnly && !e.damageUnreported) return false;
       return true;
     });
+
+    currentFiltered = filtered;
+    currentFilters = {
+      yearStart: yStart,
+      yearEnd: yEnd,
+      eventType: typeFilter,
+      minDamage,
+      unreportedOnly,
+    };
 
     floodSource.clear();
     filtered.forEach((e) => floodSource.addFeature(eventFeature(e)));
@@ -897,6 +991,12 @@ function exportPDF() {
 
   if (exportBtnEl) {
     exportBtnEl.addEventListener("click", exportPDF);
+  }
+
+  if (exportCsvBtnEl) {
+    exportCsvBtnEl.addEventListener("click", () => {
+      exportFilteredEventsCsv(currentFiltered, currentFilters);
+    });
   }
 
   // Mobile panel toggle
