@@ -530,6 +530,27 @@ function renderCityComparison(dataset, filteredEvents) {
   html += `<tr><td>Flood events (30y)</td>${ranked.map((r) => `<td>${r.count}</td>`).join("")}</tr>`;
   html += `<tr><td>Reported damage</td>${ranked.map((r) => `<td>${money(r.damage)}</td>`).join("")}</tr>`;
   html += `</tbody></table>`;
+
+  // Optional cross-region benchmark table (static 30-year totals)
+  if (dataset.stats && dataset.stats.comparisonCities && dataset.meta.comparison_cities) {
+    const benchRows = dataset.meta.comparison_cities.map((city) => {
+      const s = dataset.stats.comparisonCities[city.key] || {
+        eventCount: 0, avgPerYear: 0, totalDamageUSD: 0, peakMonths: [], deaths: 0,
+      };
+      const peak = (s.peakMonths || []).map((p) => `${p.month} (${p.count})`).join(", ") || "N/A";
+      return `<tr><td>${city.name}</td><td>${s.eventCount}</td><td>${s.avgPerYear}</td><td>${money(s.totalDamageUSD)}</td><td>${peak}</td><td>${s.deaths || 0}</td></tr>`;
+    }).join("");
+
+    html +=
+      `<h4 style="margin:.65rem 0 .35rem">Regional Benchmark (WV Comparison Cities)</h4>` +
+      `<p style="margin:0 0 .35rem;color:#475569;font-size:.76rem">` +
+      `These cities are included to show flood risk is widespread and not limited to Charleston, SC.` +
+      `</p>` +
+      `<table class="cmp-table"><thead><tr>` +
+      `<th>City</th><th>Events (30y)</th><th>Avg / year</th><th>Reported damage</th><th>Peak months</th><th>Deaths</th>` +
+      `</tr></thead><tbody>${benchRows}</tbody></table>`;
+  }
+
   tbl.innerHTML = html;
 }
 

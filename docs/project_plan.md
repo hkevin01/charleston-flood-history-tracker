@@ -36,5 +36,6 @@ Phase 3 Gate: PASS
 - [x] Add "unreported-only" filter mode for data-quality auditing.
 - [ ] Add on-map legend control (compact map-overlay legend).
 - [x] Add downloadable filtered-event CSV export.
+- [x] Add cross-region benchmark comparison cities (Fayetteville/Oak Hill/Bridgeport/Fairmont/Clarksburg, WV).
 
 Phase 4 Gate: IN PROGRESS

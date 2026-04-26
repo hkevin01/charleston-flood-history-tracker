@@ -29,3 +29,9 @@ The UI exposes:
 - safety guidance references,
 - insurance guidance references,
 - explicit limitations where city-level public insurance payout stats are unavailable.
+
+## Cross-Region Benchmark Context
+
+- Added comparison-only benchmark cities in West Virginia: Fayetteville, Oak Hill, Bridgeport, Fairmont, Clarksburg.
+- Pipeline now performs a second pass for WV flood-family events within the same 20-mile radius logic.
+- These benchmarks are rendered in a separate comparison table and do not alter Charleston map layers or Charleston risk zones.

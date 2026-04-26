@@ -46,6 +46,8 @@
 
 The **Charleston Flood History Tracker** is a static, browser-based geospatial application that visualises **314 unique flood-family events** recorded by NOAA NCEI across the Charleston, SC metro between **1995 and 2024**. Five study cities are covered — Charleston, North Charleston, Summerville, Goose Creek, and Hanahan — each within a 20-mile radius search perimeter.
 
+The app also includes **comparison-only benchmark cities in West Virginia** (Fayetteville, Oak Hill, Bridgeport, Fairmont, and Clarksburg) to reinforce a key public-safety point: flooding is widespread across regions and is not limited to coastal South Carolina.
+
 The application is aimed at **residents making location and insurance decisions**, **journalists and researchers** studying coastal flood risk, and **public-health educators** who need authoritative, citable data to communicate flood timing and frequency patterns.
 
 Unlike forecast tools, this project answers the retrospective question: *"How often, when, and where has flooding actually been documented here?"*
@@ -370,6 +372,8 @@ docker compose -f docker/docker-compose.yml down
 ### City comparison panel
 
 Shows event counts and peak months for all five study cities side by side — useful for comparing relative flood exposure when considering a move within the metro.
+
+The panel also includes a separate **Regional Benchmark (WV Comparison Cities)** table. These benchmark cities are not mapped in the Charleston view; they are included as cross-region context only.
 
 ### Decision analysis section
 

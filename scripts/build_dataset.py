@@ -94,6 +94,17 @@ CITIES = [
     {"key": "hanahan",          "name": "Hanahan, SC",          "lat": 32.9185, "lon": -80.0220},
 ]
 
+# Comparison-only cities used to show that flood risk is not unique to
+# Charleston, SC. These are not plotted on the map and do not affect
+# Charleston risk-zone generation.
+COMPARISON_CITIES = [
+    {"key": "fayetteville_wv", "name": "Fayetteville, WV", "lat": 38.0529, "lon": -81.1043},
+    {"key": "oak_hill_wv",     "name": "Oak Hill, WV",     "lat": 37.9723, "lon": -81.1487},
+    {"key": "bridgeport_wv",   "name": "Bridgeport, WV",   "lat": 39.2865, "lon": -80.2553},
+    {"key": "fairmont_wv",     "name": "Fairmont, WV",     "lat": 39.4851, "lon": -80.1426},
+    {"key": "clarksburg_wv",   "name": "Clarksburg, WV",   "lat": 39.2806, "lon": -80.3445},
+]
+
 # ---------------------------------------------------------------------------
 # Keyword sets for narrative-based damage-context classification.
 # Derived from manual inspection of 314 Charleston-metro NOAA narratives.
@@ -674,6 +685,86 @@ def read_year_events(url: str) -> list[FloodEvent]:
     return out
 
 
+def read_year_comparison_events(url: str, cities: list[dict], radius_miles: float) -> list[FloodEvent]:
+    """
+    # -------------------------------------------------------------------------
+    # ID:           CFHT-READ-COMP-001
+    # Requirement:  Parse one yearly NOAA details CSV and return only flood-
+    #               family events in West Virginia that fall within radius of
+    #               any comparison city.
+    # Purpose:      Build cross-region comparison metrics to demonstrate that
+    #               flooding is widespread and not unique to Charleston, SC.
+    # Inputs:
+    #   url (str):         Yearly NOAA StormEvents details CSV.GZ URL.
+    #   cities (list[dict]): Comparison city dicts with lat/lon.
+    #   radius_miles (float): Inclusion radius around each comparison city.
+    # Outputs:
+    #   list[FloodEvent]: Events near at least one comparison city.
+    # -------------------------------------------------------------------------
+    """
+    with urllib.request.urlopen(url, timeout=120) as resp:
+        raw = resp.read()
+
+    out: list[FloodEvent] = []
+    with gzip.GzipFile(fileobj=io.BytesIO(raw)) as gz:
+        text = io.TextIOWrapper(gz, encoding="utf-8", errors="replace")
+        reader = csv.DictReader(text)
+        for row in reader:
+            if row.get("STATE", "").strip().upper() != "WEST VIRGINIA":
+                continue
+            evtype = (row.get("EVENT_TYPE", "") or "").strip()
+            if evtype not in FLOOD_EVENT_TYPES:
+                continue
+
+            begin_lat = parse_float(row.get("BEGIN_LAT", "0"))
+            begin_lon = parse_float(row.get("BEGIN_LON", "0"))
+            if begin_lat == 0.0 and begin_lon == 0.0:
+                continue
+
+            end_lat = parse_float(row.get("END_LAT", "0"), begin_lat)
+            end_lon = parse_float(row.get("END_LON", "0"), begin_lon)
+            if end_lat == 0.0 and end_lon == 0.0:
+                end_lat, end_lon = begin_lat, begin_lon
+
+            injuries = (parse_int(row.get("INJURIES_DIRECT", "0"))
+                        + parse_int(row.get("INJURIES_INDIRECT", "0")))
+            deaths = (parse_int(row.get("DEATHS_DIRECT", "0"))
+                      + parse_int(row.get("DEATHS_INDIRECT", "0")))
+
+            narrative = (
+                row.get("EVENT_NARRATIVE", "")
+                or row.get("EPISODE_NARRATIVE", "")
+                or ""
+            )[:800]
+
+            ev = FloodEvent(
+                event_id=parse_int(row.get("EVENT_ID", "0")),
+                episode_id=parse_int(row.get("EPISODE_ID", "0")),
+                year=parse_int(row.get("YEAR", "0")),
+                month=parse_int(row.get("MONTH_NAME", "0"), 0),
+                date_time=row.get("BEGIN_DATE_TIME", ""),
+                event_type=evtype,
+                state=row.get("STATE", ""),
+                county=row.get("CZ_NAME", ""),
+                begin_lat=begin_lat,
+                begin_lon=begin_lon,
+                end_lat=end_lat,
+                end_lon=end_lon,
+                injuries=injuries,
+                deaths=deaths,
+                property_damage_usd=parse_damage_to_usd(row.get("DAMAGE_PROPERTY", "")),
+                crops_damage_usd=parse_damage_to_usd(row.get("DAMAGE_CROPS", "")),
+                narrative=narrative,
+                damage_context=classify_damage_context(narrative),
+                damage_unreported=False,
+            )
+
+            if any(event_near_city(ev, city, radius_miles) for city in cities):
+                out.append(ev)
+
+    return out
+
+
 def month_from_datetime(text: str) -> int:
     """
     # -------------------------------------------------------------------------
@@ -716,16 +807,25 @@ def main() -> None:
     year_files = {y: resolve_year_file(index_html, y) for y in range(START_YEAR, END_YEAR + 1)}
 
     all_floods: list[FloodEvent] = []
+    comparison_floods: list[FloodEvent] = []
     for y in range(START_YEAR, END_YEAR + 1):
         events = read_year_events(year_files[y])
+        comp_events = read_year_comparison_events(year_files[y], COMPARISON_CITIES, CITY_RADIUS_MILES)
         all_floods.extend(events)
-        print(f"Loaded {len(events):4d} SC flood events for {y}")
+        comparison_floods.extend(comp_events)
+        print(f"Loaded {len(events):4d} SC flood events and {len(comp_events):4d} WV comparison events for {y}")
 
     city_events: dict[str, list[FloodEvent]] = {c["key"]: [] for c in CITIES}
     for ev in all_floods:
         for city in CITIES:
             if event_near_city(ev, city, CITY_RADIUS_MILES):
                 city_events[city["key"]].append(ev)
+
+    comparison_city_events: dict[str, list[FloodEvent]] = {c["key"]: [] for c in COMPARISON_CITIES}
+    for ev in comparison_floods:
+        for city in COMPARISON_CITIES:
+            if event_near_city(ev, city, CITY_RADIUS_MILES):
+                comparison_city_events[city["key"]].append(ev)
 
     seen: set[int] = set()
     combined: list[FloodEvent] = []
@@ -774,6 +874,40 @@ def main() -> None:
             "deaths": deaths,
         }
 
+    comparison_city_stats = {}
+    for city in COMPARISON_CITIES:
+        key = city["key"]
+        evs = comparison_city_events[key]
+        monthly = {m: 0 for m in month_names}
+        by_type: dict[str, int] = {}
+        by_year: dict[int, int] = {}
+        total_damage = 0.0
+        injuries = 0
+        deaths = 0
+
+        for ev in evs:
+            m = month_from_datetime(ev.date_time)
+            if 1 <= m <= 12:
+                monthly[month_names[m - 1]] += 1
+            by_type[ev.event_type] = by_type.get(ev.event_type, 0) + 1
+            by_year[ev.year] = by_year.get(ev.year, 0) + 1
+            total_damage += ev.property_damage_usd + ev.crops_damage_usd
+            injuries += ev.injuries
+            deaths += ev.deaths
+
+        peak_months = sorted(monthly.items(), key=lambda x: x[1], reverse=True)[:3]
+        comparison_city_stats[key] = {
+            "eventCount": len(evs),
+            "avgPerYear": round(len(evs) / 30.0, 2),
+            "monthlyCounts": monthly,
+            "peakMonths": [{"month": m, "count": c} for m, c in peak_months],
+            "eventTypeCounts": by_type,
+            "yearlyCounts": [{"year": y, "count": by_year.get(y, 0)} for y in range(START_YEAR, END_YEAR + 1)],
+            "totalDamageUSD": round(total_damage, 2),
+            "injuries": injuries,
+            "deaths": deaths,
+        }
+
     regional_monthly = {m: 0 for m in month_names}
     regional_type: dict[str, int] = {}
     regional_damage = 0.0
@@ -801,7 +935,9 @@ def main() -> None:
             },
             "city_radius_miles": CITY_RADIUS_MILES,
             "cities": CITIES,
+            "comparison_cities": COMPARISON_CITIES,
             "counts": {c["key"]: len(city_events[c["key"]]) for c in CITIES},
+            "comparison_counts": {c["key"]: len(comparison_city_events[c["key"]]) for c in COMPARISON_CITIES},
             "total_unique_events": len(combined),
             # ----------------------------------------------------------------
             # NOAA Damage-Field Split Recommendation (CFHT-NOAA-REC-001)
@@ -879,6 +1015,7 @@ def main() -> None:
                 "deaths": regional_deaths,
             },
             "cities": city_stats,
+            "comparisonCities": comparison_city_stats,
             "decisionAnalysis": {
                 "questions": {
                     "how_often": "How often does flooding happen here?",

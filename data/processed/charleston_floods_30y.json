@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_utc": "2026-04-26T18:09:56.147279+00:00",
+    "generated_utc": "2026-04-26T19:57:21.029486+00:00",
     "year_range": [
       1995,
       2024
@@ -45,6 +45,38 @@
         "lon": -80.022
       }
     ],
+    "comparison_cities": [
+      {
+        "key": "fayetteville_wv",
+        "name": "Fayetteville, WV",
+        "lat": 38.0529,
+        "lon": -81.1043
+      },
+      {
+        "key": "oak_hill_wv",
+        "name": "Oak Hill, WV",
+        "lat": 37.9723,
+        "lon": -81.1487
+      },
+      {
+        "key": "bridgeport_wv",
+        "name": "Bridgeport, WV",
+        "lat": 39.2865,
+        "lon": -80.2553
+      },
+      {
+        "key": "fairmont_wv",
+        "name": "Fairmont, WV",
+        "lat": 39.4851,
+        "lon": -80.1426
+      },
+      {
+        "key": "clarksburg_wv",
+        "name": "Clarksburg, WV",
+        "lat": 39.2806,
+        "lon": -80.3445
+      }
+    ],
     "counts": {
       "charleston": 255,
       "north_charleston": 284,
@@ -52,7 +84,24 @@
       "goose_creek": 290,
       "hanahan": 291
     },
-    "total_unique_events": 314
+    "comparison_counts": {
+      "fayetteville_wv": 86,
+      "oak_hill_wv": 76,
+      "bridgeport_wv": 204,
+      "fairmont_wv": 202,
+      "clarksburg_wv": 209
+    },
+    "total_unique_events": 314,
+    "noaa_split_recommendation": {
+      "rationale": "DAMAGE_PROPERTY is a single NWS 'best-guess' figure mixing infrastructure, residential, commercial, and vehicle losses. A road closure costs the city; a flooded living room costs a resident.  These are funded by different mechanisms (FEMA BRIC, NFIP, auto comprehensive) and need separate fields for actionable decision-making.",
+      "recommended_fields": [
+        "DAMAGE_INFRASTRUCTURE_USD",
+        "DAMAGE_RESIDENTIAL_USD",
+        "DAMAGE_COMMERCIAL_USD",
+        "DAMAGE_VEHICLE_USD",
+        "DAMAGE_PUBLIC_ASSETS_USD"
+      ]
+    }
   },
   "places": [
     {
@@ -545,7 +594,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "President Street near the Crosstown was reportedly flooded and impassable.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 51767,
@@ -568,7 +617,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Two feet of water was reported over the road at the intersection of Ashley Phosphate Road and Dunlap Street. Secondary roadways were impassable.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 51764,
@@ -613,7 +662,7 @@
       "propertyDamageUSD": 1000.0,
       "cropDamageUSD": 0.0,
       "narrative": "Broadcast media relayed a report of water covering roads with a car starting to float near the intersection of Ashley River Road and Highway 17.",
-      "damageContext": "mixed",
+      "damageContext": "infra",
       "damageUnreported": false
     },
     {
@@ -660,7 +709,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law Enforcement reported numerous roads flooded throughout downtown Charleston, South Carolina.",
       "damageContext": "unknown",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 128871,
@@ -683,7 +732,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law Enforcement reported Royal Road near Treeland Drive was flooded and impassable.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 128874,
@@ -706,7 +755,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law Enforcement reported Carner Avenue closed due to flooding. Several other roads across North Charleston, South Carolina were flooded but passable.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 124279,
@@ -752,7 +801,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A trained weather spotter reported the main road on Seabrook Island was impassable by most vehicles due to flooding.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 119331,
@@ -798,7 +847,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Broadcast media reported flooding in downtown Charleston, South Carolina along Market Street. Portions of Market Street were blocked off by more than a foot of water covering the road.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 137194,
@@ -913,7 +962,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The public reported that numerous roads in the Shadowmoss South Carolina subdivision were flooded and impassable.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 137168,
@@ -1005,7 +1054,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The public reported that motorists were driving through the median due to completely flooded roads near the intersection of US 17, Orleans Road and Interstate 526.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 137174,
@@ -1212,7 +1261,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "North Charleston Police reported Carner Avenue closed due to flash flooding between Jacksonville Road and Spruill Avenue.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 206149,
@@ -1304,7 +1353,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A National Weather Service employee reported portions of Long Point Road closed due to heavy rain.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 206397,
@@ -1373,7 +1422,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A county official reported portions of Coleman Boulevard closed due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 206678,
@@ -1419,7 +1468,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A county official reported that many roads were under water and several residents were not able to get into driveways.",
       "damageContext": "unknown",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 206675,
@@ -1465,7 +1514,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported Bee Street impassable.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 190187,
@@ -1511,7 +1560,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The Berkeley County Warning Point reported that Isabelle Lane was impassable due to flooding in Cainhoy, South Carolina.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 190189,
@@ -1718,7 +1767,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A National Weather Service employee reported that Williamson Drive was flooded and impassable in Mount Pleasant, South Carolina.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 189866,
@@ -1833,7 +1882,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The public reported 2 to 3 feet of water covering portions of the Indigo Fields subdivision which made the streets temporarily impassable.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 235322,
@@ -1994,7 +2043,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported portions of Henry E Brown Boulevard were closed due to ponding of water from heavy rain.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 342855,
@@ -2040,7 +2089,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported two stalled vehicles due to flooding at the intersection of Ashley Phosphate and Dorchester Road.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 393346,
@@ -2109,7 +2158,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Through social media, the public reported that Ashley Avenue was flooded and impassable between Sumter Street and Race Street.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 410715,
@@ -2132,7 +2181,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Numerous reports of street flooding in Downtown Charleston. Calhoun Street is impassable.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 410716,
@@ -2155,7 +2204,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The broadcast media relayed a report of fire rescue responding to a stranded vehicle on Hunley Avenue near Folly Road.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 410717,
@@ -2178,7 +2227,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A trained spotter reports the road impassable along King Street near Huger Street in Downtown Charleston.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 410718,
@@ -2201,7 +2250,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "South Carolina Highway Patrol reports Savage Road near Interstate 526 closed due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 410720,
@@ -2224,7 +2273,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Coleman Boulevard near Moultrie Middle School has been closed due to flooding.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 410721,
@@ -2270,7 +2319,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement report that numerous roads remain flooded and water has entered many homes and businesses. Water rescues are still ongoing and the market area is completely flooded.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 410733,
@@ -2293,7 +2342,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A trained spotter reports water entering homes on Hazelwood Drive.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 410734,
@@ -2316,7 +2365,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Broadcast media reports several roads in North Charleston flooded including Noisette Boulevard, McMillan, St. Johns, Buist at Park Place, Viaduct, and Hobson.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 410735,
@@ -2339,7 +2388,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A trained spotter reports that Emory Avenue is flooded and only passable by tall trucks. Many yards are flooded and water is surrounding some homes.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 401613,
@@ -2431,7 +2480,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Emergency management reports several roads closed due to flooding including Ashley Avenue at Bennett Street, parts of Morrison Drive, Market Street, and Church Street.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 410786,
@@ -2477,7 +2526,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Emergency management reports several other roads closed including America, Reid, President at the Crosstown, Concord, and Hazel.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 410788,
@@ -2500,7 +2549,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The following intersections were closed due to flooding including Huger and King, and Huger and Meeting.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 410789,
@@ -2523,7 +2572,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Through social media, a car reported flooded and blocking the road on 32nd Avenue.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 410719,
@@ -2707,7 +2756,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Numerous roads in Downtown Charleston closed or impassable due to flash flooding. Closed or impassable roads include America, Amherst to South, all of Market Street, Fifth and Fiall, Rutledge at Fishburne, Coming, Beaufain, the Crosstown, President, Ashley, Bennett, Calhoun from Bull to Smith, East Bay and Concord, Wentworth, South Tracy, and Church. Also, water was up to the bottom floor of several homes along Fishburne Street.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 473229,
@@ -2730,7 +2779,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Emergency management reported several streets closed in Downtown Charleston due to flash flooding. These flooded streets include Hagood Avenue and Fishburne Street, President Street to Line Street and the Crosstown, Ashley Avenue and Bennett Street, and King Street and Huger Street.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 473230,
@@ -2753,7 +2802,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The City of Charleston reports flooding on George Street between Coming Street and St Philip Street. The road is closed.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 433662,
@@ -2776,7 +2825,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The roadway was blocked off at Drake Street and Amherst Street due to high water.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 433667,
@@ -2799,7 +2848,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Roads flooded and impassable in College Park Estates due to heavy rainfall.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 471073,
@@ -2914,7 +2963,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A police department reported the intersection of President Street and Fishburne street closed due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 461647,
@@ -2937,7 +2986,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A police department reported the intersection of President Street and Huger Street closed due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 461656,
@@ -2960,7 +3009,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A police department reported the intersection of Ashley Avenue and Nunan Street closed due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 463474,
@@ -2983,7 +3032,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A storm chaser reported Ashley Avenue impassable due to high water on the road.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 462000,
@@ -3006,7 +3055,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported stranded vehicles in water at the intersection of Rutledge Avenue and Septima Clark Parkway and at the intersection of East Bay Street and Columbus Street. One water rescue was needed.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 462006,
@@ -3029,7 +3078,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported Spruill Avenue closed at the Interstate 26 off ramp due to flooding.   Law enforcement also reported parts of Joppa Avenue, Kingworth Avenue and Little Avenue also closed due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 463484,
@@ -3052,7 +3101,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported Farm Quarter Road in Snee Farm subdivision closed due to flooding.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 463487,
@@ -3075,7 +3124,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The Mount Pleasant Police Department reported the intersection of Bell Hall Parkway and Long Point Road impassable due to flooding. One car was stalled at the intersection.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 463494,
@@ -3098,7 +3147,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The Dorchester County 911 call center reported the intersection of Dorchester Road and Old Trolley Road closed due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 462010,
@@ -3121,7 +3170,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A local newspaper reported parts of Ashley Avenue north of Fishburne closed due to flooding. The local newspaper also reported parts of Rutledge Avenue, Sam Rittenburg Boulevard, Sumter Street, Huger Street and King Street closed due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 463495,
@@ -3144,7 +3193,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The Dorchester County 911 call center reported the intersection of Judith Drive and Miles Jamison Road closed due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 463515,
@@ -3167,7 +3216,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The public reported the intersection of Dunneman Avenue and 10th Street closed due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 461664,
@@ -3190,7 +3239,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported Huger Street and King Street impassable north of Highway 17 due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 461949,
@@ -3213,7 +3262,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported President Street flooded and impassable.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 462015,
@@ -3259,7 +3308,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Media reported stalled cars due to flooding on Rutledge Ave.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 461954,
@@ -3282,7 +3331,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The Charleston Police Department closed portions of Rutledge, Sheppard, Huger, Dingle, Benson, Francis, Congress, Fishburne, Calhoun, President and Line roads due to flooding.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 461982,
@@ -3305,7 +3354,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Highway 52 near Jacksonville Road was closed due to flooding. Two cars were also stranded in the water.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 461989,
@@ -3328,7 +3377,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported the intersections of Ashley Avenue and Bennett Street, Morris Street and Coming Street, Morrison Drive and Meeting Street, Coming Street and Spring Street, Rutledge Avenue and Beaufain Street flooded and impassable.  America Street was also flooded and impassable between Cooper Street and Lee Street.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 438603,
@@ -3351,7 +3400,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported portions of Ashley Avenue and Calhoun Street closed due to water on the roadway.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 438605,
@@ -3374,7 +3423,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported portions of Fishburne Street and Rutledge Avenue closed due to water on the roadway.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 438607,
@@ -3397,7 +3446,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The public reported 2 blocks on Folly Road closed due to water on the roadway.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 438610,
@@ -3420,7 +3469,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported Bennett and Barre Street closed due to water on the roadway.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 438612,
@@ -3443,7 +3492,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported Radcliffe Street closed due to water on the roadway.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 438613,
@@ -3466,7 +3515,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported the intersection of Gordon Street and Rutledge Avenue closed due to water on the roadway.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 438614,
@@ -3489,7 +3538,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported numerous roads closed in downtown Charleston due to water on roadways.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 438609,
@@ -3512,7 +3561,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The Charleston County 911 Call Center reported portions of Dorchester Road closed between Meeting Street and Pinehaven Drive due to water on the roadway.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 471571,
@@ -3765,7 +3814,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement on Folly Beach reported that portions of Ashley Avenue and Center Street were blocked off with barricades between 2nd East Street and 2nd West Street due to flash flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 531192,
@@ -3880,7 +3929,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Yeamans Hall Road was closed at Murray Drive due to high water.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 541756,
@@ -4662,7 +4711,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The Charleston County 911 Call Center reported water entering homes at the intersection of Remount Road and Chatham Avenue.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 594636,
@@ -4685,7 +4734,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The Charleston County 911 Call Center reported Rivers Avenue closed between Eagle Drive and Midland Park Road due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 594622,
@@ -4708,7 +4757,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "An electrical substation on the Navy base was flooded with 2 to 3 feet of water.",
       "damageContext": "unknown",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 594640,
@@ -4731,7 +4780,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A NWS employee reported water entering businesses at the intersection of Benderson Drive and Rivers Avenue. Water depth was estimated around 2.5 feet.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 594137,
@@ -4754,7 +4803,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The media reported Highway 52 near 4 Mile Lane impassable due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 594142,
@@ -4777,7 +4826,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The Mount Pleasant Police Department reported Coleman Boulevard closed due to flooding in front of Moultrie Middle School.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 594642,
@@ -4800,7 +4849,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The Charleston Police Department reported the intersection of King Street and Huger Street closed due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 594575,
@@ -4846,7 +4895,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The Charleston Police Department and the City of Charleston Emergency Manager reported numerous roads flooded and closed in downtown Charleston. Streets closed included parts of Fishburne, King, Carolina, Line, Sumter, Beaufain, Barre, Calhoun, Ogier, Pitt, Moultrie, President, America, South, Bogard, Huger, Smith, Morris, Ashley Avenue and the Crosstown. Many cars were flooded or stalled. Many homes and businesses were surrounded by water. The Market was also reported flooded and under water.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 594580,
@@ -4869,7 +4918,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Broadcast media reported the intersection of Greenridge Road and Crossroads Drive closed due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 594573,
@@ -4892,7 +4941,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Broadcast media reported that Charleston County Rescue was dispatched for water rescue in North Charleston.",
       "damageContext": "vehicle",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 614970,
@@ -4915,7 +4964,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The Charleston Police Department reported numerous roads closed due to high water from a combination of rainfall and coastal flooding due to the high tide. Impacted roads and intersections included South Market Street between Church Street and State Street, Morris Street and Smith Street, Spring Street and President Street, President Street between Line Street and Kennedy Street, Huger Street and King Street, Ashley Avenue from Fishburne Street to Septima Clark Parkway, Beaufain Street from Pitt Street to Coming Street, Chisolm  Street at Broad Street, and Bennett Street at Ashley Avenue.  The tide level reached 7.04 feet mean lower low water at the Charleston Harbor tide gauge at 12:18 pm.  Shallow coastal flooding typically occurs around 7 feet mean lower low water.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 615169,
@@ -4938,7 +4987,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The media reported Ashley Avenue closed between Tradd Street and Broad Street in downtown Charleston, SC.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 646992,
@@ -4961,7 +5010,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement and broadcast media reported the following roads closed due to flooding by heavy rain: South Market Street, Ashley Avenue between Halsey Street and Bennett Street and Ashley Avenue at Calhoun Street.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 646995,
@@ -5007,7 +5056,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The North Charleston Police Department reported Rivers Avenue closed between Dorchester Road and Meeting Street.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 647000,
@@ -5030,7 +5079,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported the following roads closed in downtown Charleston due to flooding: Barre Street between Canal Street and Broad Street, Wentworth Street between Lockwood Drive and Barre Street and Cherry Street between the Crosstown and Barre Street.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 638888,
@@ -5053,7 +5102,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The public reported parking lots flooded and numerous cars stranded near the intersection of Peppercorn Lane and Mountainbrook Avenue.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 638887,
@@ -5076,7 +5125,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Dorchester County dispatch reported a few roads flooded and closed around Dorchester Road. This includes Dorchester Manor and Gables of Saddlebrook neighborhoods being inaccessible due to flooding and also water approaching homes. Also, the intersection of Brookdale Boulevard and and Lowell Drive was impassable. Finally, the intersection of Taylor Plantation Road and Park Forest Parkway was impassable.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 664159,
@@ -5099,7 +5148,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A county official from Berkley County reported heavy rain from Hurricane Matthew resulting in flooding in the College Park area, including water entering some homes on Oxford Road.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 664160,
@@ -5145,7 +5194,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A social media picture showed a large washout of a road in Meggett Subdivision. Heavy rains were associated with Hurricane Matthew.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 664201,
@@ -5214,7 +5263,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported water flowing across Dorchester Road and into a shopping center parking lot. Social media video also revealed several businesses and cars flooded. Heavy rains were associated with Hurricane Matthew.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 722451,
@@ -5375,7 +5424,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Emergency management and social media indicated several businesses along Market Street flooded with 8 to 16 inches of standing water inside buildings. Additionally, rainfall amounts around 3.5 inches resulted in the following streets, intersections, and areas in downtown Charleston to be closed due to flooding: Calhoun Street between Rutledge Avenue and Smith Street, Chisolm Street between Broad Street and Tradd Street, Colonial Street between Broad Street and Tradd Street, Hagood Avenue at Fishburne Street, King Street at Huger Street, Market Street between Meeting Street and East Bay Street, Romney Street at North Nassau Street, Smith Street at Marion Street, Tradd Street between Chisholm Street and East Bay Street, the Crosstown Expressway between Coming Street and Norman Street, Washin",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 1058161,
@@ -5559,7 +5608,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A video shared via social media showed water entering a business along South Market Street. Saltwater flooding approximately 18 inches deep was also reported in a business inside the City Market.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 1153633,
@@ -5582,7 +5631,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Fire rescue personnel reported at least one home flooded on Mercury Road, requiring a homeowner to be rescued. The entire area along the roads of Mercury, Hamlin, and Atlanta Drive were flooded with a combination of salt and fresh water. An estimated 30-40 homes were surrounded by flood waters with the occupants sheltering in place.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 1153634,
@@ -5605,7 +5654,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A video relayed via social media showed water inside a building along Drake Street.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 1153635,
@@ -5812,7 +5861,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A NWS employee reported water entering the back of several homes near Ashley Hall Road and St Julian Drive.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 1213534,
@@ -5858,7 +5907,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The public reported flowing water entering buildings near the intersection of Furman Lane and Oxford Road.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 1213612,
@@ -5881,7 +5930,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The City of Charleston reported over 60 roads closed across the city due to flooding. The City of Charleston web page indicated that all primary access points to the Charleston Peninsula were closed to incoming traffic due to widespread flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 1214903,
@@ -5904,7 +5953,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Major flooding occurred along French Quarter Creek where a USGS gauge (FQCS1) measured the 2nd highest crest on record (13.41 ft at approximately 1015 AM EST on August 8th). French Quarter Creek Road was completely flooded and any ground level homes were inundated with flood waters. The road and all homes were only accessible by boat during the peak of the flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 1214218,
@@ -5995,7 +6044,7 @@
       "propertyDamageUSD": 0.0,
       "cropDamageUSD": 0.0,
       "narrative": "Parts of the Berkeley County Country Club were reported to be completely submerged by water.",
-      "damageContext": "unknown",
+      "damageContext": "mixed",
       "damageUnreported": false
     },
     {
@@ -6042,7 +6091,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The public reported several roads closed due to flooding in a Summerville, South Carolina subdivision. Water was also reported to be entering the yards of several residences.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 123905,
@@ -6065,7 +6114,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A trained weather spotter reported many yards of residences completely flooded in the Pimlico Plantation subdivision.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 123906,
@@ -6088,7 +6137,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A trained weather spotter reported significant flooding on Redwood Drive. Yards of residences and adjacent empty lots were reported to be flooded.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 137183,
@@ -6226,7 +6275,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Farm Springs Road flooded and impassable.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 473267,
@@ -6295,7 +6344,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A spotter reported Swift Court flooded with water coming up to driveways.",
       "damageContext": "unknown",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 463502,
@@ -6318,7 +6367,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported the intersection of Sprucewood Drive and Birch Lane closed due to flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 605655,
@@ -6410,7 +6459,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A NWS Storm Survey indicated bridges along Highway 17A, Bacons Bridge Road and Highway 61 over the Ashley River were closed due to rising river levels.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 664172,
@@ -6433,7 +6482,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A local newspaper reported at least 15 homes in the Arbor Oaks Subdivision inundated with water from the Sawmill Branch Canal. Heavy rains were associated with Hurricane Matthew.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 664206,
@@ -6456,7 +6505,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported United Road washed out near the intersection with Highway 41. The washout likely occurred near a branch of Hester Canal. Heavy rains were associated with Hurricane Matthew.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 795691,
@@ -6594,7 +6643,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A Dorchester County emergency manager and media reported at least 75 roads closed due to flooding across Dorchester County this morning. A slightly larger amount of road closures were near Harleyville, Summerville and along the Edisto River.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 1214234,
@@ -6639,7 +6688,7 @@
       "propertyDamageUSD": 2000.0,
       "cropDamageUSD": 0.0,
       "narrative": "Parts of Carolina Nursery was reported to have been severely flooded. One car was reported to be submerged.",
-      "damageContext": "mixed",
+      "damageContext": "vehicle",
       "damageUnreported": false
     },
     {
@@ -6686,7 +6735,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law Enforcement reported River Birch Lane flooded and impassable in Ridgeville, South Carolina.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 128870,
@@ -6709,7 +6758,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement reported Crab Apple Lane flooded and impassable.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 393396,
@@ -6732,7 +6781,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A spotter reported 2.1 inches of rain accumulating within 30 minutes. The garage flooded along with neighborhood yards. Ditches were overflowing and covering Hartin Blvd. SPOTTER REPORTED 2.1 INCHES OF RAIN WITHIN 30 MINUTES.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 471331,
@@ -6778,7 +6827,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Portions of the road are washed out by water at the intersection of Haney Branch Road and Champions Drive.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 473268,
@@ -6801,7 +6850,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Law enforcement closed the road due to water on the roadway at the intersection of Jedburg Road and Riley Lane.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 471075,
@@ -6870,7 +6919,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "An emergency manager reported several roads closed due to rising river levels on the Edisto River. Roads closed included Long Creek Landing Road, Good Hope Landing Lane, Ladolce Lane, Pierce Road and the end of Lakeview Lane.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 663486,
@@ -6916,7 +6965,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A Dorchester County emergency manager reported Horseford Road closed due to flooding from Four Hole Swamp.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 663488,
@@ -6939,7 +6988,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A Charleston County emergency manager reported water covering Parkers Ferry Road, leading to one rescue taking place.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 664195,
@@ -6962,7 +7011,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "An emergency manager reported Zion Road at Old Dam Road washed out and impassible. Zion Road at Wire Road was also partially washed out and impassible. Heavy rains were associated with Hurricane Matthew.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 664208,
@@ -6985,7 +7034,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A picture on social media indicated the primary road into Overton Subdivision washed out. Another picture showed a road to the Joint Base Charleston Short Stay washed out.|Heavy rains were associated with Hurricane Matthew.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 1214356,
@@ -7054,7 +7103,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "A Colleton County emergency manager reported the 4200 Block of Peirce Highway near Royal Oak Lane closed due to flooding with as much as 4 feet of moving water.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 1214230,
@@ -7077,7 +7126,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Emergency officials in Moncks Corner reported that high water rescues were in progress, homes were flooded throughout the city and roads were closed due to 2-3 feet of fast moving water.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 1214233,
@@ -7123,7 +7172,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "Berkeley County Emergency Management reported Heatly Street in Moncks Corner being closed due to high water caused by flash flooding.",
       "damageContext": "infra",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 1214241,
@@ -7215,7 +7264,7 @@
       "cropDamageUSD": 0.0,
       "narrative": "The public relayed a video of a flooded house on Fairlawn Drive in Moncks Corner.",
       "damageContext": "mixed",
-      "damageUnreported": true
+      "damageUnreported": false
     },
     {
       "id": 1214231,
@@ -91315,6 +91364,813 @@
         "deaths": 1
       }
     },
+    "comparisonCities": {
+      "fayetteville_wv": {
+        "eventCount": 86,
+        "avgPerYear": 2.87,
+        "monthlyCounts": {
+          "Jan": 5,
+          "Feb": 12,
+          "Mar": 10,
+          "Apr": 5,
+          "May": 9,
+          "Jun": 12,
+          "Jul": 17,
+          "Aug": 9,
+          "Sep": 7,
+          "Oct": 0,
+          "Nov": 0,
+          "Dec": 0
+        },
+        "peakMonths": [
+          {
+            "month": "Jul",
+            "count": 17
+          },
+          {
+            "month": "Feb",
+            "count": 12
+          },
+          {
+            "month": "Jun",
+            "count": 12
+          }
+        ],
+        "eventTypeCounts": {
+          "Flood": 38,
+          "Flash Flood": 48
+        },
+        "yearlyCounts": [
+          {
+            "year": 1995,
+            "count": 0
+          },
+          {
+            "year": 1996,
+            "count": 0
+          },
+          {
+            "year": 1997,
+            "count": 0
+          },
+          {
+            "year": 1998,
+            "count": 0
+          },
+          {
+            "year": 1999,
+            "count": 0
+          },
+          {
+            "year": 2000,
+            "count": 0
+          },
+          {
+            "year": 2001,
+            "count": 0
+          },
+          {
+            "year": 2002,
+            "count": 0
+          },
+          {
+            "year": 2003,
+            "count": 0
+          },
+          {
+            "year": 2004,
+            "count": 0
+          },
+          {
+            "year": 2005,
+            "count": 0
+          },
+          {
+            "year": 2006,
+            "count": 0
+          },
+          {
+            "year": 2007,
+            "count": 3
+          },
+          {
+            "year": 2008,
+            "count": 1
+          },
+          {
+            "year": 2009,
+            "count": 2
+          },
+          {
+            "year": 2010,
+            "count": 8
+          },
+          {
+            "year": 2011,
+            "count": 1
+          },
+          {
+            "year": 2012,
+            "count": 1
+          },
+          {
+            "year": 2013,
+            "count": 5
+          },
+          {
+            "year": 2014,
+            "count": 2
+          },
+          {
+            "year": 2015,
+            "count": 4
+          },
+          {
+            "year": 2016,
+            "count": 6
+          },
+          {
+            "year": 2017,
+            "count": 3
+          },
+          {
+            "year": 2018,
+            "count": 8
+          },
+          {
+            "year": 2019,
+            "count": 4
+          },
+          {
+            "year": 2020,
+            "count": 5
+          },
+          {
+            "year": 2021,
+            "count": 6
+          },
+          {
+            "year": 2022,
+            "count": 15
+          },
+          {
+            "year": 2023,
+            "count": 9
+          },
+          {
+            "year": 2024,
+            "count": 3
+          }
+        ],
+        "totalDamageUSD": 79789950.0,
+        "injuries": 0,
+        "deaths": 17
+      },
+      "oak_hill_wv": {
+        "eventCount": 76,
+        "avgPerYear": 2.53,
+        "monthlyCounts": {
+          "Jan": 6,
+          "Feb": 10,
+          "Mar": 7,
+          "Apr": 2,
+          "May": 7,
+          "Jun": 11,
+          "Jul": 15,
+          "Aug": 10,
+          "Sep": 7,
+          "Oct": 0,
+          "Nov": 1,
+          "Dec": 0
+        },
+        "peakMonths": [
+          {
+            "month": "Jul",
+            "count": 15
+          },
+          {
+            "month": "Jun",
+            "count": 11
+          },
+          {
+            "month": "Feb",
+            "count": 10
+          }
+        ],
+        "eventTypeCounts": {
+          "Flood": 32,
+          "Flash Flood": 44
+        },
+        "yearlyCounts": [
+          {
+            "year": 1995,
+            "count": 0
+          },
+          {
+            "year": 1996,
+            "count": 0
+          },
+          {
+            "year": 1997,
+            "count": 0
+          },
+          {
+            "year": 1998,
+            "count": 0
+          },
+          {
+            "year": 1999,
+            "count": 0
+          },
+          {
+            "year": 2000,
+            "count": 0
+          },
+          {
+            "year": 2001,
+            "count": 0
+          },
+          {
+            "year": 2002,
+            "count": 0
+          },
+          {
+            "year": 2003,
+            "count": 1
+          },
+          {
+            "year": 2004,
+            "count": 0
+          },
+          {
+            "year": 2005,
+            "count": 0
+          },
+          {
+            "year": 2006,
+            "count": 1
+          },
+          {
+            "year": 2007,
+            "count": 1
+          },
+          {
+            "year": 2008,
+            "count": 1
+          },
+          {
+            "year": 2009,
+            "count": 2
+          },
+          {
+            "year": 2010,
+            "count": 6
+          },
+          {
+            "year": 2011,
+            "count": 2
+          },
+          {
+            "year": 2012,
+            "count": 0
+          },
+          {
+            "year": 2013,
+            "count": 4
+          },
+          {
+            "year": 2014,
+            "count": 2
+          },
+          {
+            "year": 2015,
+            "count": 3
+          },
+          {
+            "year": 2016,
+            "count": 5
+          },
+          {
+            "year": 2017,
+            "count": 4
+          },
+          {
+            "year": 2018,
+            "count": 9
+          },
+          {
+            "year": 2019,
+            "count": 4
+          },
+          {
+            "year": 2020,
+            "count": 6
+          },
+          {
+            "year": 2021,
+            "count": 5
+          },
+          {
+            "year": 2022,
+            "count": 11
+          },
+          {
+            "year": 2023,
+            "count": 7
+          },
+          {
+            "year": 2024,
+            "count": 2
+          }
+        ],
+        "totalDamageUSD": 39458950.0,
+        "injuries": 0,
+        "deaths": 1
+      },
+      "bridgeport_wv": {
+        "eventCount": 204,
+        "avgPerYear": 6.8,
+        "monthlyCounts": {
+          "Jan": 3,
+          "Feb": 17,
+          "Mar": 7,
+          "Apr": 31,
+          "May": 21,
+          "Jun": 43,
+          "Jul": 29,
+          "Aug": 27,
+          "Sep": 14,
+          "Oct": 3,
+          "Nov": 2,
+          "Dec": 7
+        },
+        "peakMonths": [
+          {
+            "month": "Jun",
+            "count": 43
+          },
+          {
+            "month": "Apr",
+            "count": 31
+          },
+          {
+            "month": "Jul",
+            "count": 29
+          }
+        ],
+        "eventTypeCounts": {
+          "Flash Flood": 131,
+          "Flood": 73
+        },
+        "yearlyCounts": [
+          {
+            "year": 1995,
+            "count": 0
+          },
+          {
+            "year": 1996,
+            "count": 0
+          },
+          {
+            "year": 1997,
+            "count": 0
+          },
+          {
+            "year": 1998,
+            "count": 0
+          },
+          {
+            "year": 1999,
+            "count": 0
+          },
+          {
+            "year": 2000,
+            "count": 0
+          },
+          {
+            "year": 2001,
+            "count": 0
+          },
+          {
+            "year": 2002,
+            "count": 0
+          },
+          {
+            "year": 2003,
+            "count": 0
+          },
+          {
+            "year": 2004,
+            "count": 1
+          },
+          {
+            "year": 2005,
+            "count": 4
+          },
+          {
+            "year": 2006,
+            "count": 0
+          },
+          {
+            "year": 2007,
+            "count": 13
+          },
+          {
+            "year": 2008,
+            "count": 11
+          },
+          {
+            "year": 2009,
+            "count": 2
+          },
+          {
+            "year": 2010,
+            "count": 0
+          },
+          {
+            "year": 2011,
+            "count": 13
+          },
+          {
+            "year": 2012,
+            "count": 6
+          },
+          {
+            "year": 2013,
+            "count": 17
+          },
+          {
+            "year": 2014,
+            "count": 6
+          },
+          {
+            "year": 2015,
+            "count": 12
+          },
+          {
+            "year": 2016,
+            "count": 4
+          },
+          {
+            "year": 2017,
+            "count": 11
+          },
+          {
+            "year": 2018,
+            "count": 26
+          },
+          {
+            "year": 2019,
+            "count": 8
+          },
+          {
+            "year": 2020,
+            "count": 6
+          },
+          {
+            "year": 2021,
+            "count": 11
+          },
+          {
+            "year": 2022,
+            "count": 20
+          },
+          {
+            "year": 2023,
+            "count": 7
+          },
+          {
+            "year": 2024,
+            "count": 26
+          }
+        ],
+        "totalDamageUSD": 12341000.0,
+        "injuries": 0,
+        "deaths": 0
+      },
+      "fairmont_wv": {
+        "eventCount": 202,
+        "avgPerYear": 6.73,
+        "monthlyCounts": {
+          "Jan": 2,
+          "Feb": 16,
+          "Mar": 11,
+          "Apr": 24,
+          "May": 21,
+          "Jun": 35,
+          "Jul": 42,
+          "Aug": 25,
+          "Sep": 12,
+          "Oct": 1,
+          "Nov": 6,
+          "Dec": 7
+        },
+        "peakMonths": [
+          {
+            "month": "Jul",
+            "count": 42
+          },
+          {
+            "month": "Jun",
+            "count": 35
+          },
+          {
+            "month": "Aug",
+            "count": 25
+          }
+        ],
+        "eventTypeCounts": {
+          "Flash Flood": 125,
+          "Flood": 77
+        },
+        "yearlyCounts": [
+          {
+            "year": 1995,
+            "count": 0
+          },
+          {
+            "year": 1996,
+            "count": 0
+          },
+          {
+            "year": 1997,
+            "count": 0
+          },
+          {
+            "year": 1998,
+            "count": 0
+          },
+          {
+            "year": 1999,
+            "count": 0
+          },
+          {
+            "year": 2000,
+            "count": 0
+          },
+          {
+            "year": 2001,
+            "count": 0
+          },
+          {
+            "year": 2002,
+            "count": 0
+          },
+          {
+            "year": 2003,
+            "count": 0
+          },
+          {
+            "year": 2004,
+            "count": 0
+          },
+          {
+            "year": 2005,
+            "count": 2
+          },
+          {
+            "year": 2006,
+            "count": 0
+          },
+          {
+            "year": 2007,
+            "count": 15
+          },
+          {
+            "year": 2008,
+            "count": 13
+          },
+          {
+            "year": 2009,
+            "count": 3
+          },
+          {
+            "year": 2010,
+            "count": 2
+          },
+          {
+            "year": 2011,
+            "count": 23
+          },
+          {
+            "year": 2012,
+            "count": 6
+          },
+          {
+            "year": 2013,
+            "count": 20
+          },
+          {
+            "year": 2014,
+            "count": 7
+          },
+          {
+            "year": 2015,
+            "count": 10
+          },
+          {
+            "year": 2016,
+            "count": 3
+          },
+          {
+            "year": 2017,
+            "count": 13
+          },
+          {
+            "year": 2018,
+            "count": 15
+          },
+          {
+            "year": 2019,
+            "count": 9
+          },
+          {
+            "year": 2020,
+            "count": 2
+          },
+          {
+            "year": 2021,
+            "count": 12
+          },
+          {
+            "year": 2022,
+            "count": 13
+          },
+          {
+            "year": 2023,
+            "count": 7
+          },
+          {
+            "year": 2024,
+            "count": 27
+          }
+        ],
+        "totalDamageUSD": 10405250.0,
+        "injuries": 0,
+        "deaths": 0
+      },
+      "clarksburg_wv": {
+        "eventCount": 209,
+        "avgPerYear": 6.97,
+        "monthlyCounts": {
+          "Jan": 2,
+          "Feb": 18,
+          "Mar": 7,
+          "Apr": 30,
+          "May": 23,
+          "Jun": 44,
+          "Jul": 30,
+          "Aug": 28,
+          "Sep": 10,
+          "Oct": 4,
+          "Nov": 5,
+          "Dec": 8
+        },
+        "peakMonths": [
+          {
+            "month": "Jun",
+            "count": 44
+          },
+          {
+            "month": "Apr",
+            "count": 30
+          },
+          {
+            "month": "Jul",
+            "count": 30
+          }
+        ],
+        "eventTypeCounts": {
+          "Flash Flood": 135,
+          "Flood": 74
+        },
+        "yearlyCounts": [
+          {
+            "year": 1995,
+            "count": 0
+          },
+          {
+            "year": 1996,
+            "count": 0
+          },
+          {
+            "year": 1997,
+            "count": 0
+          },
+          {
+            "year": 1998,
+            "count": 0
+          },
+          {
+            "year": 1999,
+            "count": 0
+          },
+          {
+            "year": 2000,
+            "count": 0
+          },
+          {
+            "year": 2001,
+            "count": 0
+          },
+          {
+            "year": 2002,
+            "count": 0
+          },
+          {
+            "year": 2003,
+            "count": 1
+          },
+          {
+            "year": 2004,
+            "count": 1
+          },
+          {
+            "year": 2005,
+            "count": 1
+          },
+          {
+            "year": 2006,
+            "count": 0
+          },
+          {
+            "year": 2007,
+            "count": 13
+          },
+          {
+            "year": 2008,
+            "count": 12
+          },
+          {
+            "year": 2009,
+            "count": 3
+          },
+          {
+            "year": 2010,
+            "count": 0
+          },
+          {
+            "year": 2011,
+            "count": 16
+          },
+          {
+            "year": 2012,
+            "count": 7
+          },
+          {
+            "year": 2013,
+            "count": 17
+          },
+          {
+            "year": 2014,
+            "count": 6
+          },
+          {
+            "year": 2015,
+            "count": 12
+          },
+          {
+            "year": 2016,
+            "count": 5
+          },
+          {
+            "year": 2017,
+            "count": 10
+          },
+          {
+            "year": 2018,
+            "count": 27
+          },
+          {
+            "year": 2019,
+            "count": 10
+          },
+          {
+            "year": 2020,
+            "count": 6
+          },
+          {
+            "year": 2021,
+            "count": 9
+          },
+          {
+            "year": 2022,
+            "count": 21
+          },
+          {
+            "year": 2023,
+            "count": 7
+          },
+          {
+            "year": 2024,
+            "count": 25
+          }
+        ],
+        "totalDamageUSD": 13921500.0,
+        "injuries": 0,
+        "deaths": 0
+      }
+    },
     "decisionAnalysis": {
       "questions": {
         "how_often": "How often does flooding happen here?",
@@ -91336,7 +92192,7 @@
         {
           "source": "NOAA NCEI Storm Events Bulk CSV + README",
           "url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/",
-          "note": "Event frequency/timing/damage/injury statistics are computed directly from NOAA records for 1995-2024."
+          "note": "Event frequency/timing/damage/injury statistics computed directly from NOAA records 1995-2024."
         },
         {
           "source": "National Weather Service Flood Safety",
@@ -91346,18 +92202,19 @@
         {
           "source": "FloodSmart (NFIP)",
           "url": "https://www.floodsmart.gov/get-insured/buy-a-policy",
-          "note": "States most homeowners/renters insurance does not cover flood damage; NFIP building/contents coverage details."
+          "note": "States most homeowners/renters insurance does not cover flood damage."
         },
         {
           "source": "NAIC Auto Insurance Database Report (2022/2023)",
           "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
-          "note": "Contains state-level comprehensive coverage claim metrics (frequency/loss cost), used here as the closest public payout-frequency proxy for flood-damaged vehicles."
+          "note": "State-level comprehensive coverage claim metrics used as closest public payout-frequency proxy for flood-damaged vehicles."
         }
       ],
       "limitations": [
         "Storm Events reports are observational and can be revised over time by NCEI.",
         "Some records may lack coordinates; this map excludes unmappable rows.",
-        "No single open dataset provides flood-only, city-level auto insurance payout frequency; NAIC comprehensive metrics are state-level proxies."
+        "No single open dataset provides flood-only, city-level auto insurance payout frequency; NAIC comprehensive metrics are state-level proxies.",
+        "damageContext labels are inferred from narrative text via keyword scoring and may not reflect the true damage split for individual events."
       ]
     }
   }
