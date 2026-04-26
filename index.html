@@ -1,97 +1,169 @@
 <!doctype html>
+<!--
+  ============================================================
+  ID:           CFHT-HTML-001
+  Module:       index.html
+  Requirement:  Provide the complete DOM skeleton for the Charleston Flood
+                History Tracker single-page application.
+  Purpose:      Zero-server entry point; all interactivity is in app.js.
+  Preconditions:  Web server (or Docker/Nginx) must serve static files from
+                  the project root so that fetch("./data/processed/...") works.
+  References:   OpenLayers 10.8 CDN, FEMA msc.fema.gov portal
+  ============================================================
+-->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b3a5b" />
+    <meta name="description"
+      content="30-year interactive flood history for Charleston, North Charleston, Summerville, Goose Creek, and Hanahan SC — NOAA Storm Events data." />
     <title>Flood History Tracker — Charleston Metro, SC</title>
-    <!-- inline SVG favicon — avoids a 404 with no separate icon file -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230b3a5b'/><text x='50%25' y='22' text-anchor='middle' font-size='20' fill='%230ea5a4'>&#128166;</text></svg>" />
+    <!-- Inline SVG favicon — avoids a 404 with no separate icon file -->
+    <link rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230b3a5b'/><text x='50%25' y='22' text-anchor='middle' font-size='20' fill='%230ea5a4'>&#128166;</text></svg>" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@10.8.0/ol.css" />
     <link rel="stylesheet" href="./src/styles.css" />
   </head>
   <body>
+
     <header class="topbar">
       <div>
         <h1>Flood History Tracker — Charleston Metro (30 Years)</h1>
-        <p>Charleston, North Charleston, Summerville, Goose Creek, Hanahan</p>
+        <p>Charleston · North Charleston · Summerville · Goose Creek · Hanahan</p>
       </div>
       <div class="pill">NOAA Storm Events + OpenLayers</div>
     </header>
 
-    <main class="layout">
-      <section id="viewDiv" aria-label="Map"></section>
+    <!-- Mobile slide-up panel toggle button (hidden on desktop via CSS) -->
+    <button class="panel-toggle-btn" id="panelToggle"
+            aria-controls="sidebar" aria-expanded="false">☰ Stats</button>
 
-      <aside class="panel">
+    <main class="layout">
+      <!-- ── Map ─────────────────────────────────────────────────────── -->
+      <section id="viewDiv" aria-label="Interactive flood map"></section>
+
+      <!-- ── Sidebar ────────────────────────────────────────────────── -->
+      <aside id="sidebar" class="panel">
+
+        <!-- Filter controls -->
         <h2>Filters</h2>
 
         <label for="eventType">Flood Event Type</label>
         <select id="eventType">
-          <option value="ALL">All Flood Types</option>
+          <option value="">All Flood Types</option>
           <option value="Coastal Flood">Coastal Flood</option>
           <option value="Flash Flood">Flash Flood</option>
-          <option value="Flood">Flood (River/Urban)</option>
+          <option value="Flood">Flood (River / Urban)</option>
           <option value="Lakeshore Flood">Lakeshore Flood</option>
-          <option value="Storm Surge/Tide">Storm Surge/Tide</option>
+          <option value="Storm Surge/Tide">Storm Surge / Tide</option>
         </select>
 
-        <label for="minDamage">Minimum Reported Damage (USD)</label>
-        <input id="minDamage" type="number" value="0" step="10000" />
+        <label for="yearStart">Year Range — Start</label>
+        <input id="yearStart" type="number" min="1995" max="2024" />
 
-        <label for="yearStart">Year Range Start</label>
-        <input id="yearStart" type="number" />
+        <label for="yearEnd">Year Range — End</label>
+        <input id="yearEnd"   type="number" min="1995" max="2024" />
 
-        <label for="yearEnd">Year Range End</label>
-        <input id="yearEnd" type="number" />
-
-        <label style="display:flex;gap:.4rem;align-items:center;margin-top:.6rem">
-          <input id="toggleRisk" type="checkbox" checked style="width:auto;margin:0" />
-          Show flood risk zones
-        </label>
-        <div style="margin-top:.4rem;padding:.5rem .6rem;background:#eff6ff;border-left:3px solid #3b82f6;border-radius:3px;font-size:.78rem;color:#1e3a5f;line-height:1.4">
-          <b>City-scale estimates only.</b> Zone shading is based on aggregate historical flood
-          reports across the metro area. Two properties in the same zone can have very different
-          flood-zone profiles depending on local elevation and drainage.
-          Verify your specific address at
-          <a href="https://msc.fema.gov/portal/home" target="_blank" rel="noreferrer" style="color:#2563eb">msc.fema.gov</a>.
+        <!-- Layer toggles -->
+        <div class="toggle-row" style="margin-top:.7rem">
+          <input id="showRisk" type="checkbox" checked />
+          <label for="showRisk" style="margin:0">Show flood risk zones</label>
         </div>
-        <div style="margin-top:.6rem">
-          <div style="font-size:.78rem;font-weight:600;color:#374151;margin-bottom:.3rem">Risk Zone Legend</div>
-          <div style="display:flex;flex-direction:column;gap:.2rem;font-size:.76rem">
+        <div class="toggle-row">
+          <input id="showFema" type="checkbox" />
+          <label for="showFema" style="margin:0">
+            Show FEMA flood zones
+            <span style="font-size:.72rem;color:#6b7280">(NFHL WMS)</span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <input id="showStormTracks" type="checkbox" />
+          <label for="showStormTracks" style="margin:0">
+            Show storm tracks
+            <span style="font-size:.72rem;color:#6b7280">(IBTrACS WMS)</span>
+          </label>
+        </div>
+
+        <!-- Risk zone disclaimer -->
+        <div style="margin-top:.5rem;padding:.45rem .55rem;background:#eff6ff;border-left:3px solid #3b82f6;border-radius:3px;font-size:.77rem;color:#1e3a5f;line-height:1.45">
+          <b>City-scale estimates only.</b> Zone shading reflects aggregate historical
+          flood reports — not a regulatory determination. Verify your address at
+          <a href="https://msc.fema.gov/portal/home" target="_blank" rel="noreferrer"
+             style="color:#2563eb">msc.fema.gov</a>.
+        </div>
+
+        <!-- Export button -->
+        <button id="exportPdfBtn" type="button">🖨 Export as PDF / Print</button>
+
+        <!-- Risk zone legend -->
+        <details style="margin-top:.55rem">
+          <summary style="cursor:pointer;font-size:.82rem;font-weight:600">Risk Zone Legend</summary>
+          <div style="font-size:.76rem;display:flex;flex-direction:column;gap:.2rem;margin-top:.3rem">
             <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:16px;height:16px;background:rgba(190,215,240,0.42);border:1px solid #93c5fd;border-radius:2px"></span>Low</div>
             <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:16px;height:16px;background:rgba(110,165,215,0.42);border:1px solid #60a5fa;border-radius:2px"></span>Guarded</div>
             <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:16px;height:16px;background:rgba(55,115,185,0.42);border:1px solid #3b82f6;border-radius:2px"></span>Elevated</div>
             <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:16px;height:16px;background:rgba(25,70,150,0.42);border:1px solid #1d4ed8;border-radius:2px"></span>High</div>
             <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:16px;height:16px;background:rgba(10,35,110,0.42);border:1px solid #1e3a8a;border-radius:2px"></span>Most Affected</div>
           </div>
-        </div>
+        </details>
 
-        <button id="applyFilters">Apply Filters</button>
-
-        <h3>Flood Stats</h3>
+        <!-- Statistics -->
+        <h3 style="margin-top:.8rem">Flood Stats</h3>
         <div id="stats" class="stats"></div>
 
-        <h3>Event Legend</h3>
-        <div style="font-size:.78rem;display:flex;flex-direction:column;gap:.25rem;margin-bottom:.5rem">
-          <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:14px;height:14px;background:#dc2626;border:2px solid #7f1d1d;border-radius:50%"></span><b style="color:#991b1b">Fatal flood event</b></div>
-          <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:12px;height:12px;background:#0f766e;border:1px solid #1f2937;border-radius:50%"></span>Coastal Flood</div>
-          <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:12px;height:12px;background:#2563eb;border:1px solid #1f2937;border-radius:50%"></span>Flash Flood</div>
-          <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:12px;height:12px;background:#0284c7;border:1px solid #1f2937;border-radius:50%"></span>Flood</div>
-          <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:12px;height:12px;background:#dc2626;border:1px solid #1f2937;border-radius:50%"></span>Storm Surge/Tide</div>
-        </div>
+        <!-- Trend summary -->
+        <div id="trendsSummary" class="stats" style="margin-top:.6rem"></div>
 
-        <h3>City Comparison</h3>
+        <!-- Event legend -->
+        <details style="margin-top:.55rem">
+          <summary style="cursor:pointer;font-size:.82rem;font-weight:600">Event Marker Legend</summary>
+          <div style="font-size:.78rem;display:flex;flex-direction:column;gap:.25rem;margin-top:.3rem">
+            <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:14px;height:14px;background:#dc2626;border:2px solid #7f1d1d;border-radius:50%"></span><b style="color:#991b1b">Fatal event (any type)</b></div>
+            <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:13px;height:13px;background:#eab308;border:2px solid #92400e;border-radius:50%"></span><b style="color:#92400e">Injuries — no deaths</b></div>
+            <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:12px;height:12px;background:#0f766e;border:1px solid #1f2937;border-radius:50%"></span>Coastal Flood</div>
+            <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:12px;height:12px;background:#2563eb;border:1px solid #1f2937;border-radius:50%"></span>Flash Flood</div>
+            <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:12px;height:12px;background:#0284c7;border:1px solid #1f2937;border-radius:50%"></span>Flood (River / Urban)</div>
+            <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:12px;height:12px;background:#ea580c;border:1px solid #1f2937;border-radius:50%"></span>Storm Surge / Tide</div>
+            <div style="display:flex;align-items:center;gap:.5rem"><span style="display:inline-block;width:12px;height:12px;background:#7c3aed;border:1px solid #1f2937;border-radius:50%"></span>Lakeshore Flood</div>
+          </div>
+        </details>
+
+        <!-- Damage context legend -->
+        <details style="margin-top:.55rem">
+          <summary style="cursor:pointer;font-size:.82rem;font-weight:600">Damage Context (Narrative-Inferred)</summary>
+          <div style="font-size:.77rem;display:flex;flex-direction:column;gap:.3rem;margin-top:.3rem">
+            <div><span class="dmg-badge dmg-badge-infra">🛣️ Infrastructure</span> — roads, bridges, culverts</div>
+            <div><span class="dmg-badge dmg-badge-residential">🏠 Residential</span> — homes, apartments</div>
+            <div><span class="dmg-badge dmg-badge-vehicle">🚗 Vehicle</span> — stranded / flooded cars</div>
+            <div><span class="dmg-badge dmg-badge-commercial">🏢 Commercial</span> — businesses, schools</div>
+            <div><span class="dmg-badge dmg-badge-mixed">🔀 Mixed</span> — multiple categories</div>
+            <div><span class="dmg-badge dmg-badge-unknown">❓ Unclassified</span> — no narrative signal</div>
+            <p style="margin:.3rem 0 0;color:#6b7280;font-size:.72rem">
+              ⚠ Inferred from keyword scoring of NOAA narrative text.
+              NOAA DAMAGE_PROPERTY is a single composite figure with no official
+              infrastructure/residential split (NWS NWSI 10-1605).
+            </p>
+          </div>
+        </details>
+
+        <!-- City comparison -->
+        <h3 style="margin-top:.8rem">City Comparison</h3>
         <div id="cityComparison"></div>
 
+        <!-- Decision analysis -->
         <div id="decisionAnalysis"></div>
-      </aside>
+
+      </aside><!-- end #sidebar -->
     </main>
 
+    <!-- OL popup overlay -->
     <div id="popup" class="ol-popup">
       <a href="#" id="popup-closer" class="ol-popup-closer">✕</a>
       <div id="popup-content"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/ol@10.8.0/dist/ol.js"></script>
-    <script src="./src/app.js"></script>
+    <script src="./src/app.js" defer></script>
   </body>
 </html>

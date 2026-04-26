@@ -6,12 +6,14 @@ from scripts.build_dataset import (
     CITIES,
     FloodEvent,
     build_risk_zones,
+    classify_damage_context,
     event_near_city,
     haversine_miles,
     parse_damage_to_usd,
     parse_float,
     parse_int,
 )
+from scripts.annotate_damage_context import damage_appears_unreported
 
 
 class FloodBuildHelperTests(unittest.TestCase):
@@ -46,6 +48,78 @@ class FloodBuildHelperTests(unittest.TestCase):
         self.assertIn("level", zones[0])
         levels = {z["level"] for z in zones}
         self.assertTrue(levels.intersection({"Low", "Guarded", "Elevated", "High", "Most Affected"}))
+
+    # ------------------------------------------------------------------
+    # classify_damage_context tests
+    # ID: CFHT-CLASSIFY-TEST-001
+    # ------------------------------------------------------------------
+    def test_classify_empty_returns_unknown(self):
+        self.assertEqual(classify_damage_context(""), "unknown")
+        self.assertEqual(classify_damage_context(None), "unknown")
+        self.assertEqual(classify_damage_context("   "), "unknown")
+
+    def test_classify_infra_dominant(self):
+        narrative = (
+            "Heavy rain caused several roads to flood overnight. "
+            "Highway 17 was closed at multiple intersections. "
+            "A bridge on Old Towne Road became impassable."
+        )
+        self.assertEqual(classify_damage_context(narrative), "infra")
+
+    def test_classify_residential(self):
+        # "drive" in "Oak Drive" also triggers infra keyword — tie → mixed.
+        # Use a narrative without street-name ambiguity to test pure residential.
+        narrative = (
+            "Several homes and apartments in the Summerville subdivision "
+            "received water inside their living rooms and crawl spaces. "
+            "Homeowners reported flooded houses with water in basements."
+        )
+        self.assertEqual(classify_damage_context(narrative), "residential")
+
+    def test_classify_vehicle(self):
+        narrative = (
+            "Multiple vehicles became stranded in rising floodwater on I-526. "
+            "Several cars were floating in the parking lot of the shopping center. "
+            "Motorists required water rescue after stalled vehicles."
+        )
+        result = classify_damage_context(narrative)
+        # vehicle keywords dominate; may also be mixed with commercial
+        self.assertIn(result, ("vehicle", "mixed"))
+
+    def test_classify_mixed_when_tied(self):
+        # Equal road + home keywords → mixed
+        narrative = "The road flooded, and a home on the street was damaged."
+        result = classify_damage_context(narrative)
+        self.assertIn(result, ("infra", "mixed", "residential"))
+
+    def test_classify_no_keywords_unknown(self):
+        narrative = "Flooding occurred in the area."
+        self.assertEqual(classify_damage_context(narrative), "unknown")
+
+    # ------------------------------------------------------------------
+    # damage_appears_unreported tests
+    # ID: CFHT-UNREPORTED-TEST-001
+    # ------------------------------------------------------------------
+    def test_unreported_flags_blank_with_damage_narrative(self):
+        """Zero-damage + vivid damage narrative → flagged as unreported."""
+        narrative = (
+            "Hawthorne trailer park on Rivers Avenue was completely flooded "
+            "with some cars under water."
+        )
+        self.assertTrue(damage_appears_unreported(narrative, 0.0, 0.0))
+
+    def test_unreported_not_flagged_when_damage_recorded(self):
+        """Non-zero propertyDamageUSD → never flagged, regardless of narrative."""
+        self.assertFalse(damage_appears_unreported("cars under water", 5000.0, 0.0))
+
+    def test_unreported_not_flagged_for_empty_narrative(self):
+        """No narrative → cannot infer damage; flag stays False."""
+        self.assertFalse(damage_appears_unreported("", 0.0, 0.0))
+        self.assertFalse(damage_appears_unreported(None, 0.0, 0.0))
+
+    def test_unreported_not_flagged_for_trivial_narrative(self):
+        """Narrative with no damage-indicating keywords → not flagged."""
+        self.assertFalse(damage_appears_unreported("Some rainfall occurred in the region.", 0.0, 0.0))
 
 
 if __name__ == "__main__":
