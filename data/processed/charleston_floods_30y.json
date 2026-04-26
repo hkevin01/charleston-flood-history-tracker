@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_utc": "2026-04-26T20:22:13.065753+00:00",
+    "generated_utc": "2026-04-26T20:36:54.230933+00:00",
     "year_range": [
       1995,
       2024
@@ -102938,6 +102938,552 @@
         "totalDamageUSD": 13921500.0,
         "injuries": 0,
         "deaths": 0
+      }
+    },
+    "insuranceSignals": {
+      "generatedUtc": "2026-04-26T20:36:54.230916+00:00",
+      "sources": {
+        "femaOpenDataSetsIndex": "https://www.fema.gov/api/open/v1/OpenFemaDataSets",
+        "femaNfipClaims": "https://www.fema.gov/api/open/v2/FimaNfipClaims",
+        "femaHousingOwners": "https://www.fema.gov/api/open/v2/HousingAssistanceOwners",
+        "femaHousingRenters": "https://www.fema.gov/api/open/v2/HousingAssistanceRenters",
+        "femaIhpValidRegistrations": "https://www.fema.gov/api/open/v2/IndividualsAndHouseholdsProgramValidRegistrations",
+        "femaIhpLargeDisasters": "https://www.fema.gov/api/open/v1/IndividualAssistanceHousingRegistrantsLargeDisasters",
+        "sbaDisasterLoanData": "https://data.sba.gov/en/dataset/disaster-loan-data",
+        "sbaPhysicalDamagePolicy": "https://www.sba.gov/funding-programs/disaster-assistance/physical-damage-loans",
+        "naicAutoInsuranceDatabase": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf"
+      },
+      "confidenceFlags": {
+        "direct": "Observed claims/assistance records from FEMA NFIP + FEMA Housing Assistance datasets",
+        "proxy": "Vehicle-related signal inferred from FEMA IHP flood and auto-damage fields",
+        "context-only": "Program-level context source (SBA/NAIC), not city-level flood-only claim transactions"
+      },
+      "coverageNotes": [
+        "NFIP and FEMA IA datasets have different temporal coverage and business rules than NOAA Storm Events.",
+        "SBA and NAIC are used as context sources for vehicle impacts where city-level flood-only auto claim records are limited.",
+        "Values are for comparative signal layering, not official federal financial reporting."
+      ],
+      "byCity": {
+        "charleston": {
+          "name": "Charleston, SC",
+          "state": "SC",
+          "confidence": {
+            "residentialLayer": "direct",
+            "vehicleProxyLayer": "proxy",
+            "sbaVehicleContext": "context-only",
+            "naicVehicleContext": "context-only"
+          },
+          "residentialLayer": {
+            "nfipClaims": {
+              "claimsCount": 0,
+              "buildingPaidUSD": 0.0,
+              "contentsPaidUSD": 0.0,
+              "increasedCompliancePaidUSD": 0.0,
+              "truncated": false
+            },
+            "housingOwners": {
+              "rows": 65,
+              "approvedForFemaAssistance": 874,
+              "validRegistrations": 3809,
+              "repairReplaceAmountUSD": 1555260.59,
+              "rentalAmountUSD": 833483.16,
+              "otherNeedsAmountUSD": 306810.57,
+              "totalApprovedIhpAmountUSD": 2714033.75,
+              "totalDamageUSD": 4557219.27,
+              "truncated": false
+            },
+            "housingRenters": {
+              "rows": 0,
+              "approvedForFemaAssistance": 0,
+              "validRegistrations": 0,
+              "repairReplaceAmountUSD": 0.0,
+              "rentalAmountUSD": 0.0,
+              "otherNeedsAmountUSD": 0.0,
+              "totalApprovedIhpAmountUSD": 0.0,
+              "totalDamageUSD": 0.0,
+              "truncated": false,
+              "error": "unavailable"
+            },
+            "compositeResidentialLossUSD": 1555260.59
+          },
+          "vehicleProxyLayer": {
+            "floodRegistrationCount": 1420,
+            "autoDamageRegistrationCount": 452,
+            "largeDisasterFloodRegistrationCount": 0,
+            "floodDamageAmountUSD": 4112676.92,
+            "ihpAssistanceAmountUSD": 2430645.49,
+            "proxyVehicleImpactScore": 1304.0,
+            "truncated": false
+          }
+        },
+        "north_charleston": {
+          "name": "North Charleston, SC",
+          "state": "SC",
+          "confidence": {
+            "residentialLayer": "direct",
+            "vehicleProxyLayer": "proxy",
+            "sbaVehicleContext": "context-only",
+            "naicVehicleContext": "context-only"
+          },
+          "residentialLayer": {
+            "nfipClaims": {
+              "claimsCount": 0,
+              "buildingPaidUSD": 0.0,
+              "contentsPaidUSD": 0.0,
+              "increasedCompliancePaidUSD": 0.0,
+              "truncated": false
+            },
+            "housingOwners": {
+              "rows": 32,
+              "approvedForFemaAssistance": 567,
+              "validRegistrations": 2647,
+              "repairReplaceAmountUSD": 1348174.24,
+              "rentalAmountUSD": 479707.19,
+              "otherNeedsAmountUSD": 195408.5,
+              "totalApprovedIhpAmountUSD": 2032746.66,
+              "totalDamageUSD": 2597352.2,
+              "truncated": false
+            },
+            "housingRenters": {
+              "rows": 0,
+              "approvedForFemaAssistance": 0,
+              "validRegistrations": 0,
+              "repairReplaceAmountUSD": 0.0,
+              "rentalAmountUSD": 0.0,
+              "otherNeedsAmountUSD": 0.0,
+              "totalApprovedIhpAmountUSD": 0.0,
+              "totalDamageUSD": 0.0,
+              "truncated": false,
+              "error": "unavailable"
+            },
+            "compositeResidentialLossUSD": 1348174.24
+          },
+          "vehicleProxyLayer": {
+            "floodRegistrationCount": 747,
+            "autoDamageRegistrationCount": 333,
+            "largeDisasterFloodRegistrationCount": 0,
+            "floodDamageAmountUSD": 2200380.75,
+            "ihpAssistanceAmountUSD": 1662213.23,
+            "proxyVehicleImpactScore": 781.2,
+            "truncated": false
+          }
+        },
+        "summerville": {
+          "name": "Summerville, SC",
+          "state": "SC",
+          "confidence": {
+            "residentialLayer": "direct",
+            "vehicleProxyLayer": "proxy",
+            "sbaVehicleContext": "context-only",
+            "naicVehicleContext": "context-only"
+          },
+          "residentialLayer": {
+            "nfipClaims": {
+              "claimsCount": 0,
+              "buildingPaidUSD": 0.0,
+              "contentsPaidUSD": 0.0,
+              "increasedCompliancePaidUSD": 0.0,
+              "truncated": false
+            },
+            "housingOwners": {
+              "rows": 26,
+              "approvedForFemaAssistance": 581,
+              "validRegistrations": 2808,
+              "repairReplaceAmountUSD": 1414220.71,
+              "rentalAmountUSD": 519727.4,
+              "otherNeedsAmountUSD": 182801.67,
+              "totalApprovedIhpAmountUSD": 2120316.17,
+              "totalDamageUSD": 2873570.62,
+              "truncated": false
+            },
+            "housingRenters": {
+              "rows": 0,
+              "approvedForFemaAssistance": 0,
+              "validRegistrations": 0,
+              "repairReplaceAmountUSD": 0.0,
+              "rentalAmountUSD": 0.0,
+              "otherNeedsAmountUSD": 0.0,
+              "totalApprovedIhpAmountUSD": 0.0,
+              "totalDamageUSD": 0.0,
+              "truncated": false,
+              "error": "unavailable"
+            },
+            "compositeResidentialLossUSD": 1414220.71
+          },
+          "vehicleProxyLayer": {
+            "floodRegistrationCount": 890,
+            "autoDamageRegistrationCount": 225,
+            "largeDisasterFloodRegistrationCount": 0,
+            "floodDamageAmountUSD": 2476758.17,
+            "ihpAssistanceAmountUSD": 1955137.41,
+            "proxyVehicleImpactScore": 759.0,
+            "truncated": false
+          }
+        },
+        "goose_creek": {
+          "name": "Goose Creek, SC",
+          "state": "SC",
+          "confidence": {
+            "residentialLayer": "direct",
+            "vehicleProxyLayer": "proxy",
+            "sbaVehicleContext": "context-only",
+            "naicVehicleContext": "context-only"
+          },
+          "residentialLayer": {
+            "nfipClaims": {
+              "claimsCount": 0,
+              "buildingPaidUSD": 0.0,
+              "contentsPaidUSD": 0.0,
+              "increasedCompliancePaidUSD": 0.0,
+              "truncated": false
+            },
+            "housingOwners": {
+              "rows": 7,
+              "approvedForFemaAssistance": 114,
+              "validRegistrations": 965,
+              "repairReplaceAmountUSD": 329419.57,
+              "rentalAmountUSD": 71192.0,
+              "otherNeedsAmountUSD": 18186.0,
+              "totalApprovedIhpAmountUSD": 419014.89,
+              "totalDamageUSD": 438718.97,
+              "truncated": false
+            },
+            "housingRenters": {
+              "rows": 0,
+              "approvedForFemaAssistance": 0,
+              "validRegistrations": 0,
+              "repairReplaceAmountUSD": 0.0,
+              "rentalAmountUSD": 0.0,
+              "otherNeedsAmountUSD": 0.0,
+              "totalApprovedIhpAmountUSD": 0.0,
+              "totalDamageUSD": 0.0,
+              "truncated": false,
+              "error": "unavailable"
+            },
+            "compositeResidentialLossUSD": 329419.57
+          },
+          "vehicleProxyLayer": {
+            "floodRegistrationCount": 161,
+            "autoDamageRegistrationCount": 64,
+            "largeDisasterFloodRegistrationCount": 0,
+            "floodDamageAmountUSD": 318670.87,
+            "ihpAssistanceAmountUSD": 363187.2,
+            "proxyVehicleImpactScore": 160.6,
+            "truncated": false
+          }
+        },
+        "hanahan": {
+          "name": "Hanahan, SC",
+          "state": "SC",
+          "confidence": {
+            "residentialLayer": "direct",
+            "vehicleProxyLayer": "proxy",
+            "sbaVehicleContext": "context-only",
+            "naicVehicleContext": "context-only"
+          },
+          "residentialLayer": {
+            "nfipClaims": {
+              "claimsCount": 0,
+              "buildingPaidUSD": 0.0,
+              "contentsPaidUSD": 0.0,
+              "increasedCompliancePaidUSD": 0.0,
+              "truncated": false
+            },
+            "housingOwners": {
+              "rows": 8,
+              "approvedForFemaAssistance": 66,
+              "validRegistrations": 263,
+              "repairReplaceAmountUSD": 120275.16,
+              "rentalAmountUSD": 93042.29,
+              "otherNeedsAmountUSD": 13989.02,
+              "totalApprovedIhpAmountUSD": 227306.47,
+              "totalDamageUSD": 296532.28,
+              "truncated": false
+            },
+            "housingRenters": {
+              "rows": 0,
+              "approvedForFemaAssistance": 0,
+              "validRegistrations": 0,
+              "repairReplaceAmountUSD": 0.0,
+              "rentalAmountUSD": 0.0,
+              "otherNeedsAmountUSD": 0.0,
+              "totalApprovedIhpAmountUSD": 0.0,
+              "totalDamageUSD": 0.0,
+              "truncated": false,
+              "error": "unavailable"
+            },
+            "compositeResidentialLossUSD": 120275.16
+          },
+          "vehicleProxyLayer": {
+            "floodRegistrationCount": 103,
+            "autoDamageRegistrationCount": 17,
+            "largeDisasterFloodRegistrationCount": 0,
+            "floodDamageAmountUSD": 240701.82,
+            "ihpAssistanceAmountUSD": 193566.14,
+            "proxyVehicleImpactScore": 78.8,
+            "truncated": false
+          }
+        },
+        "fayetteville_wv": {
+          "name": "Fayetteville, WV",
+          "state": "WV",
+          "confidence": {
+            "residentialLayer": "direct",
+            "vehicleProxyLayer": "proxy",
+            "sbaVehicleContext": "context-only",
+            "naicVehicleContext": "context-only"
+          },
+          "residentialLayer": {
+            "nfipClaims": {
+              "claimsCount": 0,
+              "buildingPaidUSD": 0.0,
+              "contentsPaidUSD": 0.0,
+              "increasedCompliancePaidUSD": 0.0,
+              "truncated": false
+            },
+            "housingOwners": {
+              "rows": 10,
+              "approvedForFemaAssistance": 96,
+              "validRegistrations": 222,
+              "repairReplaceAmountUSD": 209247.74,
+              "rentalAmountUSD": 13564.0,
+              "otherNeedsAmountUSD": 20574.53,
+              "totalApprovedIhpAmountUSD": 243928.91,
+              "totalDamageUSD": 390145.93,
+              "truncated": false
+            },
+            "housingRenters": {
+              "rows": 0,
+              "approvedForFemaAssistance": 0,
+              "validRegistrations": 0,
+              "repairReplaceAmountUSD": 0.0,
+              "rentalAmountUSD": 0.0,
+              "otherNeedsAmountUSD": 0.0,
+              "totalApprovedIhpAmountUSD": 0.0,
+              "totalDamageUSD": 0.0,
+              "truncated": false,
+              "error": "unavailable"
+            },
+            "compositeResidentialLossUSD": 209247.74
+          },
+          "vehicleProxyLayer": {
+            "floodRegistrationCount": 72,
+            "autoDamageRegistrationCount": 7,
+            "largeDisasterFloodRegistrationCount": 0,
+            "floodDamageAmountUSD": 329317.6,
+            "ihpAssistanceAmountUSD": 191950.24,
+            "proxyVehicleImpactScore": 50.2,
+            "truncated": false
+          }
+        },
+        "oak_hill_wv": {
+          "name": "Oak Hill, WV",
+          "state": "WV",
+          "confidence": {
+            "residentialLayer": "direct",
+            "vehicleProxyLayer": "proxy",
+            "sbaVehicleContext": "context-only",
+            "naicVehicleContext": "context-only"
+          },
+          "residentialLayer": {
+            "nfipClaims": {
+              "claimsCount": 0,
+              "buildingPaidUSD": 0.0,
+              "contentsPaidUSD": 0.0,
+              "increasedCompliancePaidUSD": 0.0,
+              "truncated": false
+            },
+            "housingOwners": {
+              "rows": 8,
+              "approvedForFemaAssistance": 111,
+              "validRegistrations": 297,
+              "repairReplaceAmountUSD": 189088.69,
+              "rentalAmountUSD": 24056.0,
+              "otherNeedsAmountUSD": 39506.59,
+              "totalApprovedIhpAmountUSD": 252651.28,
+              "totalDamageUSD": 260370.18,
+              "truncated": false
+            },
+            "housingRenters": {
+              "rows": 0,
+              "approvedForFemaAssistance": 0,
+              "validRegistrations": 0,
+              "repairReplaceAmountUSD": 0.0,
+              "rentalAmountUSD": 0.0,
+              "otherNeedsAmountUSD": 0.0,
+              "totalApprovedIhpAmountUSD": 0.0,
+              "totalDamageUSD": 0.0,
+              "truncated": false,
+              "error": "unavailable"
+            },
+            "compositeResidentialLossUSD": 189088.69
+          },
+          "vehicleProxyLayer": {
+            "floodRegistrationCount": 68,
+            "autoDamageRegistrationCount": 14,
+            "largeDisasterFloodRegistrationCount": 0,
+            "floodDamageAmountUSD": 125482.67,
+            "ihpAssistanceAmountUSD": 133781.58,
+            "proxyVehicleImpactScore": 54.8,
+            "truncated": false
+          }
+        },
+        "bridgeport_wv": {
+          "name": "Bridgeport, WV",
+          "state": "WV",
+          "confidence": {
+            "residentialLayer": "direct",
+            "vehicleProxyLayer": "proxy",
+            "sbaVehicleContext": "context-only",
+            "naicVehicleContext": "context-only"
+          },
+          "residentialLayer": {
+            "nfipClaims": {
+              "claimsCount": 0,
+              "buildingPaidUSD": 0.0,
+              "contentsPaidUSD": 0.0,
+              "increasedCompliancePaidUSD": 0.0,
+              "truncated": false
+            },
+            "housingOwners": {
+              "rows": 11,
+              "approvedForFemaAssistance": 118,
+              "validRegistrations": 181,
+              "repairReplaceAmountUSD": 481292.2,
+              "rentalAmountUSD": 55521.1,
+              "otherNeedsAmountUSD": 65850.64,
+              "totalApprovedIhpAmountUSD": 602663.94,
+              "totalDamageUSD": 534960.23,
+              "truncated": false
+            },
+            "housingRenters": {
+              "rows": 0,
+              "approvedForFemaAssistance": 0,
+              "validRegistrations": 0,
+              "repairReplaceAmountUSD": 0.0,
+              "rentalAmountUSD": 0.0,
+              "otherNeedsAmountUSD": 0.0,
+              "totalApprovedIhpAmountUSD": 0.0,
+              "totalDamageUSD": 0.0,
+              "truncated": false,
+              "error": "unavailable"
+            },
+            "compositeResidentialLossUSD": 481292.2
+          },
+          "vehicleProxyLayer": {
+            "floodRegistrationCount": 126,
+            "autoDamageRegistrationCount": 15,
+            "largeDisasterFloodRegistrationCount": 0,
+            "floodDamageAmountUSD": 536515.24,
+            "ihpAssistanceAmountUSD": 558494.05,
+            "proxyVehicleImpactScore": 90.6,
+            "truncated": false
+          }
+        },
+        "fairmont_wv": {
+          "name": "Fairmont, WV",
+          "state": "WV",
+          "confidence": {
+            "residentialLayer": "direct",
+            "vehicleProxyLayer": "proxy",
+            "sbaVehicleContext": "context-only",
+            "naicVehicleContext": "context-only"
+          },
+          "residentialLayer": {
+            "nfipClaims": {
+              "claimsCount": 0,
+              "buildingPaidUSD": 0.0,
+              "contentsPaidUSD": 0.0,
+              "increasedCompliancePaidUSD": 0.0,
+              "truncated": false
+            },
+            "housingOwners": {
+              "rows": 15,
+              "approvedForFemaAssistance": 600,
+              "validRegistrations": 799,
+              "repairReplaceAmountUSD": 3340340.34,
+              "rentalAmountUSD": 254630.4,
+              "otherNeedsAmountUSD": 805152.54,
+              "totalApprovedIhpAmountUSD": 4401971.23,
+              "totalDamageUSD": 3035713.77,
+              "truncated": false
+            },
+            "housingRenters": {
+              "rows": 0,
+              "approvedForFemaAssistance": 0,
+              "validRegistrations": 0,
+              "repairReplaceAmountUSD": 0.0,
+              "rentalAmountUSD": 0.0,
+              "otherNeedsAmountUSD": 0.0,
+              "totalApprovedIhpAmountUSD": 0.0,
+              "totalDamageUSD": 0.0,
+              "truncated": false,
+              "error": "unavailable"
+            },
+            "compositeResidentialLossUSD": 3340340.34
+          },
+          "vehicleProxyLayer": {
+            "floodRegistrationCount": 639,
+            "autoDamageRegistrationCount": 68,
+            "largeDisasterFloodRegistrationCount": 0,
+            "floodDamageAmountUSD": 3245522.73,
+            "ihpAssistanceAmountUSD": 3663553.77,
+            "proxyVehicleImpactScore": 451.4,
+            "truncated": false
+          }
+        },
+        "clarksburg_wv": {
+          "name": "Clarksburg, WV",
+          "state": "WV",
+          "confidence": {
+            "residentialLayer": "direct",
+            "vehicleProxyLayer": "proxy",
+            "sbaVehicleContext": "context-only",
+            "naicVehicleContext": "context-only"
+          },
+          "residentialLayer": {
+            "nfipClaims": {
+              "claimsCount": 0,
+              "buildingPaidUSD": 0.0,
+              "contentsPaidUSD": 0.0,
+              "increasedCompliancePaidUSD": 0.0,
+              "truncated": false
+            },
+            "housingOwners": {
+              "rows": 8,
+              "approvedForFemaAssistance": 134,
+              "validRegistrations": 222,
+              "repairReplaceAmountUSD": 381839.16,
+              "rentalAmountUSD": 20838.0,
+              "otherNeedsAmountUSD": 16821.1,
+              "totalApprovedIhpAmountUSD": 419890.66,
+              "totalDamageUSD": 425168.96,
+              "truncated": false
+            },
+            "housingRenters": {
+              "rows": 0,
+              "approvedForFemaAssistance": 0,
+              "validRegistrations": 0,
+              "repairReplaceAmountUSD": 0.0,
+              "rentalAmountUSD": 0.0,
+              "otherNeedsAmountUSD": 0.0,
+              "totalApprovedIhpAmountUSD": 0.0,
+              "totalDamageUSD": 0.0,
+              "truncated": false,
+              "error": "unavailable"
+            },
+            "compositeResidentialLossUSD": 381839.16
+          },
+          "vehicleProxyLayer": {
+            "floodRegistrationCount": 133,
+            "autoDamageRegistrationCount": 17,
+            "largeDisasterFloodRegistrationCount": 0,
+            "floodDamageAmountUSD": 384543.19,
+            "ihpAssistanceAmountUSD": 376902.63,
+            "proxyVehicleImpactScore": 96.8,
+            "truncated": false
+          }
+        }
       }
     },
     "decisionAnalysis": {

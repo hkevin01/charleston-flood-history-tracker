@@ -130,7 +130,7 @@ def _fema_fetch_rows(
     truncated = False
 
     while True:
-        encoded_filter = urllib.parse.quote(filter_expr, safe="()', =")
+        encoded_filter = urllib.parse.quote(filter_expr, safe="()',=")
         encoded_select = urllib.parse.quote(",".join(select_fields), safe=",")
         url = (
             f"{OPENFEMA_API_BASE}/{version}/{dataset}"
