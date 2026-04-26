@@ -64,6 +64,16 @@
     }
     return _getContext.call(this, type, attrs);
   };
+
+  if (typeof OffscreenCanvas !== "undefined" && OffscreenCanvas.prototype.getContext) {
+    const _offscreenGetContext = OffscreenCanvas.prototype.getContext;
+    OffscreenCanvas.prototype.getContext = function (type, attrs) {
+      if (type === "2d") {
+        attrs = Object.assign({ willReadFrequently: true }, attrs || {});
+      }
+      return _offscreenGetContext.call(this, type, attrs);
+    };
+  }
 })();
 
 // ---------------------------------------------------------------------------
@@ -318,6 +328,29 @@ function cityFeature(place) {
     zIndex: 4,
   }));
   f.set("_popup", `<b>${place.name}</b>`);
+  return f;
+}
+
+function comparisonCityFeature(place) {
+  const f = new ol.Feature({ geometry: new ol.geom.Point(ol.proj.fromLonLat([place.lon, place.lat])) });
+  f.setStyle(new ol.style.Style({
+    image: new ol.style.RegularShape({
+      points: 3,
+      radius: 9,
+      rotation: Math.PI,
+      fill: new ol.style.Fill({ color: "#14532d" }),
+      stroke: new ol.style.Stroke({ color: "#ffffff", width: 1.2 }),
+    }),
+    text: new ol.style.Text({
+      text: place.name.split(",")[0],
+      offsetY: -16,
+      font: "600 12px 'Segoe UI', sans-serif",
+      fill: new ol.style.Fill({ color: "#14532d" }),
+      stroke: new ol.style.Stroke({ color: "rgba(255,255,255,0.95)", width: 3 }),
+    }),
+    zIndex: 4,
+  }));
+  f.set("_popup", `<b>${place.name}</b><br/><small>WV comparison city</small>`);
   return f;
 }
 
@@ -748,7 +781,7 @@ function haversine(lat1, lon1, lat2, lon2) {
 function buildFemaLayer() {
   return new ol.layer.Image({
     source: new ol.source.ImageWMS({
-      url: "https://hazards.fema.gov/gis/nfhl/services/public/NFHL/MapServer/WMSServer",
+      url: "https://hazards.fema.gov/arcgis/rest/services/public/NFHLWMS/MapServer/WMSServer",
       params: {
         LAYERS: "28",
         FORMAT: "image/png",
@@ -915,12 +948,16 @@ function exportFilteredEventsCsv(events, filters) {
 
   // ── 2. OL vector sources ──────────────────────────────────────────────────
   const floodSource = new ol.source.Vector();
+  const comparisonFloodSource = new ol.source.Vector();
   const citySource  = new ol.source.Vector();
+  const comparisonCitySource  = new ol.source.Vector();
   const riskSource  = new ol.source.Vector();
 
   const riskLayer  = new ol.layer.Vector({ source: riskSource,  zIndex: 0 });
   const floodLayer = new ol.layer.Vector({ source: floodSource, zIndex: 2 });
+  const comparisonFloodLayer = new ol.layer.Vector({ source: comparisonFloodSource, zIndex: 2 });
   const cityLayer  = new ol.layer.Vector({ source: citySource,  zIndex: 3 });
+  const comparisonCityLayer  = new ol.layer.Vector({ source: comparisonCitySource, zIndex: 3 });
 
   // ── 3. WMS overlay layers ─────────────────────────────────────────────────
   const femaLayer       = buildFemaLayer();
@@ -935,7 +972,9 @@ function exportFilteredEventsCsv(events, filters) {
       femaLayer,
       stormTrackLayer,
       floodLayer,
+      comparisonFloodLayer,
       cityLayer,
+      comparisonCityLayer,
     ],
     view: new ol.View({ center: ol.proj.fromLonLat([-80.03, 32.92]), zoom: 10 }),
   });
@@ -970,6 +1009,11 @@ function exportFilteredEventsCsv(events, filters) {
 
   // ── 6. City markers (static, never filtered) ─────────────────────────────
   dataset.places.forEach((p) => citySource.addFeature(cityFeature(p)));
+  (dataset.comparisonPlaces || dataset.meta?.comparison_cities || []).forEach((p) => {
+    comparisonCitySource.addFeature(comparisonCityFeature(p));
+  });
+  comparisonFloodLayer.setVisible(false);
+  comparisonCityLayer.setVisible(false);
 
   // ── 7. Filter controls ────────────────────────────────────────────────────
   const yearStartEl  = document.getElementById("yearStart");
@@ -978,6 +1022,8 @@ function exportFilteredEventsCsv(events, filters) {
   const showUnreportedOnlyEl = document.getElementById("showUnreportedOnly");
   const eventTypeEl  = document.getElementById("eventType");
   const showRiskEl   = document.getElementById("showRisk");
+  const showComparisonEventsEl = document.getElementById("showComparisonEvents");
+  const comparisonCityEl = document.getElementById("comparisonCity");
   const showFemaEl   = document.getElementById("showFema");
   const showTracksEl = document.getElementById("showStormTracks");
   const exportBtnEl  = document.getElementById("exportPdfBtn");
@@ -995,6 +1041,42 @@ function exportFilteredEventsCsv(events, filters) {
   yearStartEl.value = String(dataset.meta.year_range[0]);
   yearEndEl.value   = String(dataset.meta.year_range[1]);
 
+  if (comparisonCityEl) {
+    comparisonCityEl.innerHTML =
+      `<option value="">All WV benchmark cities</option>` +
+      (dataset.meta?.comparison_cities || [])
+        .map((c) => `<option value="${c.key}">${c.name}</option>`)
+        .join("");
+  }
+
+  function focusComparisonSelection(selectionKey) {
+    const places = dataset.comparisonPlaces || dataset.meta?.comparison_cities || [];
+    if (!places.length) return;
+
+    if (!selectionKey) {
+      const extent = ol.extent.createEmpty();
+      places.forEach((c) => {
+        ol.extent.extend(
+          extent,
+          ol.proj.transformExtent([c.lon, c.lat, c.lon, c.lat], "EPSG:4326", "EPSG:3857")
+        );
+      });
+      if (!ol.extent.isEmpty(extent)) {
+        map.getView().fit(extent, { padding: [55, 55, 55, 55], duration: 350, maxZoom: 7 });
+      }
+      return;
+    }
+
+    const city = places.find((c) => c.key === selectionKey);
+    if (city) {
+      map.getView().animate({
+        center: ol.proj.fromLonLat([city.lon, city.lat]),
+        zoom: 9,
+        duration: 350,
+      });
+    }
+  }
+
   // ── 8. Redraw function ───────────────────────────────────────────────────
   /**
    * ID:       CFHT-REDRAW-001
@@ -1010,6 +1092,8 @@ function exportFilteredEventsCsv(events, filters) {
     const unreportedOnly = !!showUnreportedOnlyEl?.checked;
     const typeFilter = eventTypeEl.value;
     const showRisk   = showRiskEl.checked;
+    const showComparisonEvents = !!showComparisonEventsEl?.checked;
+    const selectedComparisonCity = comparisonCityEl?.value || "";
 
     const filtered = dataset.floodEvents.filter((e) => {
       if (e.year < yStart || e.year > yEnd) return false;
@@ -1032,6 +1116,25 @@ function exportFilteredEventsCsv(events, filters) {
     floodSource.clear();
     filtered.forEach((e) => floodSource.addFeature(eventFeature(e)));
 
+    comparisonFloodSource.clear();
+    const comparisonFiltered = (dataset.comparisonFloodEvents || []).filter((e) => {
+      if (e.year < yStart || e.year > yEnd) return false;
+      if (typeFilter && e.eventType !== typeFilter) return false;
+      const reportedDamage = (e.propertyDamageUSD || 0) + (e.cropDamageUSD || 0);
+      if (reportedDamage < minDamage) return false;
+      if (unreportedOnly && !e.damageUnreported) return false;
+      if (selectedComparisonCity) {
+        const matches = e.comparisonMatchedCities || [];
+        return matches.includes(selectedComparisonCity);
+      }
+      return true;
+    });
+    comparisonFloodLayer.setVisible(showComparisonEvents);
+    comparisonCityLayer.setVisible(showComparisonEvents);
+    if (showComparisonEvents) {
+      comparisonFiltered.forEach((e) => comparisonFloodSource.addFeature(eventFeature(e)));
+    }
+
     riskSource.clear();
     riskLayer.setVisible(showRisk);
     if (showRisk) {
@@ -1053,9 +1156,35 @@ function exportFilteredEventsCsv(events, filters) {
   }
 
   // ── 9. Wire filter control events ────────────────────────────────────────
-  [yearStartEl, yearEndEl, minDamageEl, showUnreportedOnlyEl, eventTypeEl, showRiskEl].forEach((el) => {
+  [
+    yearStartEl,
+    yearEndEl,
+    minDamageEl,
+    showUnreportedOnlyEl,
+    eventTypeEl,
+    showRiskEl,
+    showComparisonEventsEl,
+    comparisonCityEl,
+  ].forEach((el) => {
+    if (!el) return;
     el.addEventListener("change", redraw);
   });
+
+  if (comparisonCityEl) {
+    comparisonCityEl.addEventListener("change", () => {
+      if (showComparisonEventsEl?.checked) {
+        focusComparisonSelection(comparisonCityEl.value || "");
+      }
+    });
+  }
+
+  if (showComparisonEventsEl) {
+    showComparisonEventsEl.addEventListener("change", () => {
+      if (showComparisonEventsEl.checked) {
+        focusComparisonSelection(comparisonCityEl?.value || "");
+      }
+    });
+  }
 
   if (showFemaEl) {
     showFemaEl.addEventListener("change", () => {

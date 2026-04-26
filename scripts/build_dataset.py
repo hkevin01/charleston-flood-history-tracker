@@ -94,9 +94,9 @@ CITIES = [
     {"key": "hanahan",          "name": "Hanahan, SC",          "lat": 32.9185, "lon": -80.0220},
 ]
 
-# Comparison-only cities used to show that flood risk is not unique to
-# Charleston, SC. These are not plotted on the map and do not affect
-# Charleston risk-zone generation.
+# Comparison cities used to show that flood risk is not unique to
+# Charleston, SC. These can be rendered on the map as a separate overlay and
+# do not affect Charleston risk-zone generation.
 COMPARISON_CITIES = [
     {"key": "fayetteville_wv", "name": "Fayetteville, WV", "lat": 38.0529, "lon": -81.1043},
     {"key": "oak_hill_wv",     "name": "Oak Hill, WV",     "lat": 37.9723, "lon": -81.1487},
@@ -827,13 +827,33 @@ def main() -> None:
             if event_near_city(ev, city, CITY_RADIUS_MILES):
                 comparison_city_events[city["key"]].append(ev)
 
-    seen: set[int] = set()
+    seen: set[tuple[int, int, int]] = set()
     combined: list[FloodEvent] = []
     for city in CITIES:
         for ev in city_events[city["key"]]:
-            if ev.event_id not in seen:
-                seen.add(ev.event_id)
+            ev_key = (ev.year, ev.episode_id, ev.event_id)
+            if ev_key not in seen:
+                seen.add(ev_key)
                 combined.append(ev)
+
+    comparison_event_matches: dict[tuple[int, int, int], set[str]] = {}
+    comparison_unique_map: dict[tuple[int, int, int], FloodEvent] = {}
+    for ev in comparison_floods:
+        matched = [
+            city["key"]
+            for city in COMPARISON_CITIES
+            if event_near_city(ev, city, CITY_RADIUS_MILES)
+        ]
+        if not matched:
+            continue
+
+        ev_key = (ev.year, ev.episode_id, ev.event_id)
+        comparison_unique_map.setdefault(ev_key, ev)
+        if ev_key not in comparison_event_matches:
+            comparison_event_matches[ev_key] = set()
+        comparison_event_matches[ev_key].update(matched)
+
+    comparison_combined = list(comparison_unique_map.values())
 
     risk_zones = {c["key"]: build_risk_zones(c, city_events[c["key"]]) for c in CITIES}
 
@@ -983,6 +1003,7 @@ def main() -> None:
             },
         },
         "places": CITIES,
+        "comparisonPlaces": COMPARISON_CITIES,
         "floodEvents": [
             {
                 "id": ev.event_id,
@@ -1002,6 +1023,30 @@ def main() -> None:
                 "damageUnreported": ev.damage_unreported,
             }
             for ev in combined
+        ],
+        "comparisonFloodEvents": [
+            {
+                "id": ev.event_id,
+                "episodeId": ev.episode_id,
+                "year": ev.year,
+                "dateTime": ev.date_time,
+                "eventType": ev.event_type,
+                "state": ev.state,
+                "county": ev.county,
+                "start": {"lat": ev.begin_lat, "lon": ev.begin_lon},
+                "end":   {"lat": ev.end_lat,   "lon": ev.end_lon},
+                "injuries": ev.injuries,
+                "deaths": ev.deaths,
+                "propertyDamageUSD": round(ev.property_damage_usd, 2),
+                "cropDamageUSD":     round(ev.crops_damage_usd, 2),
+                "narrative": ev.narrative,
+                "damageContext": ev.damage_context,
+                "damageUnreported": ev.damage_unreported,
+                "comparisonMatchedCities": sorted(
+                    comparison_event_matches.get((ev.year, ev.episode_id, ev.event_id), set())
+                ),
+            }
+            for ev in comparison_combined
         ],
         "riskZones": risk_zones,
         "stats": {

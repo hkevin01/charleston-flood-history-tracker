@@ -102,6 +102,22 @@
           </label>
         </div>
 
+        <div class="toggle-row">
+          <input id="showComparisonEvents" type="checkbox" />
+          <label for="showComparisonEvents" style="margin:0">
+            Show WV comparison events
+            <span style="font-size:.72rem;color:#6b7280">(Fayetteville, Fairmont, and nearby benchmark cities)</span>
+          </label>
+        </div>
+
+        <label for="comparisonCity" style="margin-top:.45rem">WV focus city</label>
+        <select id="comparisonCity" aria-label="West Virginia comparison city focus">
+          <option value="">All WV benchmark cities</option>
+        </select>
+        <p style="margin:.25rem 0 0;color:#6b7280;font-size:.72rem">
+          When enabled, the map recenters to the selected WV benchmark location.
+        </p>
+
         <!-- Risk zone disclaimer -->
         <div style="margin-top:.5rem;padding:.45rem .55rem;background:#eff6ff;border-left:3px solid #3b82f6;border-radius:3px;font-size:.77rem;color:#1e3a5f;line-height:1.45">
           <b>City-scale estimates only.</b> Zone shading reflects aggregate historical
