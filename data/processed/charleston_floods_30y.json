@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_utc": "2026-04-26T20:53:13.787112+00:00",
+    "generated_utc": "2026-04-26T21:22:25.887780+00:00",
     "year_range": [
       1995,
       2024
@@ -184656,6 +184656,128 @@
             "count": 13
           }
         ],
+        "yearlyDamage": [
+          {
+            "year": 1995,
+            "damage": 0.0
+          },
+          {
+            "year": 1996,
+            "damage": 0.0
+          },
+          {
+            "year": 1997,
+            "damage": 0.0
+          },
+          {
+            "year": 1998,
+            "damage": 0.0
+          },
+          {
+            "year": 1999,
+            "damage": 0.0
+          },
+          {
+            "year": 2000,
+            "damage": 0.0
+          },
+          {
+            "year": 2001,
+            "damage": 0.0
+          },
+          {
+            "year": 2002,
+            "damage": 0.0
+          },
+          {
+            "year": 2003,
+            "damage": 0.0
+          },
+          {
+            "year": 2004,
+            "damage": 0.0
+          },
+          {
+            "year": 2005,
+            "damage": 0.0
+          },
+          {
+            "year": 2006,
+            "damage": 0.0
+          },
+          {
+            "year": 2007,
+            "damage": 3000.0
+          },
+          {
+            "year": 2008,
+            "damage": 112750.0
+          },
+          {
+            "year": 2009,
+            "damage": 40000.0
+          },
+          {
+            "year": 2010,
+            "damage": 6500.0
+          },
+          {
+            "year": 2011,
+            "damage": 8000.0
+          },
+          {
+            "year": 2012,
+            "damage": 760000.0
+          },
+          {
+            "year": 2013,
+            "damage": 185000.0
+          },
+          {
+            "year": 2014,
+            "damage": 59500.0
+          },
+          {
+            "year": 2015,
+            "damage": 21884530.0
+          },
+          {
+            "year": 2016,
+            "damage": 0.0
+          },
+          {
+            "year": 2017,
+            "damage": 550000.0
+          },
+          {
+            "year": 2018,
+            "damage": 27500.0
+          },
+          {
+            "year": 2019,
+            "damage": 15000.0
+          },
+          {
+            "year": 2020,
+            "damage": 0.0
+          },
+          {
+            "year": 2021,
+            "damage": 0.0
+          },
+          {
+            "year": 2022,
+            "damage": 185000.0
+          },
+          {
+            "year": 2023,
+            "damage": 0.0
+          },
+          {
+            "year": 2024,
+            "damage": 50000.0
+          }
+        ],
         "totalDamageUSD": 23886780.0,
         "injuries": 0,
         "deaths": 1
@@ -184815,6 +184937,128 @@
           {
             "year": 2024,
             "count": 15
+          }
+        ],
+        "yearlyDamage": [
+          {
+            "year": 1995,
+            "damage": 0.0
+          },
+          {
+            "year": 1996,
+            "damage": 0.0
+          },
+          {
+            "year": 1997,
+            "damage": 0.0
+          },
+          {
+            "year": 1998,
+            "damage": 0.0
+          },
+          {
+            "year": 1999,
+            "damage": 0.0
+          },
+          {
+            "year": 2000,
+            "damage": 0.0
+          },
+          {
+            "year": 2001,
+            "damage": 0.0
+          },
+          {
+            "year": 2002,
+            "damage": 0.0
+          },
+          {
+            "year": 2003,
+            "damage": 0.0
+          },
+          {
+            "year": 2004,
+            "damage": 0.0
+          },
+          {
+            "year": 2005,
+            "damage": 0.0
+          },
+          {
+            "year": 2006,
+            "damage": 0.0
+          },
+          {
+            "year": 2007,
+            "damage": 3000.0
+          },
+          {
+            "year": 2008,
+            "damage": 163000.0
+          },
+          {
+            "year": 2009,
+            "damage": 41000.0
+          },
+          {
+            "year": 2010,
+            "damage": 6500.0
+          },
+          {
+            "year": 2011,
+            "damage": 8000.0
+          },
+          {
+            "year": 2012,
+            "damage": 760000.0
+          },
+          {
+            "year": 2013,
+            "damage": 196000.0
+          },
+          {
+            "year": 2014,
+            "damage": 59500.0
+          },
+          {
+            "year": 2015,
+            "damage": 26273220.0
+          },
+          {
+            "year": 2016,
+            "damage": 0.0
+          },
+          {
+            "year": 2017,
+            "damage": 550000.0
+          },
+          {
+            "year": 2018,
+            "damage": 37500.0
+          },
+          {
+            "year": 2019,
+            "damage": 15000.0
+          },
+          {
+            "year": 2020,
+            "damage": 50000.0
+          },
+          {
+            "year": 2021,
+            "damage": 0.0
+          },
+          {
+            "year": 2022,
+            "damage": 195000.0
+          },
+          {
+            "year": 2023,
+            "damage": 25000.0
+          },
+          {
+            "year": 2024,
+            "damage": 110000.0
           }
         ],
         "totalDamageUSD": 28492720.0,
@@ -184978,6 +185222,128 @@
             "count": 26
           }
         ],
+        "yearlyDamage": [
+          {
+            "year": 1995,
+            "damage": 0.0
+          },
+          {
+            "year": 1996,
+            "damage": 0.0
+          },
+          {
+            "year": 1997,
+            "damage": 0.0
+          },
+          {
+            "year": 1998,
+            "damage": 0.0
+          },
+          {
+            "year": 1999,
+            "damage": 0.0
+          },
+          {
+            "year": 2000,
+            "damage": 0.0
+          },
+          {
+            "year": 2001,
+            "damage": 0.0
+          },
+          {
+            "year": 2002,
+            "damage": 0.0
+          },
+          {
+            "year": 2003,
+            "damage": 0.0
+          },
+          {
+            "year": 2004,
+            "damage": 0.0
+          },
+          {
+            "year": 2005,
+            "damage": 0.0
+          },
+          {
+            "year": 2006,
+            "damage": 0.0
+          },
+          {
+            "year": 2007,
+            "damage": 5000.0
+          },
+          {
+            "year": 2008,
+            "damage": 143000.0
+          },
+          {
+            "year": 2009,
+            "damage": 26500.0
+          },
+          {
+            "year": 2010,
+            "damage": 3000.0
+          },
+          {
+            "year": 2011,
+            "damage": 3000.0
+          },
+          {
+            "year": 2012,
+            "damage": 0.0
+          },
+          {
+            "year": 2013,
+            "damage": 167000.0
+          },
+          {
+            "year": 2014,
+            "damage": 27000.0
+          },
+          {
+            "year": 2015,
+            "damage": 18906790.0
+          },
+          {
+            "year": 2016,
+            "damage": 0.0
+          },
+          {
+            "year": 2017,
+            "damage": 550000.0
+          },
+          {
+            "year": 2018,
+            "damage": 37500.0
+          },
+          {
+            "year": 2019,
+            "damage": 15000.0
+          },
+          {
+            "year": 2020,
+            "damage": 50000.0
+          },
+          {
+            "year": 2021,
+            "damage": 0.0
+          },
+          {
+            "year": 2022,
+            "damage": 85000.0
+          },
+          {
+            "year": 2023,
+            "damage": 25000.0
+          },
+          {
+            "year": 2024,
+            "damage": 160000.0
+          }
+        ],
         "totalDamageUSD": 20203790.0,
         "injuries": 0,
         "deaths": 0
@@ -185139,6 +185505,128 @@
             "count": 23
           }
         ],
+        "yearlyDamage": [
+          {
+            "year": 1995,
+            "damage": 0.0
+          },
+          {
+            "year": 1996,
+            "damage": 0.0
+          },
+          {
+            "year": 1997,
+            "damage": 0.0
+          },
+          {
+            "year": 1998,
+            "damage": 0.0
+          },
+          {
+            "year": 1999,
+            "damage": 0.0
+          },
+          {
+            "year": 2000,
+            "damage": 0.0
+          },
+          {
+            "year": 2001,
+            "damage": 0.0
+          },
+          {
+            "year": 2002,
+            "damage": 0.0
+          },
+          {
+            "year": 2003,
+            "damage": 0.0
+          },
+          {
+            "year": 2004,
+            "damage": 0.0
+          },
+          {
+            "year": 2005,
+            "damage": 0.0
+          },
+          {
+            "year": 2006,
+            "damage": 0.0
+          },
+          {
+            "year": 2007,
+            "damage": 5000.0
+          },
+          {
+            "year": 2008,
+            "damage": 163000.0
+          },
+          {
+            "year": 2009,
+            "damage": 40000.0
+          },
+          {
+            "year": 2010,
+            "damage": 6500.0
+          },
+          {
+            "year": 2011,
+            "damage": 3000.0
+          },
+          {
+            "year": 2012,
+            "damage": 760000.0
+          },
+          {
+            "year": 2013,
+            "damage": 196000.0
+          },
+          {
+            "year": 2014,
+            "damage": 44500.0
+          },
+          {
+            "year": 2015,
+            "damage": 24735190.0
+          },
+          {
+            "year": 2016,
+            "damage": 0.0
+          },
+          {
+            "year": 2017,
+            "damage": 550000.0
+          },
+          {
+            "year": 2018,
+            "damage": 37500.0
+          },
+          {
+            "year": 2019,
+            "damage": 15000.0
+          },
+          {
+            "year": 2020,
+            "damage": 50000.0
+          },
+          {
+            "year": 2021,
+            "damage": 0.0
+          },
+          {
+            "year": 2022,
+            "damage": 195000.0
+          },
+          {
+            "year": 2023,
+            "damage": 25000.0
+          },
+          {
+            "year": 2024,
+            "damage": 130000.0
+          }
+        ],
         "totalDamageUSD": 26955690.0,
         "injuries": 0,
         "deaths": 1
@@ -185298,6 +185786,128 @@
           {
             "year": 2024,
             "count": 20
+          }
+        ],
+        "yearlyDamage": [
+          {
+            "year": 1995,
+            "damage": 0.0
+          },
+          {
+            "year": 1996,
+            "damage": 0.0
+          },
+          {
+            "year": 1997,
+            "damage": 0.0
+          },
+          {
+            "year": 1998,
+            "damage": 0.0
+          },
+          {
+            "year": 1999,
+            "damage": 0.0
+          },
+          {
+            "year": 2000,
+            "damage": 0.0
+          },
+          {
+            "year": 2001,
+            "damage": 0.0
+          },
+          {
+            "year": 2002,
+            "damage": 0.0
+          },
+          {
+            "year": 2003,
+            "damage": 0.0
+          },
+          {
+            "year": 2004,
+            "damage": 0.0
+          },
+          {
+            "year": 2005,
+            "damage": 0.0
+          },
+          {
+            "year": 2006,
+            "damage": 0.0
+          },
+          {
+            "year": 2007,
+            "damage": 5000.0
+          },
+          {
+            "year": 2008,
+            "damage": 163000.0
+          },
+          {
+            "year": 2009,
+            "damage": 40000.0
+          },
+          {
+            "year": 2010,
+            "damage": 6500.0
+          },
+          {
+            "year": 2011,
+            "damage": 8000.0
+          },
+          {
+            "year": 2012,
+            "damage": 760000.0
+          },
+          {
+            "year": 2013,
+            "damage": 196000.0
+          },
+          {
+            "year": 2014,
+            "damage": 59500.0
+          },
+          {
+            "year": 2015,
+            "damage": 26192290.0
+          },
+          {
+            "year": 2016,
+            "damage": 0.0
+          },
+          {
+            "year": 2017,
+            "damage": 550000.0
+          },
+          {
+            "year": 2018,
+            "damage": 37500.0
+          },
+          {
+            "year": 2019,
+            "damage": 15000.0
+          },
+          {
+            "year": 2020,
+            "damage": 50000.0
+          },
+          {
+            "year": 2021,
+            "damage": 0.0
+          },
+          {
+            "year": 2022,
+            "damage": 195000.0
+          },
+          {
+            "year": 2023,
+            "damage": 25000.0
+          },
+          {
+            "year": 2024,
+            "damage": 130000.0
           }
         ],
         "totalDamageUSD": 28432790.0,
@@ -185463,6 +186073,128 @@
             "count": 3
           }
         ],
+        "yearlyDamage": [
+          {
+            "year": 1995,
+            "damage": 0.0
+          },
+          {
+            "year": 1996,
+            "damage": 0.0
+          },
+          {
+            "year": 1997,
+            "damage": 0.0
+          },
+          {
+            "year": 1998,
+            "damage": 0.0
+          },
+          {
+            "year": 1999,
+            "damage": 0.0
+          },
+          {
+            "year": 2000,
+            "damage": 0.0
+          },
+          {
+            "year": 2001,
+            "damage": 0.0
+          },
+          {
+            "year": 2002,
+            "damage": 0.0
+          },
+          {
+            "year": 2003,
+            "damage": 0.0
+          },
+          {
+            "year": 2004,
+            "damage": 0.0
+          },
+          {
+            "year": 2005,
+            "damage": 0.0
+          },
+          {
+            "year": 2006,
+            "damage": 0.0
+          },
+          {
+            "year": 2007,
+            "damage": 220000.0
+          },
+          {
+            "year": 2008,
+            "damage": 50000.0
+          },
+          {
+            "year": 2009,
+            "damage": 120000.0
+          },
+          {
+            "year": 2010,
+            "damage": 2920000.0
+          },
+          {
+            "year": 2011,
+            "damage": 3000.0
+          },
+          {
+            "year": 2012,
+            "damage": 0.0
+          },
+          {
+            "year": 2013,
+            "damage": 117000.0
+          },
+          {
+            "year": 2014,
+            "damage": 20000.0
+          },
+          {
+            "year": 2015,
+            "damage": 295000.0
+          },
+          {
+            "year": 2016,
+            "damage": 66000000.0
+          },
+          {
+            "year": 2017,
+            "damage": 24000.0
+          },
+          {
+            "year": 2018,
+            "damage": 29500.0
+          },
+          {
+            "year": 2019,
+            "damage": 54500.0
+          },
+          {
+            "year": 2020,
+            "damage": 53000.0
+          },
+          {
+            "year": 2021,
+            "damage": 68000.0
+          },
+          {
+            "year": 2022,
+            "damage": 9810950.0
+          },
+          {
+            "year": 2023,
+            "damage": 5000.0
+          },
+          {
+            "year": 2024,
+            "damage": 0.0
+          }
+        ],
         "totalDamageUSD": 79789950.0,
         "injuries": 0,
         "deaths": 17
@@ -185622,6 +186354,128 @@
           {
             "year": 2024,
             "count": 2
+          }
+        ],
+        "yearlyDamage": [
+          {
+            "year": 1995,
+            "damage": 0.0
+          },
+          {
+            "year": 1996,
+            "damage": 0.0
+          },
+          {
+            "year": 1997,
+            "damage": 0.0
+          },
+          {
+            "year": 1998,
+            "damage": 0.0
+          },
+          {
+            "year": 1999,
+            "damage": 0.0
+          },
+          {
+            "year": 2000,
+            "damage": 0.0
+          },
+          {
+            "year": 2001,
+            "damage": 0.0
+          },
+          {
+            "year": 2002,
+            "damage": 0.0
+          },
+          {
+            "year": 2003,
+            "damage": 100000.0
+          },
+          {
+            "year": 2004,
+            "damage": 0.0
+          },
+          {
+            "year": 2005,
+            "damage": 0.0
+          },
+          {
+            "year": 2006,
+            "damage": 2000.0
+          },
+          {
+            "year": 2007,
+            "damage": 10000.0
+          },
+          {
+            "year": 2008,
+            "damage": 50000.0
+          },
+          {
+            "year": 2009,
+            "damage": 120000.0
+          },
+          {
+            "year": 2010,
+            "damage": 2740000.0
+          },
+          {
+            "year": 2011,
+            "damage": 5000.0
+          },
+          {
+            "year": 2012,
+            "damage": 0.0
+          },
+          {
+            "year": 2013,
+            "damage": 117000.0
+          },
+          {
+            "year": 2014,
+            "damage": 20000.0
+          },
+          {
+            "year": 2015,
+            "damage": 285000.0
+          },
+          {
+            "year": 2016,
+            "damage": 26000000.0
+          },
+          {
+            "year": 2017,
+            "damage": 9000.0
+          },
+          {
+            "year": 2018,
+            "damage": 31000.0
+          },
+          {
+            "year": 2019,
+            "damage": 54500.0
+          },
+          {
+            "year": 2020,
+            "damage": 83000.0
+          },
+          {
+            "year": 2021,
+            "damage": 67000.0
+          },
+          {
+            "year": 2022,
+            "damage": 9760450.0
+          },
+          {
+            "year": 2023,
+            "damage": 5000.0
+          },
+          {
+            "year": 2024,
+            "damage": 0.0
           }
         ],
         "totalDamageUSD": 39458950.0,
@@ -185785,6 +186639,128 @@
             "count": 26
           }
         ],
+        "yearlyDamage": [
+          {
+            "year": 1995,
+            "damage": 0.0
+          },
+          {
+            "year": 1996,
+            "damage": 0.0
+          },
+          {
+            "year": 1997,
+            "damage": 0.0
+          },
+          {
+            "year": 1998,
+            "damage": 0.0
+          },
+          {
+            "year": 1999,
+            "damage": 0.0
+          },
+          {
+            "year": 2000,
+            "damage": 0.0
+          },
+          {
+            "year": 2001,
+            "damage": 0.0
+          },
+          {
+            "year": 2002,
+            "damage": 0.0
+          },
+          {
+            "year": 2003,
+            "damage": 0.0
+          },
+          {
+            "year": 2004,
+            "damage": 500000.0
+          },
+          {
+            "year": 2005,
+            "damage": 525000.0
+          },
+          {
+            "year": 2006,
+            "damage": 0.0
+          },
+          {
+            "year": 2007,
+            "damage": 421000.0
+          },
+          {
+            "year": 2008,
+            "damage": 3085000.0
+          },
+          {
+            "year": 2009,
+            "damage": 110000.0
+          },
+          {
+            "year": 2010,
+            "damage": 0.0
+          },
+          {
+            "year": 2011,
+            "damage": 1148000.0
+          },
+          {
+            "year": 2012,
+            "damage": 1605000.0
+          },
+          {
+            "year": 2013,
+            "damage": 318000.0
+          },
+          {
+            "year": 2014,
+            "damage": 46000.0
+          },
+          {
+            "year": 2015,
+            "damage": 279000.0
+          },
+          {
+            "year": 2016,
+            "damage": 90000.0
+          },
+          {
+            "year": 2017,
+            "damage": 1761500.0
+          },
+          {
+            "year": 2018,
+            "damage": 76000.0
+          },
+          {
+            "year": 2019,
+            "damage": 19000.0
+          },
+          {
+            "year": 2020,
+            "damage": 27000.0
+          },
+          {
+            "year": 2021,
+            "damage": 172000.0
+          },
+          {
+            "year": 2022,
+            "damage": 1443750.0
+          },
+          {
+            "year": 2023,
+            "damage": 710750.0
+          },
+          {
+            "year": 2024,
+            "damage": 4000.0
+          }
+        ],
         "totalDamageUSD": 12341000.0,
         "injuries": 0,
         "deaths": 0
@@ -185944,6 +186920,128 @@
           {
             "year": 2024,
             "count": 27
+          }
+        ],
+        "yearlyDamage": [
+          {
+            "year": 1995,
+            "damage": 0.0
+          },
+          {
+            "year": 1996,
+            "damage": 0.0
+          },
+          {
+            "year": 1997,
+            "damage": 0.0
+          },
+          {
+            "year": 1998,
+            "damage": 0.0
+          },
+          {
+            "year": 1999,
+            "damage": 0.0
+          },
+          {
+            "year": 2000,
+            "damage": 0.0
+          },
+          {
+            "year": 2001,
+            "damage": 0.0
+          },
+          {
+            "year": 2002,
+            "damage": 0.0
+          },
+          {
+            "year": 2003,
+            "damage": 0.0
+          },
+          {
+            "year": 2004,
+            "damage": 0.0
+          },
+          {
+            "year": 2005,
+            "damage": 60000.0
+          },
+          {
+            "year": 2006,
+            "damage": 0.0
+          },
+          {
+            "year": 2007,
+            "damage": 324000.0
+          },
+          {
+            "year": 2008,
+            "damage": 2965000.0
+          },
+          {
+            "year": 2009,
+            "damage": 185000.0
+          },
+          {
+            "year": 2010,
+            "damage": 275000.0
+          },
+          {
+            "year": 2011,
+            "damage": 1428000.0
+          },
+          {
+            "year": 2012,
+            "damage": 1605000.0
+          },
+          {
+            "year": 2013,
+            "damage": 363000.0
+          },
+          {
+            "year": 2014,
+            "damage": 27000.0
+          },
+          {
+            "year": 2015,
+            "damage": 205000.0
+          },
+          {
+            "year": 2016,
+            "damage": 50000.0
+          },
+          {
+            "year": 2017,
+            "damage": 1709500.0
+          },
+          {
+            "year": 2018,
+            "damage": 30500.0
+          },
+          {
+            "year": 2019,
+            "damage": 18000.0
+          },
+          {
+            "year": 2020,
+            "damage": 14000.0
+          },
+          {
+            "year": 2021,
+            "damage": 141000.0
+          },
+          {
+            "year": 2022,
+            "damage": 32000.0
+          },
+          {
+            "year": 2023,
+            "damage": 712250.0
+          },
+          {
+            "year": 2024,
+            "damage": 261000.0
           }
         ],
         "totalDamageUSD": 10405250.0,
@@ -186107,13 +187205,135 @@
             "count": 25
           }
         ],
+        "yearlyDamage": [
+          {
+            "year": 1995,
+            "damage": 0.0
+          },
+          {
+            "year": 1996,
+            "damage": 0.0
+          },
+          {
+            "year": 1997,
+            "damage": 0.0
+          },
+          {
+            "year": 1998,
+            "damage": 0.0
+          },
+          {
+            "year": 1999,
+            "damage": 0.0
+          },
+          {
+            "year": 2000,
+            "damage": 0.0
+          },
+          {
+            "year": 2001,
+            "damage": 0.0
+          },
+          {
+            "year": 2002,
+            "damage": 0.0
+          },
+          {
+            "year": 2003,
+            "damage": 25000.0
+          },
+          {
+            "year": 2004,
+            "damage": 500000.0
+          },
+          {
+            "year": 2005,
+            "damage": 200000.0
+          },
+          {
+            "year": 2006,
+            "damage": 0.0
+          },
+          {
+            "year": 2007,
+            "damage": 421000.0
+          },
+          {
+            "year": 2008,
+            "damage": 3160000.0
+          },
+          {
+            "year": 2009,
+            "damage": 160000.0
+          },
+          {
+            "year": 2010,
+            "damage": 0.0
+          },
+          {
+            "year": 2011,
+            "damage": 1183000.0
+          },
+          {
+            "year": 2012,
+            "damage": 1805000.0
+          },
+          {
+            "year": 2013,
+            "damage": 318000.0
+          },
+          {
+            "year": 2014,
+            "damage": 33000.0
+          },
+          {
+            "year": 2015,
+            "damage": 419000.0
+          },
+          {
+            "year": 2016,
+            "damage": 95000.0
+          },
+          {
+            "year": 2017,
+            "damage": 1761500.0
+          },
+          {
+            "year": 2018,
+            "damage": 82000.0
+          },
+          {
+            "year": 2019,
+            "damage": 23000.0
+          },
+          {
+            "year": 2020,
+            "damage": 27000.0
+          },
+          {
+            "year": 2021,
+            "damage": 149000.0
+          },
+          {
+            "year": 2022,
+            "damage": 1444250.0
+          },
+          {
+            "year": 2023,
+            "damage": 710750.0
+          },
+          {
+            "year": 2024,
+            "damage": 1405000.0
+          }
+        ],
         "totalDamageUSD": 13921500.0,
         "injuries": 0,
         "deaths": 0
       }
     },
     "insuranceSignals": {
-      "generatedUtc": "2026-04-26T20:53:13.787093+00:00",
+      "generatedUtc": "2026-04-26T21:22:25.887763+00:00",
       "sources": {
         "femaOpenDataSetsIndex": "https://www.fema.gov/api/open/v1/OpenFemaDataSets",
         "femaNfipClaims": "https://www.fema.gov/api/open/v2/FimaNfipClaims",

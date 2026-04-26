@@ -678,8 +678,9 @@ function renderInsuranceSignals(dataset) {
   };
 
   // Approximate 2020 Census populations for per-capita normalization
+  // Keys must exactly match stats.insuranceSignals.byCity keys in the dataset
   const CITY_POP = {
-    charleston_sc:      150227,
+    charleston:         150227,
     north_charleston:   116278,
     summerville:         54964,
     goose_creek:         44045,
