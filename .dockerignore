@@ -1,0 +1,7 @@
+data/raw/
+scripts/
+tests/
+docs/
+*.md
+.git/
+.gitignore

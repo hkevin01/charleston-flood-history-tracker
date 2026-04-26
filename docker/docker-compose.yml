@@ -1,0 +1,10 @@
+services:
+  flood-tracker:
+    container_name: charleston-flood-tracker
+    image: charleston-flood-history-tracker:latest
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8091:80"
+    restart: unless-stopped
