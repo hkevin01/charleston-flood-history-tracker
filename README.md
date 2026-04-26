@@ -522,6 +522,14 @@ mindmap
 > [!NOTE]
 > **The 20-mile radius produces intentional overlap.** City-level event counts in the comparison panel will sum to more than the 314 deduplicated regional events. This is expected and documented.
 
+### Data Quality Flags
+
+Some events display a data-quality flag called **damageUnreported**.
+
+- Plain meaning: the NOAA record shows `$0` because the damage field was left blank, **not** because no damage happened.
+- Why you might see it: the narrative says things like roads flooded, cars underwater, or structures impacted, but no dollar estimate was entered in the original report.
+- How to read it: treat `$0` as **unknown / not reported** for that event, not as confirmed zero loss.
+
 <p align="right">(<a href="#top">back to top ↑</a>)</p>
 
 ---

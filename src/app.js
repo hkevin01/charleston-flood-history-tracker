@@ -331,7 +331,7 @@ function cityFeature(place) {
 // Outputs:  Mutates innerHTML of #stats element.
 // Side Effects: DOM write only; no data mutation.
 // ---------------------------------------------------------------------------
-function renderStats(dataset, filteredEvents) {
+function renderStats(dataset, filteredEvents, minDamageFilterUSD = 0) {
   const statsEl = document.getElementById("stats");
   const byType = {};
   const byCtx  = {};
@@ -370,6 +370,7 @@ function renderStats(dataset, filteredEvents) {
   statsEl.innerHTML =
     `<b>Events shown:</b> ${filteredEvents.length}<br/>` +
     `<b>Year range:</b> ${dataset.meta.year_range[0]}-${dataset.meta.year_range[1]}<br/>` +
+    `<b>Min reported damage filter:</b> ${money(minDamageFilterUSD)}<br/>` +
     `<b>Total reported damage:</b> ${money(dmg)}<br/>` +
     (unreportedCount > 0
       ? `<span style="color:#92400e;font-size:0.85em">⚠ ${unreportedCount} event${unreportedCount > 1 ? "s" : ""} ` +
@@ -572,6 +573,55 @@ function renderDecisionSection(dataset) {
 }
 
 // ---------------------------------------------------------------------------
+// ID:           CFHT-PRINT-REPORT-001
+// Requirement:  Populate a print-only summary block with current filters and
+//               key metrics so PDF export reads like a concise report.
+// Inputs:
+//   dataset (object): Full parsed JSON dataset.
+//   filteredEvents (array): Events currently passing filter criteria.
+//   filters (object): { yearStart, yearEnd, eventType, minDamage }.
+// Outputs:  Mutates innerHTML of #printReport element.
+// Side Effects: DOM write only; no data mutation.
+// ---------------------------------------------------------------------------
+function renderPrintReport(dataset, filteredEvents, filters) {
+  const el = document.getElementById("printReport");
+  if (!el) return;
+
+  const totalDamage = filteredEvents.reduce(
+    (s, e) => s + (e.propertyDamageUSD || 0) + (e.cropDamageUSD || 0),
+    0
+  );
+  const unreported = filteredEvents.filter((e) => e.damageUnreported).length;
+  const byType = {};
+  filteredEvents.forEach((e) => {
+    byType[e.eventType] = (byType[e.eventType] || 0) + 1;
+  });
+  const typeSummary = Object.entries(byType)
+    .sort((a, b) => b[1] - a[1])
+    .map(([k, v]) => `${k}: ${v}`)
+    .join(" | ");
+
+  const generatedAt = new Date().toLocaleString("en-US", {
+    year: "numeric", month: "short", day: "2-digit",
+    hour: "2-digit", minute: "2-digit",
+  });
+
+  el.innerHTML =
+    `<h2 style="margin:0 0 .2rem;font-size:1rem;color:#0b3a5b">Charleston Flood Risk Report Snapshot</h2>` +
+    `<div><b>Generated:</b> ${generatedAt}</div>` +
+    `<div><b>Filter window:</b> ${filters.yearStart}-${filters.yearEnd}</div>` +
+    `<div><b>Event type:</b> ${filters.eventType || "All flood types"}</div>` +
+    `<div><b>Minimum reported damage:</b> ${money(filters.minDamage)}</div>` +
+    `<div><b>Events shown:</b> ${filteredEvents.length}</div>` +
+    `<div><b>Total reported damage:</b> ${money(totalDamage)}</div>` +
+    `<div><b>Damage not recorded flags:</b> ${unreported}</div>` +
+    `<div><b>Type split:</b> ${typeSummary || "N/A"}</div>` +
+    `<div style="margin-top:.2rem;color:#475569">` +
+    `Data source: NOAA Storm Events (NCEI). "Damage not recorded" indicates blank NOAA damage fields with impact narratives.` +
+    `</div>`;
+}
+
+// ---------------------------------------------------------------------------
 // ID:           CFHT-HAVERSINE-001
 // Requirement:  Compute great-circle distance in miles between two WGS-84
 //               coordinate pairs.  Front-end mirror of the Python pipeline
@@ -766,6 +816,7 @@ function exportPDF() {
   // ── 7. Filter controls ────────────────────────────────────────────────────
   const yearStartEl  = document.getElementById("yearStart");
   const yearEndEl    = document.getElementById("yearEnd");
+  const minDamageEl  = document.getElementById("minDamage");
   const eventTypeEl  = document.getElementById("eventType");
   const showRiskEl   = document.getElementById("showRisk");
   const showFemaEl   = document.getElementById("showFema");
@@ -786,12 +837,15 @@ function exportPDF() {
   function redraw() {
     const yStart = parseInt(yearStartEl.value, 10) || dataset.meta.year_range[0];
     const yEnd   = parseInt(yearEndEl.value,   10) || dataset.meta.year_range[1];
+    const minDamage = Math.max(0, parseFloat(minDamageEl?.value || "0") || 0);
     const typeFilter = eventTypeEl.value;
     const showRisk   = showRiskEl.checked;
 
     const filtered = dataset.floodEvents.filter((e) => {
       if (e.year < yStart || e.year > yEnd) return false;
       if (typeFilter && e.eventType !== typeFilter) return false;
+      const reportedDamage = (e.propertyDamageUSD || 0) + (e.cropDamageUSD || 0);
+      if (reportedDamage < minDamage) return false;
       return true;
     });
 
@@ -805,13 +859,19 @@ function exportPDF() {
       allZones.forEach((z) => riskSource.addFeature(riskFeature(z)));
     }
 
-    renderStats(dataset, filtered);
+    renderStats(dataset, filtered, minDamage);
     renderTrendsSummary(dataset, filtered);
     renderCityComparison(dataset, filtered);
+    renderPrintReport(dataset, filtered, {
+      yearStart: yStart,
+      yearEnd: yEnd,
+      eventType: typeFilter,
+      minDamage,
+    });
   }
 
   // ── 9. Wire filter control events ────────────────────────────────────────
-  [yearStartEl, yearEndEl, eventTypeEl, showRiskEl].forEach((el) => {
+  [yearStartEl, yearEndEl, minDamageEl, eventTypeEl, showRiskEl].forEach((el) => {
     el.addEventListener("change", redraw);
   });
 

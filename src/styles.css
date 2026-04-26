@@ -112,6 +112,9 @@ body {
   min-height: 0;
   overflow-y: auto;
 }
+
+/* Print-only summary block populated by app.js */
+.print-report { display: none; }
 .panel h2, .panel h3, .panel h4 { margin: 0.35rem 0; }
 .panel label {
   display: block;
@@ -358,6 +361,16 @@ body {
   .layout {
     display: block;
     padding: 0.3cm;
+  }
+
+  .print-report {
+    display: block;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 0.35cm;
+    margin: 0.2cm 0.3cm 0.3cm;
+    background: #f8fafc;
+    font-size: 0.8rem;
   }
 
   #viewDiv {

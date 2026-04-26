@@ -35,6 +35,9 @@
       <div class="pill">NOAA Storm Events + OpenLayers</div>
     </header>
 
+    <!-- Print-only report summary (populated by app.js before export) -->
+    <section id="printReport" class="print-report" aria-label="Printable report summary"></section>
+
     <!-- Mobile slide-up panel toggle button (hidden on desktop via CSS) -->
     <button class="panel-toggle-btn" id="panelToggle"
             aria-controls="sidebar" aria-expanded="false">☰ Stats</button>
@@ -64,6 +67,12 @@
 
         <label for="yearEnd">Year Range — End</label>
         <input id="yearEnd"   type="number" min="1995" max="2024" />
+
+        <label for="minDamage">Minimum Reported Damage (USD)</label>
+        <input id="minDamage" type="number" min="0" step="1000" value="0" />
+        <p style="margin:.25rem 0 0;color:#6b7280;font-size:.72rem">
+          Filters on reported NOAA dollar values. Events flagged as unreported may still show $0.
+        </p>
 
         <!-- Layer toggles -->
         <div class="toggle-row" style="margin-top:.7rem">
