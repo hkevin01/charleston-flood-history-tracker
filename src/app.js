@@ -1109,7 +1109,8 @@ function exportFilteredEventsCsv(events, filters) {
   const minDamageEl  = document.getElementById("minDamage");
   const showUnreportedOnlyEl = document.getElementById("showUnreportedOnly");
   const eventTypeEl  = document.getElementById("eventType");
-  const showRiskEl   = document.getElementById("showRisk");
+  const showRiskEl    = document.getElementById("showRisk");
+  const showWvRiskEl  = document.getElementById("showWvRisk");
   const showComparisonEventsEl = document.getElementById("showComparisonEvents");
   const comparisonCityEl = document.getElementById("comparisonCity");
   const showFemaEl   = document.getElementById("showFema");
@@ -1179,7 +1180,8 @@ function exportFilteredEventsCsv(events, filters) {
     const minDamage = Math.max(0, parseFloat(minDamageEl?.value || "0") || 0);
     const unreportedOnly = !!showUnreportedOnlyEl?.checked;
     const typeFilter = eventTypeEl.value;
-    const showRisk   = showRiskEl.checked;
+    const showRisk    = showRiskEl.checked;
+    const showWvRisk  = !!showWvRiskEl?.checked;
     const showComparisonEvents = !!showComparisonEventsEl?.checked;
     const selectedComparisonCity = comparisonCityEl?.value || "";
 
@@ -1231,9 +1233,8 @@ function exportFilteredEventsCsv(events, filters) {
     }
 
     comparisonRiskSource.clear();
-    const showComparisonRisk = showRisk && showComparisonEvents;
-    comparisonRiskLayer.setVisible(showComparisonRisk);
-    if (showComparisonRisk && dataset.comparisonRiskZones) {
+    comparisonRiskLayer.setVisible(showWvRisk);
+    if (showWvRisk && dataset.comparisonRiskZones) {
       const cityKeys = selectedComparisonCity
         ? [selectedComparisonCity]
         : Object.keys(dataset.comparisonRiskZones);
@@ -1265,6 +1266,7 @@ function exportFilteredEventsCsv(events, filters) {
     showUnreportedOnlyEl,
     eventTypeEl,
     showRiskEl,
+    showWvRiskEl,
     showComparisonEventsEl,
     comparisonCityEl,
   ].forEach((el) => {
