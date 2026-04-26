@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_utc": "2026-04-26T20:39:57.522238+00:00",
+    "generated_utc": "2026-04-26T20:45:09.635206+00:00",
     "year_range": [
       1995,
       2024
@@ -102941,7 +102941,7 @@
       }
     },
     "insuranceSignals": {
-      "generatedUtc": "2026-04-26T20:39:57.522221+00:00",
+      "generatedUtc": "2026-04-26T20:45:09.635188+00:00",
       "sources": {
         "femaOpenDataSetsIndex": "https://www.fema.gov/api/open/v1/OpenFemaDataSets",
         "femaNfipClaims": "https://www.fema.gov/api/open/v2/FimaNfipClaims",
@@ -102975,12 +102975,11 @@
           },
           "residentialLayer": {
             "nfipClaims": {
-              "claimsCount": 0,
-              "buildingPaidUSD": 0.0,
-              "contentsPaidUSD": 0.0,
-              "increasedCompliancePaidUSD": 0.0,
-              "truncated": false,
-              "error": "unavailable"
+              "claimsCount": 19281,
+              "buildingPaidUSD": 278311682.48,
+              "contentsPaidUSD": 33609948.04,
+              "increasedCompliancePaidUSD": 271333.5,
+              "truncated": false
             },
             "housingOwners": {
               "rows": 65,
@@ -103005,7 +103004,7 @@
               "truncated": false,
               "error": "unavailable"
             },
-            "compositeResidentialLossUSD": 1555260.59
+            "compositeResidentialLossUSD": 313476891.11
           },
           "vehicleProxyLayer": {
             "floodRegistrationCount": 1420,
@@ -103028,12 +103027,11 @@
           },
           "residentialLayer": {
             "nfipClaims": {
-              "claimsCount": 0,
-              "buildingPaidUSD": 0.0,
-              "contentsPaidUSD": 0.0,
-              "increasedCompliancePaidUSD": 0.0,
-              "truncated": false,
-              "error": "unavailable"
+              "claimsCount": 19899,
+              "buildingPaidUSD": 285832478.4,
+              "contentsPaidUSD": 34806513.27,
+              "increasedCompliancePaidUSD": 276733.5,
+              "truncated": false
             },
             "housingOwners": {
               "rows": 32,
@@ -103058,7 +103056,7 @@
               "truncated": false,
               "error": "unavailable"
             },
-            "compositeResidentialLossUSD": 1348174.24
+            "compositeResidentialLossUSD": 321987165.91
           },
           "vehicleProxyLayer": {
             "floodRegistrationCount": 747,
@@ -103081,12 +103079,11 @@
           },
           "residentialLayer": {
             "nfipClaims": {
-              "claimsCount": 0,
-              "buildingPaidUSD": 0.0,
-              "contentsPaidUSD": 0.0,
-              "increasedCompliancePaidUSD": 0.0,
-              "truncated": false,
-              "error": "unavailable"
+              "claimsCount": 1397,
+              "buildingPaidUSD": 21768018.91,
+              "contentsPaidUSD": 3707508.46,
+              "increasedCompliancePaidUSD": 95400.0,
+              "truncated": false
             },
             "housingOwners": {
               "rows": 26,
@@ -103111,7 +103108,7 @@
               "truncated": false,
               "error": "unavailable"
             },
-            "compositeResidentialLossUSD": 1414220.71
+            "compositeResidentialLossUSD": 26889748.08
           },
           "vehicleProxyLayer": {
             "floodRegistrationCount": 890,
@@ -103134,12 +103131,11 @@
           },
           "residentialLayer": {
             "nfipClaims": {
-              "claimsCount": 0,
-              "buildingPaidUSD": 0.0,
-              "contentsPaidUSD": 0.0,
-              "increasedCompliancePaidUSD": 0.0,
-              "truncated": false,
-              "error": "unavailable"
+              "claimsCount": 618,
+              "buildingPaidUSD": 7520795.92,
+              "contentsPaidUSD": 1196565.23,
+              "increasedCompliancePaidUSD": 5400.0,
+              "truncated": false
             },
             "housingOwners": {
               "rows": 7,
@@ -103164,7 +103160,7 @@
               "truncated": false,
               "error": "unavailable"
             },
-            "compositeResidentialLossUSD": 329419.57
+            "compositeResidentialLossUSD": 9046780.72
           },
           "vehicleProxyLayer": {
             "floodRegistrationCount": 161,
@@ -103187,12 +103183,11 @@
           },
           "residentialLayer": {
             "nfipClaims": {
-              "claimsCount": 0,
-              "buildingPaidUSD": 0.0,
-              "contentsPaidUSD": 0.0,
-              "increasedCompliancePaidUSD": 0.0,
-              "truncated": false,
-              "error": "unavailable"
+              "claimsCount": 19899,
+              "buildingPaidUSD": 285832478.4,
+              "contentsPaidUSD": 34806513.27,
+              "increasedCompliancePaidUSD": 276733.5,
+              "truncated": false
             },
             "housingOwners": {
               "rows": 8,
@@ -103217,7 +103212,7 @@
               "truncated": false,
               "error": "unavailable"
             },
-            "compositeResidentialLossUSD": 120275.16
+            "compositeResidentialLossUSD": 320759266.83
           },
           "vehicleProxyLayer": {
             "floodRegistrationCount": 103,
@@ -103240,12 +103235,11 @@
           },
           "residentialLayer": {
             "nfipClaims": {
-              "claimsCount": 0,
-              "buildingPaidUSD": 0.0,
-              "contentsPaidUSD": 0.0,
-              "increasedCompliancePaidUSD": 0.0,
-              "truncated": false,
-              "error": "unavailable"
+              "claimsCount": 295,
+              "buildingPaidUSD": 2706587.19,
+              "contentsPaidUSD": 386236.91,
+              "increasedCompliancePaidUSD": 69100.0,
+              "truncated": false
             },
             "housingOwners": {
               "rows": 10,
@@ -103270,7 +103264,7 @@
               "truncated": false,
               "error": "unavailable"
             },
-            "compositeResidentialLossUSD": 209247.74
+            "compositeResidentialLossUSD": 3302071.84
           },
           "vehicleProxyLayer": {
             "floodRegistrationCount": 72,
@@ -103293,12 +103287,11 @@
           },
           "residentialLayer": {
             "nfipClaims": {
-              "claimsCount": 0,
-              "buildingPaidUSD": 0.0,
-              "contentsPaidUSD": 0.0,
-              "increasedCompliancePaidUSD": 0.0,
-              "truncated": false,
-              "error": "unavailable"
+              "claimsCount": 295,
+              "buildingPaidUSD": 2706587.19,
+              "contentsPaidUSD": 386236.91,
+              "increasedCompliancePaidUSD": 69100.0,
+              "truncated": false
             },
             "housingOwners": {
               "rows": 8,
@@ -103323,7 +103316,7 @@
               "truncated": false,
               "error": "unavailable"
             },
-            "compositeResidentialLossUSD": 189088.69
+            "compositeResidentialLossUSD": 3281912.79
           },
           "vehicleProxyLayer": {
             "floodRegistrationCount": 68,
@@ -103346,12 +103339,11 @@
           },
           "residentialLayer": {
             "nfipClaims": {
-              "claimsCount": 0,
-              "buildingPaidUSD": 0.0,
-              "contentsPaidUSD": 0.0,
+              "claimsCount": 773,
+              "buildingPaidUSD": 3779315.55,
+              "contentsPaidUSD": 1828090.05,
               "increasedCompliancePaidUSD": 0.0,
-              "truncated": false,
-              "error": "unavailable"
+              "truncated": false
             },
             "housingOwners": {
               "rows": 11,
@@ -103376,7 +103368,7 @@
               "truncated": false,
               "error": "unavailable"
             },
-            "compositeResidentialLossUSD": 481292.2
+            "compositeResidentialLossUSD": 6088697.8
           },
           "vehicleProxyLayer": {
             "floodRegistrationCount": 126,
@@ -103399,12 +103391,11 @@
           },
           "residentialLayer": {
             "nfipClaims": {
-              "claimsCount": 0,
-              "buildingPaidUSD": 0.0,
-              "contentsPaidUSD": 0.0,
+              "claimsCount": 371,
+              "buildingPaidUSD": 3167407.52,
+              "contentsPaidUSD": 2676712.43,
               "increasedCompliancePaidUSD": 0.0,
-              "truncated": false,
-              "error": "unavailable"
+              "truncated": false
             },
             "housingOwners": {
               "rows": 15,
@@ -103429,7 +103420,7 @@
               "truncated": false,
               "error": "unavailable"
             },
-            "compositeResidentialLossUSD": 3340340.34
+            "compositeResidentialLossUSD": 9184460.29
           },
           "vehicleProxyLayer": {
             "floodRegistrationCount": 639,
@@ -103452,12 +103443,11 @@
           },
           "residentialLayer": {
             "nfipClaims": {
-              "claimsCount": 0,
-              "buildingPaidUSD": 0.0,
-              "contentsPaidUSD": 0.0,
+              "claimsCount": 773,
+              "buildingPaidUSD": 3779315.55,
+              "contentsPaidUSD": 1828090.05,
               "increasedCompliancePaidUSD": 0.0,
-              "truncated": false,
-              "error": "unavailable"
+              "truncated": false
             },
             "housingOwners": {
               "rows": 8,
@@ -103482,7 +103472,7 @@
               "truncated": false,
               "error": "unavailable"
             },
-            "compositeResidentialLossUSD": 381839.16
+            "compositeResidentialLossUSD": 5989244.76
           },
           "vehicleProxyLayer": {
             "floodRegistrationCount": 133,
