@@ -1036,9 +1036,11 @@ function exportFilteredEventsCsv(events, filters) {
   const comparisonFloodSource = new ol.source.Vector();
   const citySource  = new ol.source.Vector();
   const comparisonCitySource  = new ol.source.Vector();
-  const riskSource  = new ol.source.Vector();
+  const riskSource           = new ol.source.Vector();
+  const comparisonRiskSource  = new ol.source.Vector();
 
-  const riskLayer  = new ol.layer.Vector({ source: riskSource,  zIndex: 0 });
+  const riskLayer            = new ol.layer.Vector({ source: riskSource,           zIndex: 0 });
+  const comparisonRiskLayer  = new ol.layer.Vector({ source: comparisonRiskSource,  zIndex: 0 });
   const floodLayer = new ol.layer.Vector({ source: floodSource, zIndex: 2 });
   const comparisonFloodLayer = new ol.layer.Vector({ source: comparisonFloodSource, zIndex: 2 });
   const cityLayer  = new ol.layer.Vector({ source: citySource,  zIndex: 3 });
@@ -1054,6 +1056,7 @@ function exportFilteredEventsCsv(events, filters) {
     layers: [
       new ol.layer.Tile({ source: new ol.source.OSM() }),
       riskLayer,
+      comparisonRiskLayer,
       femaLayer,
       stormTrackLayer,
       floodLayer,
@@ -1225,6 +1228,20 @@ function exportFilteredEventsCsv(events, filters) {
     if (showRisk) {
       const allZones = Object.values(dataset.riskZones).flat();
       allZones.forEach((z) => riskSource.addFeature(riskFeature(z)));
+    }
+
+    comparisonRiskSource.clear();
+    const showComparisonRisk = showRisk && showComparisonEvents;
+    comparisonRiskLayer.setVisible(showComparisonRisk);
+    if (showComparisonRisk && dataset.comparisonRiskZones) {
+      const cityKeys = selectedComparisonCity
+        ? [selectedComparisonCity]
+        : Object.keys(dataset.comparisonRiskZones);
+      cityKeys.forEach((key) => {
+        (dataset.comparisonRiskZones[key] || []).forEach((z) => {
+          comparisonRiskSource.addFeature(riskFeature(z));
+        });
+      });
     }
 
     renderStats(dataset, filtered, minDamage, unreportedOnly);

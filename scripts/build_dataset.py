@@ -1199,6 +1199,7 @@ def main() -> None:
     comparison_combined = list(comparison_unique_map.values())
 
     risk_zones = {c["key"]: build_risk_zones(c, city_events[c["key"]]) for c in CITIES}
+    comparison_risk_zones = {c["key"]: build_risk_zones(c, comparison_city_events[c["key"]]) for c in COMPARISON_CITIES}
 
     month_names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -1394,6 +1395,7 @@ def main() -> None:
             for ev in comparison_combined
         ],
         "riskZones": risk_zones,
+        "comparisonRiskZones": comparison_risk_zones,
         "stats": {
             "regional": {
                 "eventCount": len(combined),
