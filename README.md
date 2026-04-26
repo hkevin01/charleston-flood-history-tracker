@@ -28,6 +28,7 @@
 - [Dataset Headline Numbers](#dataset-headline-numbers)
 - [Architecture](#architecture)
 - [Data Flow](#data-flow)
+- [Data & Metadata Provenance](#data--metadata-provenance)
 - [Event Distribution](#event-distribution)
 - [Technology Stack](#technology-stack)
 - [Setup & Installation](#setup--installation)
@@ -186,6 +187,42 @@ sequenceDiagram
     Browser->>Browser: Apply user filters (year / type / damage)
     Browser-->>Dev: Interactive flood history map
 ```
+
+<p align="right">(<a href="#top">back to top ↑</a>)</p>
+
+---
+
+## Data & Metadata Provenance
+
+This project intentionally separates **primary event data** from **contextual metadata** used to improve interpretation.
+
+### Primary event dataset (used directly in JSON)
+
+| Source | What we use | How it is used in this project | Notes |
+|--------|-------------|--------------------------------|-------|
+| NOAA NCEI Storm Events CSV bulk files | `StormEvents_details-ftp_v1.0_dYYYY_*.csv.gz` | Canonical source for event ID, time, county, lat/lon, event type, injuries/deaths, `DAMAGE_PROPERTY`, `DAMAGE_CROPS`, narratives | Downloaded by `scripts/build_dataset.py` and written into `data/processed/charleston_floods_30y.json` |
+
+### Contextual metadata sources (for interpretation and QA)
+
+| Source | What we query | Why it matters | Integration status |
+|--------|---------------|----------------|--------------------|
+| NWS Charleston event archive | Significant event summary pages and office archive references | Confirms local meteorological context, rain totals, and event framing for known flood periods | Referenced as supporting context |
+| Iowa State IEM NWS text archive | AFOS text products (LSR, FFW, etc.) for KCHS | Provides time-stamped warning/report context not always visible in Storm Events CSV fields | Referenced as supporting context |
+| NWS text products (LSR/FFW) | `LSRCHS` and `FFWCHS` examples for Aug 2005 | Verified that North Charleston was under a Flash Flood Warning during the target event window | Referenced as supporting context |
+| SHELDUS (ASU/CEMHS) | County-level hazard/loss catalogs | Candidate secondary source for cross-checking loss totals when NOAA records are blank or sparse | Research in progress |
+
+### Provenance policy used in this repository
+
+1. **Primary values in the shipped JSON come from NOAA Storm Events CSVs.**
+2. **When NOAA damage fields are blank but narratives describe physical impact, we flag the event as `damageUnreported: true`.**
+3. **External sources (NWS office pages, IEM product archives, newspapers, SHELDUS) are treated as corroborating metadata unless a defensible, traceable replacement value is established.**
+4. **No external estimate is silently substituted into NOAA numeric damage fields.**
+
+### Known August 2005 finding (current status)
+
+- The Aug 24, 2005 Charleston-area flash flood event associated with Hawthorne Trailer Park / Rivers Avenue has narrative evidence of substantial impact, but NOAA `DAMAGE_PROPERTY` is blank in the source CSV.
+- Supporting metadata confirms contemporaneous flash flood warning context for North Charleston.
+- Current project behavior is to keep numeric damage at reported NOAA value and surface uncertainty with `damageUnreported` indicators.
 
 <p align="right">(<a href="#top">back to top ↑</a>)</p>
 
@@ -549,9 +586,12 @@ This project is released under the **MIT License** — you are free to use, copy
 | Source | Description | Link |
 |--------|-------------|------|
 | NOAA NCEI Storm Events | Primary flood event records (1995–2024) | [CSV directory](https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/) |
+| NWS Charleston Event Archive | Local event summary and historical office context | [weather.gov/chs/events](https://www.weather.gov/chs/events) |
+| Iowa State IEM NWS Text Archive | Historical AFOS text products (LSR/FFW/AFD/etc.) | [mesonet.agron.iastate.edu](https://mesonet.agron.iastate.edu/nws/text.php) |
 | NWS Flood Safety | Action guidance referenced in decision-analysis section | [weather.gov](https://www.weather.gov/safety/flood) |
 | NFIP / FloodSmart | Insurance guidance | [floodsmart.gov](https://www.floodsmart.gov/get-insured/buy-a-policy) |
 | NAIC Auto Insurance DB | State-level auto comprehensive claim frequency proxy | [naic.org](https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf) |
+| SHELDUS (ASU/CEMHS) | County-level hazard/loss cross-reference source | [cemhs.asu.edu/sheldus](https://cemhs.asu.edu/sheldus) |
 | OpenStreetMap | Base map tiles | [openstreetmap.org](https://www.openstreetmap.org) |
 
 ### Inspiration
