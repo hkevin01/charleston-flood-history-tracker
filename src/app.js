@@ -555,6 +555,64 @@ function renderCityComparison(dataset, filteredEvents) {
 }
 
 // ---------------------------------------------------------------------------
+// ID:           CFHT-BENCH-CHART-001
+// Requirement:  Render a compact side-by-side frequency chart comparing
+//               Charleston-metro filtered events against WV benchmark-city
+//               aggregate event frequency for the active year range.
+// Inputs:
+//   dataset (object): Full parsed JSON dataset.
+//   filteredEvents (array): Active filtered Charleston-regional events.
+//   yearStart/yearEnd (number): Active year range bounds.
+// Outputs:  Mutates innerHTML of #benchmarkChart element.
+// Notes:
+//   WV benchmark aggregation is year-range aware. It does not currently
+//   apply Charleston-specific type/minDamage filters because benchmark rows
+//   are stored as yearly aggregates in comparisonCities stats.
+// ---------------------------------------------------------------------------
+function renderBenchmarkChart(dataset, filteredEvents, yearStart, yearEnd) {
+  const el = document.getElementById("benchmarkChart");
+  if (!el) return;
+
+  const years = Math.max(1, yearEnd - yearStart + 1);
+  const charlestonCount = filteredEvents.length;
+  const charlestonAvg = charlestonCount / years;
+
+  let wvCount = 0;
+  if (dataset.stats?.comparisonCities) {
+    for (const cityStats of Object.values(dataset.stats.comparisonCities)) {
+      for (const yc of (cityStats.yearlyCounts || [])) {
+        if (yc.year >= yearStart && yc.year <= yearEnd) {
+          wvCount += yc.count || 0;
+        }
+      }
+    }
+  }
+  const wvAvg = wvCount / years;
+
+  const maxAvg = Math.max(charlestonAvg, wvAvg, 1);
+  const charPct = Math.round((charlestonAvg / maxAvg) * 100);
+  const wvPct = Math.round((wvAvg / maxAvg) * 100);
+
+  el.innerHTML =
+    `<div class="bench-wrap">` +
+      `<div class="bench-row">` +
+        `<div class="bench-label">Charleston metro</div>` +
+        `<div class="bench-track"><div class="bench-fill bench-fill-charleston" style="width:${charPct}%"></div></div>` +
+        `<div class="bench-value">${charlestonAvg.toFixed(2)}/yr</div>` +
+      `</div>` +
+      `<div class="bench-row">` +
+        `<div class="bench-label">WV benchmarks</div>` +
+        `<div class="bench-track"><div class="bench-fill bench-fill-wv" style="width:${wvPct}%"></div></div>` +
+        `<div class="bench-value">${wvAvg.toFixed(2)}/yr</div>` +
+      `</div>` +
+    `</div>` +
+    `<div class="bench-caption">` +
+      `Active window ${yearStart}-${yearEnd}. Charleston uses current map filters; WV uses benchmark yearly totals ` +
+      `for Fayetteville, Oak Hill, Bridgeport, Fairmont, and Clarksburg.` +
+    `</div>`;
+}
+
+// ---------------------------------------------------------------------------
 // ID:           CFHT-DECISION-001
 // Requirement:  Populate the #decisionAnalysis panel with evidence-backed
 //               answers to common flood-risk decision questions, a per-city
@@ -984,6 +1042,7 @@ function exportFilteredEventsCsv(events, filters) {
     renderStats(dataset, filtered, minDamage, unreportedOnly);
     renderTrendsSummary(dataset, filtered);
     renderCityComparison(dataset, filtered);
+    renderBenchmarkChart(dataset, filtered, yStart, yEnd);
     renderPrintReport(dataset, filtered, {
       yearStart: yStart,
       yearEnd: yEnd,
