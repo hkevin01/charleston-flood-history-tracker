@@ -257,6 +257,30 @@ body {
 .bench-value { font-variant-numeric: tabular-nums; color: #0f172a; font-weight: 700; }
 .bench-caption { margin-top: .3rem; color: #64748b; font-size: .72rem; line-height: 1.35; }
 
+/* ── External signal confidence badges ──────────────────────────────────── */
+.conf-badge {
+  display: inline-block;
+  margin-right: .35rem;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+.conf-badge-direct {
+  background: #dcfce7;
+  color: #166534;
+}
+.conf-badge-proxy {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+.conf-badge-context {
+  background: #f1f5f9;
+  color: #475569;
+}
+
 /* ── Damage context badges (reusable static class) ──────────────────────── */
 .dmg-badge {
   display: inline-block;

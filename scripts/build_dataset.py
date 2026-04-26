@@ -63,6 +63,7 @@ import io
 import json
 import math
 import re
+import urllib.parse
 import urllib.request
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -73,6 +74,7 @@ OUT_JSON = PROJECT_ROOT / "data" / "processed" / "charleston_floods_30y.json"
 
 NOAA_DIR = "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/"
 NOAA_INDEX_URL = NOAA_DIR
+OPENFEMA_API_BASE = "https://www.fema.gov/api/open"
 
 START_YEAR = 1995
 END_YEAR = 2024
@@ -104,6 +106,324 @@ COMPARISON_CITIES = [
     {"key": "fairmont_wv",     "name": "Fairmont, WV",     "lat": 39.4851, "lon": -80.1426},
     {"key": "clarksburg_wv",   "name": "Clarksburg, WV",   "lat": 39.2806, "lon": -80.3445},
 ]
+
+
+def _city_state_from_name(city_name: str) -> tuple[str, str]:
+    parts = [p.strip() for p in (city_name or "").split(",")]
+    city = parts[0].upper() if parts else ""
+    state = parts[1].upper() if len(parts) > 1 else ""
+    return city, state
+
+
+def _fema_fetch_rows(
+    dataset: str,
+    *,
+    filter_expr: str,
+    select_fields: list[str],
+    version: str = "v2",
+    page_size: int = 1000,
+    max_rows: int = 20000,
+) -> tuple[list[dict], bool]:
+    """Fetch OpenFEMA rows with paging and a hard cap to avoid runaway runtime."""
+    rows: list[dict] = []
+    skip = 0
+    truncated = False
+
+    while True:
+        encoded_filter = urllib.parse.quote(filter_expr, safe="()', =")
+        encoded_select = urllib.parse.quote(",".join(select_fields), safe=",")
+        url = (
+            f"{OPENFEMA_API_BASE}/{version}/{dataset}"
+            f"?$top={page_size}&$skip={skip}"
+            f"&$filter={encoded_filter}"
+            f"&$select={encoded_select}"
+        )
+        with urllib.request.urlopen(url, timeout=120) as resp:
+            payload = json.loads(resp.read().decode("utf-8", errors="replace"))
+
+        entity_key = None
+        for k in payload.keys():
+            if k != "metadata":
+                entity_key = k
+                break
+        if not entity_key:
+            break
+
+        chunk = payload.get(entity_key, [])
+        if not chunk:
+            break
+
+        rows.extend(chunk)
+        if len(rows) >= max_rows:
+            rows = rows[:max_rows]
+            truncated = True
+            break
+
+        if len(chunk) < page_size:
+            break
+        skip += page_size
+
+    return rows, truncated
+
+
+def _fetch_nfip_city_claim_metrics(city_name: str, state_abbr: str) -> dict:
+    city = city_name.upper()
+    state = state_abbr.upper()
+    filter_expr = f"state eq '{state}' and reportedCity eq '{city}'"
+    select_fields = [
+        "amountPaidOnBuildingClaim",
+        "amountPaidOnContentsClaim",
+        "amountPaidOnIncreasedCostOfComplianceClaim",
+    ]
+    rows, truncated = _fema_fetch_rows(
+        "FimaNfipClaims",
+        filter_expr=filter_expr,
+        select_fields=select_fields,
+        version="v2",
+    )
+
+    building = 0.0
+    contents = 0.0
+    icc = 0.0
+    for r in rows:
+        building += parse_float(r.get("amountPaidOnBuildingClaim", 0), 0.0)
+        contents += parse_float(r.get("amountPaidOnContentsClaim", 0), 0.0)
+        icc += parse_float(r.get("amountPaidOnIncreasedCostOfComplianceClaim", 0), 0.0)
+
+    return {
+        "claimsCount": len(rows),
+        "buildingPaidUSD": round(building, 2),
+        "contentsPaidUSD": round(contents, 2),
+        "increasedCompliancePaidUSD": round(icc, 2),
+        "truncated": truncated,
+    }
+
+
+def _fetch_housing_city_metrics(city_name: str, state_abbr: str, dataset_name: str) -> dict:
+    city = city_name.upper()
+    state = state_abbr.upper()
+    filter_expr = f"state eq '{state}' and city eq '{city}'"
+    select_fields = [
+        "approvedForFemaAssistance",
+        "validRegistrations",
+        "repairReplaceAmount",
+        "rentalAmount",
+        "otherNeedsAmount",
+        "totalApprovedIhpAmount",
+        "totalDamage",
+    ]
+    rows, truncated = _fema_fetch_rows(
+        dataset_name,
+        filter_expr=filter_expr,
+        select_fields=select_fields,
+        version="v2",
+    )
+
+    out = {
+        "rows": len(rows),
+        "approvedForFemaAssistance": 0,
+        "validRegistrations": 0,
+        "repairReplaceAmountUSD": 0.0,
+        "rentalAmountUSD": 0.0,
+        "otherNeedsAmountUSD": 0.0,
+        "totalApprovedIhpAmountUSD": 0.0,
+        "totalDamageUSD": 0.0,
+        "truncated": truncated,
+    }
+    for r in rows:
+        out["approvedForFemaAssistance"] += parse_int(r.get("approvedForFemaAssistance", 0), 0)
+        out["validRegistrations"] += parse_int(r.get("validRegistrations", 0), 0)
+        out["repairReplaceAmountUSD"] += parse_float(r.get("repairReplaceAmount", 0), 0.0)
+        out["rentalAmountUSD"] += parse_float(r.get("rentalAmount", 0), 0.0)
+        out["otherNeedsAmountUSD"] += parse_float(r.get("otherNeedsAmount", 0), 0.0)
+        out["totalApprovedIhpAmountUSD"] += parse_float(r.get("totalApprovedIhpAmount", 0), 0.0)
+        out["totalDamageUSD"] += parse_float(r.get("totalDamage", 0), 0.0)
+
+    out["repairReplaceAmountUSD"] = round(out["repairReplaceAmountUSD"], 2)
+    out["rentalAmountUSD"] = round(out["rentalAmountUSD"], 2)
+    out["otherNeedsAmountUSD"] = round(out["otherNeedsAmountUSD"], 2)
+    out["totalApprovedIhpAmountUSD"] = round(out["totalApprovedIhpAmountUSD"], 2)
+    out["totalDamageUSD"] = round(out["totalDamageUSD"], 2)
+    return out
+
+
+def _fetch_vehicle_proxy_metrics(city_name: str, state_abbr: str) -> dict:
+    city = city_name.upper()
+    state = state_abbr.upper()
+
+    # Direct FEMA proxy from IHP valid registrations.
+    flood_filter = (
+        f"damagedStateAbbreviation eq '{state}' and damagedCity eq '{city}' "
+        "and floodDamage eq true"
+    )
+    auto_filter = (
+        f"damagedStateAbbreviation eq '{state}' and damagedCity eq '{city}' "
+        "and autoDamage eq true"
+    )
+    select_fields = ["floodDamageAmount", "haAmount", "fipAmount"]
+
+    flood_rows, flood_truncated = _fema_fetch_rows(
+        "IndividualsAndHouseholdsProgramValidRegistrations",
+        filter_expr=flood_filter,
+        select_fields=select_fields,
+        version="v2",
+    )
+    auto_rows, auto_truncated = _fema_fetch_rows(
+        "IndividualsAndHouseholdsProgramValidRegistrations",
+        filter_expr=auto_filter,
+        select_fields=select_fields,
+        version="v2",
+    )
+
+    large_disaster_rows, large_truncated = _fema_fetch_rows(
+        "IndividualAssistanceHousingRegistrantsLargeDisasters",
+        filter_expr=(
+            f"damagedStateAbbreviation eq '{state}' and damagedCity eq '{city}' "
+            "and floodDamage eq true"
+        ),
+        select_fields=["floodDamage", "floodInsurance"],
+        version="v1",
+    )
+
+    flood_damage_usd = sum(parse_float(r.get("floodDamageAmount", 0), 0.0) for r in flood_rows)
+    ihp_assistance_usd = sum(
+        parse_float(r.get("haAmount", 0), 0.0) + parse_float(r.get("fipAmount", 0), 0.0)
+        for r in flood_rows
+    )
+
+    # Weighted proxy score: flood applicant pressure + explicit auto-damage flags.
+    score = (len(flood_rows) * 0.6) + (len(auto_rows) * 1.0) + (len(large_disaster_rows) * 0.4)
+
+    return {
+        "floodRegistrationCount": len(flood_rows),
+        "autoDamageRegistrationCount": len(auto_rows),
+        "largeDisasterFloodRegistrationCount": len(large_disaster_rows),
+        "floodDamageAmountUSD": round(flood_damage_usd, 2),
+        "ihpAssistanceAmountUSD": round(ihp_assistance_usd, 2),
+        "proxyVehicleImpactScore": round(score, 2),
+        "truncated": bool(flood_truncated or auto_truncated or large_truncated),
+    }
+
+
+def build_external_insurance_signals(cities: list[dict], comparison_cities: list[dict]) -> dict:
+    all_cities = cities + comparison_cities
+    by_city: dict[str, dict] = {}
+
+    for city in all_cities:
+        city_only, state_abbr = _city_state_from_name(city["name"])
+        if not city_only or not state_abbr:
+            continue
+
+        city_payload = {
+            "name": city["name"],
+            "state": state_abbr,
+            "confidence": {
+                "residentialLayer": "direct",
+                "vehicleProxyLayer": "proxy",
+                "sbaVehicleContext": "context-only",
+                "naicVehicleContext": "context-only",
+            },
+        }
+
+        try:
+            nfip = _fetch_nfip_city_claim_metrics(city_only, state_abbr)
+        except Exception:
+            nfip = {
+                "claimsCount": 0,
+                "buildingPaidUSD": 0.0,
+                "contentsPaidUSD": 0.0,
+                "increasedCompliancePaidUSD": 0.0,
+                "truncated": False,
+                "error": "unavailable",
+            }
+
+        try:
+            owners = _fetch_housing_city_metrics(city_only, state_abbr, "HousingAssistanceOwners")
+        except Exception:
+            owners = {
+                "rows": 0,
+                "approvedForFemaAssistance": 0,
+                "validRegistrations": 0,
+                "repairReplaceAmountUSD": 0.0,
+                "rentalAmountUSD": 0.0,
+                "otherNeedsAmountUSD": 0.0,
+                "totalApprovedIhpAmountUSD": 0.0,
+                "totalDamageUSD": 0.0,
+                "truncated": False,
+                "error": "unavailable",
+            }
+
+        try:
+            renters = _fetch_housing_city_metrics(city_only, state_abbr, "HousingAssistanceRenters")
+        except Exception:
+            renters = {
+                "rows": 0,
+                "approvedForFemaAssistance": 0,
+                "validRegistrations": 0,
+                "repairReplaceAmountUSD": 0.0,
+                "rentalAmountUSD": 0.0,
+                "otherNeedsAmountUSD": 0.0,
+                "totalApprovedIhpAmountUSD": 0.0,
+                "totalDamageUSD": 0.0,
+                "truncated": False,
+                "error": "unavailable",
+            }
+
+        try:
+            vehicle_proxy = _fetch_vehicle_proxy_metrics(city_only, state_abbr)
+        except Exception:
+            vehicle_proxy = {
+                "floodRegistrationCount": 0,
+                "autoDamageRegistrationCount": 0,
+                "largeDisasterFloodRegistrationCount": 0,
+                "floodDamageAmountUSD": 0.0,
+                "ihpAssistanceAmountUSD": 0.0,
+                "proxyVehicleImpactScore": 0.0,
+                "truncated": False,
+                "error": "unavailable",
+            }
+
+        residential_composite = (
+            nfip.get("buildingPaidUSD", 0.0)
+            + nfip.get("contentsPaidUSD", 0.0)
+            + owners.get("repairReplaceAmountUSD", 0.0)
+            + renters.get("repairReplaceAmountUSD", 0.0)
+        )
+
+        city_payload["residentialLayer"] = {
+            "nfipClaims": nfip,
+            "housingOwners": owners,
+            "housingRenters": renters,
+            "compositeResidentialLossUSD": round(residential_composite, 2),
+        }
+        city_payload["vehicleProxyLayer"] = vehicle_proxy
+        by_city[city["key"]] = city_payload
+
+    return {
+        "generatedUtc": datetime.now(UTC).isoformat(),
+        "sources": {
+            "femaOpenDataSetsIndex": f"{OPENFEMA_API_BASE}/v1/OpenFemaDataSets",
+            "femaNfipClaims": f"{OPENFEMA_API_BASE}/v2/FimaNfipClaims",
+            "femaHousingOwners": f"{OPENFEMA_API_BASE}/v2/HousingAssistanceOwners",
+            "femaHousingRenters": f"{OPENFEMA_API_BASE}/v2/HousingAssistanceRenters",
+            "femaIhpValidRegistrations": f"{OPENFEMA_API_BASE}/v2/IndividualsAndHouseholdsProgramValidRegistrations",
+            "femaIhpLargeDisasters": f"{OPENFEMA_API_BASE}/v1/IndividualAssistanceHousingRegistrantsLargeDisasters",
+            "sbaDisasterLoanData": "https://data.sba.gov/en/dataset/disaster-loan-data",
+            "sbaPhysicalDamagePolicy": "https://www.sba.gov/funding-programs/disaster-assistance/physical-damage-loans",
+            "naicAutoInsuranceDatabase": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        },
+        "confidenceFlags": {
+            "direct": "Observed claims/assistance records from FEMA NFIP + FEMA Housing Assistance datasets",
+            "proxy": "Vehicle-related signal inferred from FEMA IHP flood and auto-damage fields",
+            "context-only": "Program-level context source (SBA/NAIC), not city-level flood-only claim transactions",
+        },
+        "coverageNotes": [
+            "NFIP and FEMA IA datasets have different temporal coverage and business rules than NOAA Storm Events.",
+            "SBA and NAIC are used as context sources for vehicle impacts where city-level flood-only auto claim records are limited.",
+            "Values are for comparative signal layering, not official federal financial reporting.",
+        ],
+        "byCity": by_city,
+    }
 
 # ---------------------------------------------------------------------------
 # Keyword sets for narrative-based damage-context classification.
@@ -942,6 +1262,8 @@ def main() -> None:
         regional_inj += ev.injuries
         regional_deaths += ev.deaths
 
+    insurance_signals = build_external_insurance_signals(CITIES, COMPARISON_CITIES)
+
     output = {
         "meta": {
             "generated_utc": datetime.now(UTC).isoformat(),
@@ -1061,6 +1383,7 @@ def main() -> None:
             },
             "cities": city_stats,
             "comparisonCities": comparison_city_stats,
+            "insuranceSignals": insurance_signals,
             "decisionAnalysis": {
                 "questions": {
                     "how_often": "How often does flooding happen here?",

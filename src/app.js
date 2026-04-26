@@ -15,7 +15,8 @@
  * Inputs:
  *   - ./data/processed/charleston_floods_30y.json — fetched at startup.
  *   - DOM: #viewDiv, #stats, #trendsSummary, #cityComparison,
- *          #decisionAnalysis, #popup, #popup-content, #popup-closer,
+ *          #benchmarkChart, #insuranceSignals, #decisionAnalysis,
+ *          #popup, #popup-content, #popup-closer,
  *          filter controls (yearStart, yearEnd, eventType, showRisk,
  *          showFema, showStormTracks).
  * Outputs:
@@ -646,6 +647,90 @@ function renderBenchmarkChart(dataset, filteredEvents, yearStart, yearEnd) {
 }
 
 // ---------------------------------------------------------------------------
+// ID:           CFHT-INSURANCE-SIGNALS-001
+// Requirement:  Render confidence-flagged residential and vehicle impact
+//               signal metrics sourced from FEMA direct data and SBA/NAIC
+//               contextual references.
+// Inputs:
+//   dataset (object): Full parsed JSON dataset.
+// Outputs:  Mutates innerHTML of #insuranceSignals element.
+// ---------------------------------------------------------------------------
+function renderInsuranceSignals(dataset) {
+  const el = document.getElementById("insuranceSignals");
+  if (!el) return;
+
+  const sig = dataset?.stats?.insuranceSignals;
+  if (!sig || !sig.byCity) {
+    el.innerHTML = `<div style="color:#64748b">External claims/proxy signals unavailable in this dataset build.</div>`;
+    return;
+  }
+
+  const badge = (kind) => {
+    const klass =
+      kind === "direct" ? "conf-badge conf-badge-direct"
+      : kind === "proxy" ? "conf-badge conf-badge-proxy"
+      : "conf-badge conf-badge-context";
+    return `<span class="${klass}">${kind}</span>`;
+  };
+
+  const rows = Object.entries(sig.byCity).map(([cityKey, c]) => {
+    const r = c.residentialLayer || {};
+    const v = c.vehicleProxyLayer || {};
+    const residentialUSD = r.compositeResidentialLossUSD || 0;
+    const vehicleScore = v.proxyVehicleImpactScore || 0;
+    const confidence = c.confidence || {};
+    return {
+      cityKey,
+      name: c.name || cityKey,
+      residentialUSD,
+      vehicleScore,
+      residentialBadge: badge(confidence.residentialLayer || "direct"),
+      vehicleBadge: badge(confidence.vehicleProxyLayer || "proxy"),
+      nfipClaims: r.nfipClaims?.claimsCount || 0,
+      floodRegs: v.floodRegistrationCount || 0,
+      autoRegs: v.autoDamageRegistrationCount || 0,
+    };
+  }).sort((a, b) => b.residentialUSD - a.residentialUSD || b.vehicleScore - a.vehicleScore);
+
+  const tableRows = rows.map((r) =>
+    `<tr>` +
+      `<td>${r.name}</td>` +
+      `<td>${r.residentialBadge} ${money(r.residentialUSD)}</td>` +
+      `<td>${r.vehicleBadge} ${r.vehicleScore.toFixed(1)}</td>` +
+      `<td>${r.nfipClaims}</td>` +
+      `<td>${r.floodRegs}/${r.autoRegs}</td>` +
+    `</tr>`
+  ).join("");
+
+  const flags = Object.entries(sig.confidenceFlags || {})
+    .map(([k, v]) => `<li>${badge(k)} ${v}</li>`)
+    .join("");
+
+  const sourceEntries = Object.entries(sig.sources || {});
+  const topSources = sourceEntries.slice(0, 6)
+    .map(([label, url]) => `<li><a href="${url}" target="_blank" rel="noreferrer">${label}</a></li>`)
+    .join("");
+
+  el.innerHTML =
+    `<div style="color:#334155;font-size:.76rem;line-height:1.4">` +
+      `Residential layer combines NFIP claims + FEMA housing assistance (direct records). ` +
+      `Vehicle layer is a proxy using FEMA IHP flood/auto indicators with SBA and NAIC context.` +
+    `</div>` +
+    `<table class="cmp-table" style="margin-top:.45rem">` +
+      `<thead><tr>` +
+        `<th>City</th><th>Residential signal (USD)</th><th>Vehicle proxy score</th><th>NFIP claims</th><th>IHP flood/auto</th>` +
+      `</tr></thead>` +
+      `<tbody>${tableRows}</tbody>` +
+    `</table>` +
+    `<div style="margin-top:.45rem">` +
+      `<b style="color:#0f172a">Confidence flags</b><ul style="margin:.25rem 0 0 1rem;padding:0">${flags}</ul>` +
+    `</div>` +
+    `<div style="margin-top:.45rem">` +
+      `<b style="color:#0f172a">Data sources</b><ul style="margin:.25rem 0 0 1rem;padding:0">${topSources}</ul>` +
+    `</div>`;
+}
+
+// ---------------------------------------------------------------------------
 // ID:           CFHT-DECISION-001
 // Requirement:  Populate the #decisionAnalysis panel with evidence-backed
 //               answers to common flood-risk decision questions, a per-city
@@ -1220,6 +1305,7 @@ function exportFilteredEventsCsv(events, filters) {
   }
 
   // ── 10. Static sections ───────────────────────────────────────────────────
+  renderInsuranceSignals(dataset);
   renderDecisionSection(dataset);
 
   // ── 11. Initial draw ─────────────────────────────────────────────────────
