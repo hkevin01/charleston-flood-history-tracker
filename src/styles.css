@@ -152,6 +152,13 @@ body {
 }
 #exportPdfBtn:hover { background: #047857; }
 
+/* Export CSV button — tertiary style */
+#exportCsvBtn {
+  background: #1d4ed8;
+  margin-top: 0.35rem;
+}
+#exportCsvBtn:hover { background: #1e40af; }
+
 /* ── Stats panel ────────────────────────────────────────────────────────── */
 .stats {
   margin-top: 0.6rem;
