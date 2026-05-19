@@ -61,18 +61,18 @@ Unlike forecast tools, this project answers the retrospective question: *"How of
 
 ## Key Features
 
-| Icon | Feature | Description | Impact | Status |
+| <sub>Icon</sub> | <sub>Feature</sub> | <sub>Description</sub> | <sub>Impact</sub> | <sub>Status</sub> |
 |------|---------|-------------|--------|--------|
-| 🗺️ | Interactive Map | OpenLayers + OSM base map with flood event markers | High | ✅ Stable |
-| 🎨 | Type-based Colours | Flash Flood vs Flood events rendered in distinct colours | Medium | ✅ Stable |
-| 📏 | Damage-scaled Symbols | Marker radius scales with reported property damage | High | ✅ Stable |
-| 🟦 | Risk-zone Polygons | Per-city Gaussian heat surface classified into 5 risk levels | High | ✅ Stable |
-| 🔎 | Live Filters | Year range slider, event type toggle, minimum damage threshold | High | ✅ Stable |
-| 🏙️ | City Comparison Panel | Side-by-side event count and peak-month table for all 5 cities | High | ✅ Stable |
-| 🧭 | Decision Analysis Section | Safety, timing, insurance, and adaptation guidance per city | Critical | ✅ Stable |
-| 🐍 | NOAA Data Pipeline | Python script that ingests, filters, scores, and emits processed JSON | Critical | ✅ Stable |
-| 🐳 | Docker Deployment | Single-command containerised Nginx deployment | Medium | ✅ Stable |
-| 🧪 | Test Suite | Pytest unit tests for all data-pipeline helpers | Medium | ✅ Stable |
+| <sub>🗺️</sub> | <sub>Interactive Map</sub> | <sub>OpenLayers + OSM base map with flood event markers</sub> | <sub>High</sub> | <sub>✅ Stable</sub> |
+| <sub>🎨</sub> | <sub>Type-based Colours</sub> | <sub>Flash Flood vs Flood events rendered in distinct colours</sub> | <sub>Medium</sub> | <sub>✅ Stable</sub> |
+| <sub>📏</sub> | <sub>Damage-scaled Symbols</sub> | <sub>Marker radius scales with reported property damage</sub> | <sub>High</sub> | <sub>✅ Stable</sub> |
+| <sub>🟦</sub> | <sub>Risk-zone Polygons</sub> | <sub>Per-city Gaussian heat surface classified into 5 risk levels</sub> | <sub>High</sub> | <sub>✅ Stable</sub> |
+| <sub>🔎</sub> | <sub>Live Filters</sub> | <sub>Year range slider, event type toggle, minimum damage threshold</sub> | <sub>High</sub> | <sub>✅ Stable</sub> |
+| <sub>🏙️</sub> | <sub>City Comparison Panel</sub> | <sub>Side-by-side event count and peak-month table for all 5 cities</sub> | <sub>High</sub> | <sub>✅ Stable</sub> |
+| <sub>🧭</sub> | <sub>Decision Analysis Section</sub> | <sub>Safety, timing, insurance, and adaptation guidance per city</sub> | <sub>Critical</sub> | <sub>✅ Stable</sub> |
+| <sub>🐍</sub> | <sub>NOAA Data Pipeline</sub> | <sub>Python script that ingests, filters, scores, and emits processed JSON</sub> | <sub>Critical</sub> | <sub>✅ Stable</sub> |
+| <sub>🐳</sub> | <sub>Docker Deployment</sub> | <sub>Single-command containerised Nginx deployment</sub> | <sub>Medium</sub> | <sub>✅ Stable</sub> |
+| <sub>🧪</sub> | <sub>Test Suite</sub> | <sub>Pytest unit tests for all data-pipeline helpers</sub> | <sub>Medium</sub> | <sub>✅ Stable</sub> |
 
 **Standout capabilities:**
 
@@ -87,28 +87,28 @@ Unlike forecast tools, this project answers the retrospective question: *"How of
 
 ## Dataset Headline Numbers
 
-| Metric | Value |
+| <sub>Metric</sub> | <sub>Value</sub> |
 |--------|-------|
-| Study period | 1995 – 2024 (30 years) |
-| Unique flood events (deduped) | **314** |
-| Cities covered | 5 |
-| Search radius per city | 20 miles |
-| Reported regional damage | **$29,233,340** |
-| Flash Flood events | 297 (94.6%) |
-| Flood events | 17 (5.4%) |
-| Peak month (Aug) | 86 events |
-| Peak month (Oct) | 61 events |
-| Peak month (Jul) | 58 events |
+| <sub>Study period</sub> | <sub>1995 – 2024 (30 years)</sub> |
+| <sub>Unique flood events (deduped)</sub> | <sub>**314**</sub> |
+| <sub>Cities covered</sub> | <sub>5</sub> |
+| <sub>Search radius per city</sub> | <sub>20 miles</sub> |
+| <sub>Reported regional damage</sub> | <sub>**$29,233,340**</sub> |
+| <sub>Flash Flood events</sub> | <sub>297 (94.6%)</sub> |
+| <sub>Flood events</sub> | <sub>17 (5.4%)</sub> |
+| <sub>Peak month (Aug)</sub> | <sub>86 events</sub> |
+| <sub>Peak month (Oct)</sub> | <sub>61 events</sub> |
+| <sub>Peak month (Jul)</sub> | <sub>58 events</sub> |
 
 **Per-city event counts (1995–2024):**
 
-| City | Events in 20-mi Radius |
+| <sub>City</sub> | <sub>Events in 20-mi Radius</sub> |
 |------|------------------------|
-| Hanahan, SC | 291 |
-| Goose Creek, SC | 290 |
-| North Charleston, SC | 284 |
-| Charleston, SC | 255 |
-| Summerville, SC | 206 |
+| <sub>Hanahan, SC</sub> | <sub>291</sub> |
+| <sub>Goose Creek, SC</sub> | <sub>290</sub> |
+| <sub>North Charleston, SC</sub> | <sub>284</sub> |
+| <sub>Charleston, SC</sub> | <sub>255</sub> |
+| <sub>Summerville, SC</sub> | <sub>206</sub> |
 
 > [!NOTE]
 > City counts overlap — a single NOAA event can fall within the 20-mile radius of multiple cities. The 314 figure is the deduplicated regional count.
@@ -150,14 +150,14 @@ flowchart TD
 
 **Component responsibilities:**
 
-| Component | File | Responsibility |
+| <sub>Component</sub> | <sub>File</sub> | <sub>Responsibility</sub> |
 |-----------|------|---------------|
-| Data pipeline | `scripts/build_dataset.py` | Download, filter, score, emit JSON |
-| Map engine | `src/app.js` | Render map, events, risk zones, filters, panels |
-| Stylesheet | `src/styles.css` | Responsive layout, legend, panel styles |
-| Dataset | `data/processed/charleston_floods_30y.json` | Versioned output — committed to repo |
-| Container | `docker/docker-compose.yml` + `Dockerfile` | Nginx static server on port 8091 |
-| Tests | `tests/test_build_dataset.py` | Pytest suite for pipeline helpers |
+| <sub>Data pipeline</sub> | <sub>`scripts/build_dataset.py`</sub> | <sub>Download, filter, score, emit JSON</sub> |
+| <sub>Map engine</sub> | <sub>`src/app.js`</sub> | <sub>Render map, events, risk zones, filters, panels</sub> |
+| <sub>Stylesheet</sub> | <sub>`src/styles.css`</sub> | <sub>Responsive layout, legend, panel styles</sub> |
+| <sub>Dataset</sub> | <sub>`data/processed/charleston_floods_30y.json`</sub> | <sub>Versioned output — committed to repo</sub> |
+| <sub>Container</sub> | <sub>`docker/docker-compose.yml` + `Dockerfile`</sub> | <sub>Nginx static server on port 8091</sub> |
+| <sub>Tests</sub> | <sub>`tests/test_build_dataset.py`</sub> | <sub>Pytest suite for pipeline helpers</sub> |
 
 The pipeline is completely decoupled from the frontend. The Python script runs once (or on demand) and writes a static JSON file that the browser reads directly — no server-side runtime, no database, no external API calls during page load.
 
@@ -200,18 +200,18 @@ This project intentionally separates **primary event data** from **contextual me
 
 ### Primary event dataset (used directly in JSON)
 
-| Source | What we use | How it is used in this project | Notes |
+| <sub>Source</sub> | <sub>What we use</sub> | <sub>How it is used in this project</sub> | <sub>Notes</sub> |
 |--------|-------------|--------------------------------|-------|
-| NOAA NCEI Storm Events CSV bulk files | `StormEvents_details-ftp_v1.0_dYYYY_*.csv.gz` | Canonical source for event ID, time, county, lat/lon, event type, injuries/deaths, `DAMAGE_PROPERTY`, `DAMAGE_CROPS`, narratives | Downloaded by `scripts/build_dataset.py` and written into `data/processed/charleston_floods_30y.json` |
+| <sub>NOAA NCEI Storm Events CSV bulk files</sub> | <sub>`StormEvents_details-ftp_v1.0_dYYYY_*.csv.gz`</sub> | <sub>Canonical source for event ID, time, county, lat/lon, event type, injuries/deaths, `DAMAGE_PROPERTY`, `DAMAGE_CROPS`, narratives</sub> | <sub>Downloaded by `scripts/build_dataset.py` and written into `data/processed/charleston_floods_30y.json`</sub> |
 
 ### Contextual metadata sources (for interpretation and QA)
 
-| Source | What we query | Why it matters | Integration status |
+| <sub>Source</sub> | <sub>What we query</sub> | <sub>Why it matters</sub> | <sub>Integration status</sub> |
 |--------|---------------|----------------|--------------------|
-| NWS Charleston event archive | Significant event summary pages and office archive references | Confirms local meteorological context, rain totals, and event framing for known flood periods | Referenced as supporting context |
-| Iowa State IEM NWS text archive | AFOS text products (LSR, FFW, etc.) for KCHS | Provides time-stamped warning/report context not always visible in Storm Events CSV fields | Referenced as supporting context |
-| NWS text products (LSR/FFW) | `LSRCHS` and `FFWCHS` examples for Aug 2005 | Verified that North Charleston was under a Flash Flood Warning during the target event window | Referenced as supporting context |
-| SHELDUS (ASU/CEMHS) | County-level hazard/loss catalogs | Candidate secondary source for cross-checking loss totals when NOAA records are blank or sparse | Research in progress |
+| <sub>NWS Charleston event archive</sub> | <sub>Significant event summary pages and office archive references</sub> | <sub>Confirms local meteorological context, rain totals, and event framing for known flood periods</sub> | <sub>Referenced as supporting context</sub> |
+| <sub>Iowa State IEM NWS text archive</sub> | <sub>AFOS text products (LSR, FFW, etc.) for KCHS</sub> | <sub>Provides time-stamped warning/report context not always visible in Storm Events CSV fields</sub> | <sub>Referenced as supporting context</sub> |
+| <sub>NWS text products (LSR/FFW)</sub> | <sub>`LSRCHS` and `FFWCHS` examples for Aug 2005</sub> | <sub>Verified that North Charleston was under a Flash Flood Warning during the target event window</sub> | <sub>Referenced as supporting context</sub> |
+| <sub>SHELDUS (ASU/CEMHS)</sub> | <sub>County-level hazard/loss catalogs</sub> | <sub>Candidate secondary source for cross-checking loss totals when NOAA records are blank or sparse</sub> | <sub>Research in progress</sub> |
 
 ### Provenance policy used in this repository
 
@@ -255,17 +255,17 @@ xychart-beta
 
 ## Technology Stack
 
-| Technology | Version | Purpose | Why Chosen | Alternatives Considered |
+| <sub>Technology</sub> | <sub>Version</sub> | <sub>Purpose</sub> | <sub>Why Chosen</sub> | <sub>Alternatives Considered</sub> |
 |------------|---------|---------|------------|------------------------|
-| [OpenLayers](https://openlayers.org) | 10.8 | Interactive web map | Fully open-source, no API key, rich vector layer API | Leaflet (fewer vector features), Mapbox (paid) |
-| OpenStreetMap | — | Base tile layer | Free, no API key, global coverage | Google Maps (paid), Esri (paid) |
-| Python | 3.10+ | Data pipeline | Pandas + requests ecosystem, rapid CSV wrangling | Node.js (weaker data libs for geospatial) |
-| Pandas | latest | CSV ingestion & filtering | Vectorised operations on large yearly CSVs | Polars (less ecosystem maturity) |
-| NumPy / SciPy | latest | Gaussian risk-zone surface | Native grid computation, ndimage smoothing | Manual convolution (slower) |
-| Vanilla JS (ES2022) | — | Frontend logic | Zero build tool, zero dependencies at runtime | React (overkill for static app) |
-| Nginx | alpine | Static file server | Minimal image size, production-grade caching headers | Apache (heavier), Python http.server (dev only) |
-| Docker + Compose | latest | Containerised deployment | Reproducible environment, one-command deploy | Manual server config |
-| Pytest | latest | Pipeline test suite | Standard Python testing, fixtures, parametrize | unittest (more verbose) |
+| <sub>[OpenLayers](https://openlayers.org)</sub> | <sub>10.8</sub> | <sub>Interactive web map</sub> | <sub>Fully open-source, no API key, rich vector layer API</sub> | <sub>Leaflet (fewer vector features), Mapbox (paid)</sub> |
+| <sub>OpenStreetMap</sub> | <sub>—</sub> | <sub>Base tile layer</sub> | <sub>Free, no API key, global coverage</sub> | <sub>Google Maps (paid), Esri (paid)</sub> |
+| <sub>Python</sub> | <sub>3.10+</sub> | <sub>Data pipeline</sub> | <sub>Pandas + requests ecosystem, rapid CSV wrangling</sub> | <sub>Node.js (weaker data libs for geospatial)</sub> |
+| <sub>Pandas</sub> | <sub>latest</sub> | <sub>CSV ingestion & filtering</sub> | <sub>Vectorised operations on large yearly CSVs</sub> | <sub>Polars (less ecosystem maturity)</sub> |
+| <sub>NumPy / SciPy</sub> | <sub>latest</sub> | <sub>Gaussian risk-zone surface</sub> | <sub>Native grid computation, ndimage smoothing</sub> | <sub>Manual convolution (slower)</sub> |
+| <sub>Vanilla JS (ES2022)</sub> | <sub>—</sub> | <sub>Frontend logic</sub> | <sub>Zero build tool, zero dependencies at runtime</sub> | <sub>React (overkill for static app)</sub> |
+| <sub>Nginx</sub> | <sub>alpine</sub> | <sub>Static file server</sub> | <sub>Minimal image size, production-grade caching headers</sub> | <sub>Apache (heavier), Python http.server (dev only)</sub> |
+| <sub>Docker + Compose</sub> | <sub>latest</sub> | <sub>Containerised deployment</sub> | <sub>Reproducible environment, one-command deploy</sub> | <sub>Manual server config</sub> |
+| <sub>Pytest</sub> | <sub>latest</sub> | <sub>Pipeline test suite</sub> | <sub>Standard Python testing, fixtures, parametrize</sub> | <sub>unittest (more verbose)</sub> |
 
 <p align="right">(<a href="#top">back to top ↑</a>)</p>
 
@@ -296,13 +296,13 @@ pip install -r requirements.txt
 <details>
 <summary>📋 Core Python dependencies</summary>
 
-| Package | Purpose |
+| <sub>Package</sub> | <sub>Purpose</sub> |
 |---------|---------|
-| `pandas` | CSV ingestion and tabular filtering |
-| `numpy` | Grid arithmetic for risk-zone scoring |
-| `scipy` | Gaussian smoothing (`ndimage.gaussian_filter`) |
-| `requests` | HTTP download of NOAA bulk CSVs |
-| `pytest` | Test suite runner |
+| <sub>`pandas`</sub> | <sub>CSV ingestion and tabular filtering</sub> |
+| <sub>`numpy`</sub> | <sub>Grid arithmetic for risk-zone scoring</sub> |
+| <sub>`scipy`</sub> | <sub>Gaussian smoothing (`ndimage.gaussian_filter`)</sub> |
+| <sub>`requests`</sub> | <sub>HTTP download of NOAA bulk CSVs</sub> |
+| <sub>`pytest`</sub> | <sub>Test suite runner</sub> |
 
 </details>
 
@@ -356,12 +356,12 @@ docker compose -f docker/docker-compose.yml down
 
 ### Map controls
 
-| Control | Action |
+| <sub>Control</sub> | <sub>Action</sub> |
 |---------|--------|
-| Scroll / pinch | Zoom in and out |
-| Click + drag | Pan the map |
-| Click event marker | Open popup with event details (type, date, damage, injuries) |
-| Click risk-zone polygon | Show zone classification and city |
+| <sub>Scroll / pinch</sub> | <sub>Zoom in and out</sub> |
+| <sub>Click + drag</sub> | <sub>Pan the map</sub> |
+| <sub>Click event marker</sub> | <sub>Open popup with event details (type, date, damage, injuries)</sub> |
+| <sub>Click risk-zone polygon</sub> | <sub>Show zone classification and city</sub> |
 
 ### Filter panel
 
@@ -402,13 +402,13 @@ The pipeline generates a per-city Gaussian risk surface over a regular lat/lon g
 
 The resulting continuous surface is classified into five tiers via quantile thresholds:
 
-| Zone | Label | Colour |
+| <sub>Zone</sub> | <sub>Label</sub> | <sub>Colour</sub> |
 |------|-------|--------|
-| 1 | Low | 🟦 Light blue |
-| 2 | Guarded | 🟩 Green |
-| 3 | Elevated | 🟨 Yellow |
-| 4 | High | 🟧 Orange |
-| 5 | Most Affected | 🟥 Red |
+| <sub>1</sub> | <sub>Low</sub> | <sub>🟦 Light blue</sub> |
+| <sub>2</sub> | <sub>Guarded</sub> | <sub>🟩 Green</sub> |
+| <sub>3</sub> | <sub>Elevated</sub> | <sub>🟨 Yellow</sub> |
+| <sub>4</sub> | <sub>High</sub> | <sub>🟧 Orange</sub> |
+| <sub>5</sub> | <sub>Most Affected</sub> | <sub>🟥 Red</sub> |
 
 ### 🔎 Spatial Filtering Logic
 
@@ -459,12 +459,12 @@ gantt
       Filtered event CSV export         :done,    p4f, 2026-07-25, 2026-08-20
 ```
 
-| Phase | Goals | Target | Status |
+| <sub>Phase</sub> | <sub>Goals</sub> | <sub>Target</sub> | <sub>Status</sub> |
 |-------|-------|--------|--------|
-| 1 — Data Pipeline | NOAA ingestion, filtering, risk scoring, JSON output | 2026-03 | ✅ Complete |
-| 2 — Map Experience | OpenLayers map, markers, polygons, filters | 2026-04 | ✅ Complete |
-| 3 — Analysis & Delivery | Decision analysis, Docker, tests, docs | 2026-04-26 | ✅ Complete |
-| 4 — Enhancements | Storm tracks, FEMA zones, PDF report, mobile, data quality filters | 2026-08 | 🟡 In Progress |
+| <sub>1 — Data Pipeline</sub> | <sub>NOAA ingestion, filtering, risk scoring, JSON output</sub> | <sub>2026-03</sub> | <sub>✅ Complete</sub> |
+| <sub>2 — Map Experience</sub> | <sub>OpenLayers map, markers, polygons, filters</sub> | <sub>2026-04</sub> | <sub>✅ Complete</sub> |
+| <sub>3 — Analysis & Delivery</sub> | <sub>Decision analysis, Docker, tests, docs</sub> | <sub>2026-04-26</sub> | <sub>✅ Complete</sub> |
+| <sub>4 — Enhancements</sub> | <sub>Storm tracks, FEMA zones, PDF report, mobile, data quality filters</sub> | <sub>2026-08</sub> | <sub>🟡 In Progress</sub> |
 
 <p align="right">(<a href="#top">back to top ↑</a>)</p>
 
@@ -472,11 +472,11 @@ gantt
 
 ## Development Status
 
-| Version | Stability | Test Coverage | Known Limitations |
+| <sub>Version</sub> | <sub>Stability</sub> | <sub>Test Coverage</sub> | <sub>Known Limitations</sub> |
 |---------|-----------|---------------|------------------|
-| v1.0.0 (current) | ✅ Stable | Unit tests for pipeline helpers | No flood-only city-level auto payout data available publicly |
-| v1.0.0 | ✅ Stable | Manual UI verification | Per-event damage dollars are sometimes unreported in NOAA source rows |
-| v1.0.0 | ✅ Stable | Docker smoke-tested | On-map compact legend overlay control not yet implemented |
+| <sub>v1.0.0 (current)</sub> | <sub>✅ Stable</sub> | <sub>Unit tests for pipeline helpers</sub> | <sub>No flood-only city-level auto payout data available publicly</sub> |
+| <sub>v1.0.0</sub> | <sub>✅ Stable</sub> | <sub>Manual UI verification</sub> | <sub>Per-event damage dollars are sometimes unreported in NOAA source rows</sub> |
+| <sub>v1.0.0</sub> | <sub>✅ Stable</sub> | <sub>Docker smoke-tested</sub> | <sub>On-map compact legend overlay control not yet implemented</sub> |
 
 ```mermaid
 mindmap
@@ -575,11 +575,11 @@ If you have a source that contradicts or supplements the current dataset, open a
 
 ### Issue templates
 
-| Template | Use for |
+| <sub>Template</sub> | <sub>Use for</sub> |
 |----------|---------|
-| [Bug report](.github/ISSUE_TEMPLATE/bug_report.md) | Something isn't working |
-| [Feature request](.github/ISSUE_TEMPLATE/feature_request.md) | New capability or enhancement |
-| [Data issue](.github/ISSUE_TEMPLATE/data_issue.md) | Incorrect, missing, or outdated flood data |
+| <sub>[Bug report](.github/ISSUE_TEMPLATE/bug_report.md)</sub> | <sub>Something isn't working</sub> |
+| <sub>[Feature request](.github/ISSUE_TEMPLATE/feature_request.md)</sub> | <sub>New capability or enhancement</sub> |
+| <sub>[Data issue](.github/ISSUE_TEMPLATE/data_issue.md)</sub> | <sub>Incorrect, missing, or outdated flood data</sub> |
 
 </details>
 
@@ -597,16 +597,16 @@ This project is released under the **MIT License** — you are free to use, copy
 
 ### Data sources
 
-| Source | Description | Link |
+| <sub>Source</sub> | <sub>Description</sub> | <sub>Link</sub> |
 |--------|-------------|------|
-| NOAA NCEI Storm Events | Primary flood event records (1995–2024) | [CSV directory](https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/) |
-| NWS Charleston Event Archive | Local event summary and historical office context | [weather.gov/chs/events](https://www.weather.gov/chs/events) |
-| Iowa State IEM NWS Text Archive | Historical AFOS text products (LSR/FFW/AFD/etc.) | [mesonet.agron.iastate.edu](https://mesonet.agron.iastate.edu/nws/text.php) |
-| NWS Flood Safety | Action guidance referenced in decision-analysis section | [weather.gov](https://www.weather.gov/safety/flood) |
-| NFIP / FloodSmart | Insurance guidance | [floodsmart.gov](https://www.floodsmart.gov/get-insured/buy-a-policy) |
-| NAIC Auto Insurance DB | State-level auto comprehensive claim frequency proxy | [naic.org](https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf) |
-| SHELDUS (ASU/CEMHS) | County-level hazard/loss cross-reference source | [cemhs.asu.edu/sheldus](https://cemhs.asu.edu/sheldus) |
-| OpenStreetMap | Base map tiles | [openstreetmap.org](https://www.openstreetmap.org) |
+| <sub>NOAA NCEI Storm Events</sub> | <sub>Primary flood event records (1995–2024)</sub> | <sub>[CSV directory](https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/)</sub> |
+| <sub>NWS Charleston Event Archive</sub> | <sub>Local event summary and historical office context</sub> | <sub>[weather.gov/chs/events](https://www.weather.gov/chs/events)</sub> |
+| <sub>Iowa State IEM NWS Text Archive</sub> | <sub>Historical AFOS text products (LSR/FFW/AFD/etc.)</sub> | <sub>[mesonet.agron.iastate.edu](https://mesonet.agron.iastate.edu/nws/text.php)</sub> |
+| <sub>NWS Flood Safety</sub> | <sub>Action guidance referenced in decision-analysis section</sub> | <sub>[weather.gov](https://www.weather.gov/safety/flood)</sub> |
+| <sub>NFIP / FloodSmart</sub> | <sub>Insurance guidance</sub> | <sub>[floodsmart.gov](https://www.floodsmart.gov/get-insured/buy-a-policy)</sub> |
+| <sub>NAIC Auto Insurance DB</sub> | <sub>State-level auto comprehensive claim frequency proxy</sub> | <sub>[naic.org](https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf)</sub> |
+| <sub>SHELDUS (ASU/CEMHS)</sub> | <sub>County-level hazard/loss cross-reference source</sub> | <sub>[cemhs.asu.edu/sheldus](https://cemhs.asu.edu/sheldus)</sub> |
+| <sub>OpenStreetMap</sub> | <sub>Base map tiles</sub> | <sub>[openstreetmap.org](https://www.openstreetmap.org)</sub> |
 
 ### Inspiration
 
